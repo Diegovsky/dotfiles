@@ -1,0 +1,294 @@
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;;
+;;	    ____        __      __              
+;;	   / __ \____  / /_  __/ /_  ____ ______
+;;	  / /_/ / __ \/ / / / / __ \/ __ `/ ___/
+;;	 / ____/ /_/ / / /_/ / /_/ / /_/ / /    
+;;	/_/    \____/_/\__, /_.___/\__,_/_/     
+;;	              /____/                    
+;;
+;; Created By Aditya Shakya @adi1090x
+;;
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;; COLORS
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+[color]
+color1 = #d63c3c
+color2 = #3581ca
+bground = #66000000 
+bground2 = #aa000000
+bground3 = #aa660000
+accent = #79caed
+fground = #ffffff
+modulefg = ${self.fground}
+[global/wm]
+
+[bar/main]
+
+monitor = ${env:MONITOR:}
+
+bottom = false
+fixed-center = true
+
+width = 100%
+height = 22
+offset-x = 0%
+offset-y = 0%
+
+background = ${color.bground}
+foreground = ${color.fground}
+
+radius-top = 0.0
+radius-bottom = 0.0
+
+overline-size = 2
+overline-color = ${color.bground}
+
+;border-bottom-size = 2
+;border-color = ${color.borderbg}
+
+padding = 0
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = "JetBrains Mono:size=12;3"
+font-1 = "Symbols Nerd Font:style=Regular:antialias=true:pixelsize=13;3"
+font-2 = "Symbols Nerd Font:style=Regular:antialias=true:pixelsize=26;6"
+
+
+modules-left = launcher left2 title left1
+modules-center = workspaces
+modules-right = right3 myaudio right2 network date right1 powermenu
+
+tray-position = none
+tray-detached = false
+tray-maxsize = 16
+tray-background = ${color.bground}
+tray-offset-x = 0
+tray-offset-y = 0
+tray-padding = 0
+tray-scale = 1.0
+
+enable-ipc = true
+
+[settings]
+
+throttle-output = 5
+throttle-output-for = 10
+throttle-input-for = 30
+
+screenchange-reload = false
+
+compositing-background = source
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+
+pseudo-transparency = false
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;; MODULES
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+
+#+++++++++++++++++++++++++++++++++++++++
+
+[module/right1]
+type = custom/text
+content-background = ${color.color2}
+content-foreground = ${color.color1}
+content-font = 3
+content = ""
+
+[module/right2]
+type = custom/text
+content-background = ${color.color2}
+content-foreground = ${color.color1}
+content-font = 3
+content = ""
+
+[module/right3]
+type = custom/text
+content-background = ${color.bground}
+content-foreground = ${color.color2}
+content-font = 3
+content = ""
+
+[module/left1]
+type = custom/text
+content-background = ${color.bground}
+content-foreground = ${color.color2}
+content-font = 3
+content = ""
+
+[module/left2]
+type = custom/text
+content-background = ${color.color1}
+content-foreground = ${color.color2}
+content-font = 3
+content = ""
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/launcher]
+type = custom/text
+content = ﳟ
+
+content-background = ${color.color1}
+content-foreground = ${color.modulefg}
+content-padding = 1
+
+click-left = rofi -show run
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/title]
+type = internal/xwindow
+
+format = <label>
+format-background = ${color.color2}
+format-foreground = ${color.modulefg}
+format-padding = 1
+
+label = %title%
+label-maxlen = 30
+
+label-empty = Arch Linux
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/workspaces]
+type = internal/i3
+
+pin-workspaces = true
+enable-click = true
+index-sort = true
+wrapping-scroll = false
+
+padding = 1
+
+label-mode-padding = 1 
+label-mode-foreground = ${color.fground} 
+label-mode-background = ${color.bground}
+
+label-focused = %index%
+label-focused-background = ${color.bground2}
+label-focused-padding = ${self.padding}
+
+label-unfocused = %index%
+label-unfocused-padding = ${self.padding}
+
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+
+label-urgent = %index%
+label-urgent-background = ${color.bground3}
+label-urgent-padding = ${self.padding}
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/myaudio]
+type = internal/pulseaudio
+
+
+format-volume = <ramp-volume> <label-volume>
+format-volume-background = ${color.color2}
+format-volume-foreground = ${color.modulefg}
+format-volume-padding = 1
+
+label-volume = %percentage%%
+
+format-muted-prefix = 
+label-muted = " Muted"
+format-muted-background = ${color.color2}
+format-muted-foreground = ${color.modulefg}
+format-muted-padding = 1
+
+ramp-volume-0 = 奄
+ramp-volume-1 = 奔
+ramp-volume-2 = 墳
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/date]
+type = internal/date
+interval = 1.0
+
+time =  %I:%M %p
+time-alt =  %d/%m/%Y%
+
+format = <label>
+format-background = ${color.color2}
+format-foreground =
+format-padding = 1
+label = %time%
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = shutdown
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = back
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = systemctl reboot
+
+menu-2-0 = shutdown
+menu-2-0-exec = systemctl poweroff
+menu-2-1 = back
+menu-2-1-exec = menu-open-0
+
+format-spacing = 1 
+format-background = ${color.color1}
+format-foreground = ${color.modulefg}
+format-padding = 1
+
+label-open = 
+label-close = 
+label-separator = 
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+[module/network]
+type = internal/network
+interface = eno1
+
+interval = 1.0
+accumulate-stats = true
+unknown-as-up = true
+
+format-connected = <ramp-signal> <label-connected>
+; color1
+format-connected-background = ${color.color1}
+format-connected-foreground = ${color.modulefg}
+format-connected-padding = 1
+
+format-disconnected = <label-disconnected>
+format-disconnected-background = ${color.color1}
+format-disconnected-foreground = ${color.modulefg}
+format-disconnected-padding = 1
+
+ramp-signal-0 = 
+label-connected = "%local_ip%"
+label-disconnected =  "Not Connected"
+
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+;;	    __________  ______
+;;	   / ____/ __ \/ ____/
+;;	  / __/ / / / / /_    
+;;	 / /___/ /_/ / __/    
+;;	/_____/\____/_/       
+;;
+;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
