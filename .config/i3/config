@@ -190,7 +190,7 @@ for_window[class="jetbrains*"] floating enable
 #for_window[instance="clion$|idea$"] floating disable
 exec --no-startup-id picom
 exec nitrogen --restore &
-exec --no-startup-id alttab
+exec lxsession
 bindsym $mod+z exec kitty /usr/bin/ranger
 bindsym Control+Print exec --no-startup-id flameshot screen -c
 bindsym Print exec --no-startup-id flameshot gui
