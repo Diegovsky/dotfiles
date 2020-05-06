@@ -62,7 +62,7 @@ modules-left = launcher left2 title left1
 modules-center = workspaces
 modules-right = right3 myaudio right2 network date right1 powermenu
 
-tray-position = none
+tray-position = right
 tray-detached = false
 tray-maxsize = 16
 tray-background = ${color.bground}

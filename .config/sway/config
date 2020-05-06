@@ -24,15 +24,14 @@ font pango:SF Pro Display 11
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer normal 600 'i3lock -t -ef -n' ''
+#exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer normal 600 'i3lock -t -ef -n' ''
 
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
+#exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% &
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% &
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle &
@@ -141,15 +140,15 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-bindsym $mod+Shift+less move workspace to output right
-bindsym $mod+Shift+greater move workspace to output left
+bindsym $mod+less move workspace to output right
+bindsym $mod+greater move workspace to output left
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -177,24 +176,37 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+set $firefox MOZ_ENABLE_WAYLAND=1 /usr/bin/firefox
+set $discord /usr/bin/discord
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bindsym $mod+BackSpace exec /usr/bin/firefox
+bindsym $mod+BackSpace exec $firefox
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause&
 bindsym XF86AudioNext exec --no-startup-id playerctl next&
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous&
-#for_window [class="."] floating enable 
 
 for_window [class=".*"] border pixel 0
-gaps inner 10
+for_window [app_id=".*"] border pixel 0
 
-exec_always /home/diegovsky/.config/i3/polybar.sh 
-#for_window[class="jetbrains*"] floating enable
-#for_window[instance="clion$|idea$"] floating disable
+gaps inner 10
+set $gnomeschema org.gnome.desktop.interface
+exec_always {
+	gsettings set $gnomeschema gtk-theme 'Arc-Dark'
+	gsettings set $gnomeschema icon-theme 'Papirus'
+	gsettings set $gnomeschema cursor-theme 'win8'
+}
 exec --no-startup-id picom
-exec nitrogen --restore &
-exec lxsession
+exec swaybg -i /home/diegovsky/Pictures/arch.jpg &
+exec /usr/bin/waybar
+#exec lxsession
 bindsym $mod+z exec kitty /usr/bin/ranger
 bindsym Control+Print exec --no-startup-id flameshot screen -c
-bindsym Print exec --no-startup-id flameshot gui
+#bindsym Print exec --no-startup-id flameshot gui
+
+input * xkb_layout "br"
+input * xkb_model "pc105"
+exec_always seat seat0 xcursor_theme win8 24
+
+workspace 10
+exec /usr/bin/pulseeffects
+exec /usr/bin/spotify
+workspace 1
