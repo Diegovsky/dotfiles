@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/diegovsky/.ssh'
+let g:netrw_dirhist_6='/mnt/Users/diego/Documents/My Games/Terraria/Players/Carlos_Bruno_Trevor'
+let g:netrw_dirhist_5='/home/diegovsky/prog/molar-installation-scripts'
+let g:netrw_dirhist_4='/home/diegovsky/.cache/sessions'
+let g:netrw_dirhist_3='/home/diegovsky/.local/share/icons'
+let g:netrw_dirhist_2='/home/diegovsky/.config/kitty'
+let g:netrw_dirhist_1='/home/diegovsky/.config/i3'

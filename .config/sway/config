@@ -41,7 +41,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec /usr/bin/kitty
+bindsym $mod+Return exec st
+bindsym $mod+Shift+Return exec kitty 
+
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -176,7 +178,7 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-set $firefox MOZ_ENABLE_WAYLAND=1 /usr/bin/firefox
+set $firefox /usr/bin/firefox
 set $discord /usr/bin/discord
 
 bindsym $mod+BackSpace exec $firefox
@@ -195,9 +197,10 @@ exec_always {
 	gsettings set $gnomeschema cursor-theme 'win8'
 }
 exec --no-startup-id picom
-exec swaybg -i /home/diegovsky/Pictures/arch.jpg &
+exec_always killall swaybg &
+exec_always swaybg -i /home/diegovsky/Pictures/yes.jpg &
 exec /usr/bin/waybar
-#exec lxsession
+exec lxsession
 bindsym $mod+z exec kitty /usr/bin/ranger
 bindsym Control+Print exec --no-startup-id flameshot screen -c
 #bindsym Print exec --no-startup-id flameshot gui
@@ -205,8 +208,3 @@ bindsym Control+Print exec --no-startup-id flameshot screen -c
 input * xkb_layout "br"
 input * xkb_model "pc105"
 exec_always seat seat0 xcursor_theme win8 24
-
-workspace 10
-exec /usr/bin/pulseeffects
-exec /usr/bin/spotify
-workspace 1
