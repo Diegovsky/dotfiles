@@ -32,8 +32,8 @@ font pango:SF Pro Display 11
 #exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +3% &
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -3% &
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% &
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% &
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle &
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle &
 
@@ -41,8 +41,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec st
-bindsym $mod+Shift+Return exec kitty 
+bindsym $mod+Return exec alacritty
 
 
 # kill focused window
@@ -150,7 +149,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "swaynag -t warning -m 'Are you sure you want to exit sway?' -B 'Yes' 'swaymsg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -196,14 +195,18 @@ exec_always {
 	gsettings set $gnomeschema icon-theme 'Papirus'
 	gsettings set $gnomeschema cursor-theme 'win8'
 }
-exec --no-startup-id picom
 exec_always killall swaybg &
 exec_always swaybg -i /home/diegovsky/Pictures/yes.jpg &
-exec /usr/bin/waybar
-exec lxsession
-bindsym $mod+z exec kitty /usr/bin/ranger
-bindsym Control+Print exec --no-startup-id flameshot screen -c
-#bindsym Print exec --no-startup-id flameshot gui
+#exec /usr/bin/waybar
+exec gnome-keyring-daemon
+exec mako
+
+bar {
+	position top
+	colors {
+		statusline #ffffff
+	}
+}
 
 input * xkb_layout "br"
 input * xkb_model "pc105"
