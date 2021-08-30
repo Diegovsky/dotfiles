@@ -11,7 +11,6 @@
         for b in reader:read():gmatch('.') do
             seed = seed + string.byte(b)
         end
-        print(seed)
         math.randomseed(seed)
     end
     )

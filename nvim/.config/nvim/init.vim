@@ -38,14 +38,6 @@ call plug#end()
 
 let mapleader = ' ' 
 
-set nocompatible
-set hidden
-set encoding=utf-8
-
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable
-
 let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceSaveWorkspaceOnSwitch = 1

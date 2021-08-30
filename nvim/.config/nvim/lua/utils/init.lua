@@ -59,5 +59,62 @@ function M.randomboolean(chance)
     return math.random() <= chance
 end
 
+function M.ensuretype(value, type_, name)
+    name = name or 'argument'
+    assert(type(value) == type_, 'Expected `'..name..'` to be string, found ' .. type_)
+end
+
+function M.keymapf(t)
+    local mode = t.mode or 'n'
+    local combo = assert(t.combo, '`combo` must be specified')
+    local run = assert(t.run, '`run` must me specified')
+    local args = t.args or {}
+    local opt = M.merge({noremap=true}, t.options)
+
+    M.ensuretype(mode, 'string', 'mode')
+    M.ensuretype(combo, 'string', 'combo')
+    M.ensuretype(run, 'function', 'run')
+
+    local function generate()
+        return 'diegovsky#'..M.randomstring(8)
+    end
+
+    local tmpname = generate()
+    -- Avoid collisions
+    while _G[tmpname] do
+        tmpname = generate()
+    end
+
+    local wrapper = {}
+    if #args > 0 then
+        wrapper.run = function()
+            run(unpack(args))
+        end
+    else
+        wrapper.run = run
+    end
+    _G[tmpname] = setmetatable(wrapper, {
+        __call = function(self)
+            self.run()
+        end;
+        __tostring = t.name
+    })
+
+ vim.api.nvim_set_keymap(mode, combo, ('<cmd>lua _G["%s"]()<cr>'):format(tmpname), opt)
+end
+
+function M.debug(...)
+    print(...)
+    if select('#', ...) <= 1 then
+        return ...
+    else
+        return setmetatable({ ... }, {
+            __tostring = function(self)
+                return '('..table.concat(self, ', ')..')'
+            end
+        })
+    end
+end
+
 function M.t(s) return vim.api.nvim_replace_termcodes(s, true, true, true) end
 return M

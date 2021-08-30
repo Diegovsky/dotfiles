@@ -31,5 +31,18 @@ let g:CtrlSpaceSaveWorkspaceOnExit = 1
 let g:conjure#filetype#scheme = "conjure.client.guile.socket"
 let g:conjure#client#guile#socket#pipename = "guile-repl.socket"
 
+" Recommended
+set nocompatible
+set hidden
+set encoding=utf-8
+
+" Folding
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
+set foldlevelstart=99
+
+
+
 " tabbing for lua files
 autocmd FileType lua setlocal softtabstop=2 shiftwidth=2
