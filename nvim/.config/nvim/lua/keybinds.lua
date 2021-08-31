@@ -14,7 +14,7 @@ local key_to_file = {
   c = 'config.vim',
   k = 'keybinds.vim',
   i = 'init.vim',
-  l = 'lua/main.lua',
+  l = 'main.lua',
   kl = 'lua/keybinds.lua',
 }
 
