@@ -85,7 +85,9 @@ function M.keymapf(t)
         tmpname = generate()
     end
 
-    local wrapper = {}
+    local wrapper = {
+        name = t.name
+    }
     if #args > 0 then
         wrapper.run = function()
             run(unpack(args))
@@ -97,7 +99,7 @@ function M.keymapf(t)
         __call = function(self)
             self.run()
         end;
-        __tostring = t.name
+        __tostring = function(self) return self.name end
     })
 
  vim.api.nvim_set_keymap(mode, combo, ('<cmd>lua _G["%s"]()<cr>'):format(tmpname), opt)

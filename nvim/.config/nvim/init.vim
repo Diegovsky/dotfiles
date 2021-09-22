@@ -48,6 +48,9 @@ let g:nvim_init_file = nvim_config_folder . 'init.vim'
 
 let g:asyncrun_open = 6
 
+set splitright
+set splitbelow
+
 let files = [
 \ 'keybinds',
 \ 'commands',

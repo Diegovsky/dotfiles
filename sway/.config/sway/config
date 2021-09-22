@@ -16,7 +16,8 @@ set $right l
 # Your preferred terminal emulator
 set $term alacritty
 set $browser firefox
-set $menu rofi -show run
+set $menu wofi --show run
+set $status_command "$HOME/.local/bin/statusbar2.py"
 
 output * bg $HOME/Pictures/wallpaper.png fill
 #
@@ -26,13 +27,7 @@ output * bg $HOME/Pictures/wallpaper.png fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-### Idle configuration
-#
-# Example configuration:
-exec swayidle -w \
-          timeout 300 'swaylock -f -c 000000' \
-          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-          before-sleep 'swaylock -f -c 000000'
+exec swayidle
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -46,6 +41,7 @@ exec swayidle -w \
 #
 # Basics:
 #
+    bindsym $mod+shift+r exec bash -c 'swaymsg bar bar-0 status_command -; swaymsg bar bar-0 status_command $status_command'
     # Start a terminal
     bindsym $mod+Return exec $term
 
@@ -201,18 +197,18 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    id "default"
     height 30
     position top
 
     font "FiraCode Nerd Font Mono 11"
 
     tray_padding 5
+    tray_output *
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %R'; do sleep 60; done
-
+    # status_command "$HOME/.local/bin/statusbar2.py"
+    status_command $status_command
     colors {
         statusline #ffffff
         background #323232
@@ -230,9 +226,12 @@ input "type:keyboard" {
     xkb_model "abnt2"
     xkb_variant ",abnt2"
 }
+input "type:tablet_tool" {
+    map_to_output "HDMI-A-1"    
+}
 
-input "type:cursor" {
-    scroll_factor 2
+input "1133:16519:Logitech_G903_LS" {
+    scroll_factor 1.2
     accel_profile flat
 }
 

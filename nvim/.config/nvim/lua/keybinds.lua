@@ -34,7 +34,7 @@ local function startguilerepl()
     end
     local sockname = '/tmp/nvim.'..token..'.socket'
     vim.g['conjure#client#guile#socket#pipename'] = sockname
-    vim.cmd('vsplit')
+    vim.cmd('split')
     vim.cmd(('terminal %s')
         :format("guile '--listen=%s'")
         :format(sockname))
@@ -42,8 +42,12 @@ local function startguilerepl()
 end
 
 local function openterminal()
-    vim.cmd('vsplit')
+    vim.cmd('split')
     vim.cmd('terminal')
+end
+
+local function openExternTerm()
+  vim.cmd('silent !alacritty&')
 end
 
 -- Keybinds
@@ -52,6 +56,12 @@ keymapf{
     combo = '<leader>ot',
     run = openterminal,
     name = 'Open Terminal'
+}
+
+keymapf{
+    combo = '<leader>oT',
+    run = openExternTerm,
+    name = 'Open External Terminal'
 }
 
 keymapf{
@@ -66,8 +76,33 @@ keymapf{
 }
 
 
-keymap('n', '<M-i>', '<cmd>set splitright<cr>', {noremap=true})
-keymap('n', '<M-o>', '<cmd>set splitbelow<cr>', {noremap=true})
+keymapf{
+  combo = '<M-i>',
+  run = function()
+    vim.g['diegovsky#^splithor'] = false
+  end,
+  name = 'Set split direction to horizontal',
+}
+
+keymapf{
+  combo = '<M-o>',
+  run = function()
+    vim.g['diegovsky#^splithor'] = true
+  end,
+  name = 'Set split direction to horizontal',
+}
+
+keymapf{
+  combo = '<M-n>',
+  run = function()
+    if vim.g['diegovsky#^splithor'] then
+      vim.cmd('new')
+    else
+      vim.cmd('vnew')
+    end
+  end,
+  name = 'Open a new window'
+}
 
 
 -- Cd to config folder
@@ -81,7 +116,7 @@ for key, file in pairs(key_to_file) do
 end
 
 -- Remap <C-w><key> to <M-<key>>
-local simple_keys = 'hjklwnHJKLT'
+local simple_keys = 'hjklwHJKLT|_=' .. '<>'
 for k in simple_keys:gmatch('.') do
     winCmd {key=k, command=k }
 end
