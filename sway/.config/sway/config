@@ -236,6 +236,12 @@ input "type:cursor" {
     accel_profile flat
 }
 
+input "type:touchpad" {
+    scroll_method two_finger
+    natural_scroll enabled
+    tap enabled
+}
+
 gaps inner 10
 
 exec .local/bin/wayonce.sh
