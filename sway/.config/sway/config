@@ -235,6 +235,12 @@ input "1133:16519:Logitech_G903_LS" {
     accel_profile flat
 }
 
+input "type:touchpad" {
+    scroll_method two_finger
+    natural_scroll enabled
+    tap enabled
+}
+
 gaps inner 10
 
 exec .local/bin/wayonce.sh
