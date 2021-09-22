@@ -31,8 +31,9 @@ local function startguilerepl()
     local token = _G['sgr#session']
     if not token then
         _G['sgr#session'] = utils.randomstring(8, 12)
+        return startguilerepl()
     end
-    local sockname = '/tmp/nvim.'..token..'.socket'
+    local sockname = '/tmp/nvim.guile.'..token..'.socket'
     vim.g['conjure#client#guile#socket#pipename'] = sockname
     vim.cmd('vsplit')
     vim.cmd(('terminal %s')
