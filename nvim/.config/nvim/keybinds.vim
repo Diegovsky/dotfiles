@@ -27,11 +27,5 @@ nnoremap <leader>cdc <cmd>cd ~/.config/nvim/<cr>
 nnoremap <leader>cdb <cmd>cd -<cr>
 
 nnoremap <leader>bd <cmd>bd<cr>
-nnoremap <leader>bn <cmd>bn<cr>
-nnoremap <leader>bp <cmd>bprevious<cr>
 
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-k>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-j>     compe#scroll({ 'delta': -4 })
+command Config exec 'cd' stdpath('config')

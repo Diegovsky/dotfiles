@@ -1,16 +1,15 @@
 syntax enable
-set synmaxcol=512
+setglobal synmaxcol=512
 filetype plugin indent on
 let g:vimsyn_embed = 'l'
-set number relativenumber
-set nowrap
-set mouse=a
-set splitright
+setglobal number relativenumber
+setglobal mouse=a
+setglobal splitright
 
 " Theme stuff
 let g:onedark_style = 'warmer'
 colorscheme onedark
-set guifont=FiraCode\ Nerd\ Font:h14
+setglobal guifont=FiraCode\ Nerd\ Font:h14
 
 " Dashboard
 let g:dashboard_default_executive ='telescope'
@@ -20,9 +19,9 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 let g:qs_buftype_blacklist = ['terminal', 'nofile']
 
 " Tabs
-set expandtab
-set shiftwidth=4
-set softtabstop=4
+setglobal expandtab
+setglobal shiftwidth=4
+setglobal softtabstop=4
 
 " ctrlspace
 let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
@@ -32,17 +31,23 @@ let g:conjure#filetype#scheme = "conjure.client.guile.socket"
 let g:conjure#client#guile#socket#pipename = "guile-repl.socket"
 
 " Recommended
-set nocompatible
-set hidden
-set encoding=utf-8
+setglobal nocompatible
+setglobal hidden
+setglobal encoding=utf-8
 
 " Folding
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set nofoldenable
-set foldlevelstart=99
+setglobal foldmethod=expr
+setglobal foldexpr=nvim_treesitter#foldexpr()
+setglobal nofoldenable
+setglobal foldlevelstart=99
 
-
+let $NVIM_CMD = "echo 'Failed to connect to nvim.\nQuitting.'; exit"
+let $GIT_EDITOR = 'nvr -cc split --remote-wait'
 
 " tabbing for lua files
 autocmd FileType lua setlocal softtabstop=2 shiftwidth=2
+" tabbing for xml files
+autocmd FileType xml setlocal softtabstop=2 shiftwidth=2
+
+" Actually close git files after closing the buffer.
+autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete

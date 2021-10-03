@@ -1,0 +1,4 @@
+profile {
+	output HDMI-A-1 enable mode 1920x1080 position 0,0
+	output DVI-D-1  enable mode 1360x768  position -1360,150
+}

@@ -11,4 +11,6 @@ dex -a -e sway &
 solaar -w hide &
 mako &
 
+kanshi &
+
 /lib/polkit-gnome/polkit-gnome-authentication-agent-1 &

@@ -64,6 +64,13 @@ function M.ensuretype(value, type_, name)
     assert(type(value) == type_, 'Expected `'..name..'` to be string, found ' .. type_)
 end
 
+-- Call a lua function with a keybind.
+-- Gives you the hability to map a key to a lua function.
+-- @param t.mode the vim mode [Default: 'n']
+-- @param t.combo the key combination to be bound
+-- @param t.run the function to be run
+-- @param t.args the args to pass to the function [Default: {}]
+-- @param t.opt neovim's keymap options.
 function M.keymapf(t)
     local mode = t.mode or 'n'
     local combo = assert(t.combo, '`combo` must be specified')

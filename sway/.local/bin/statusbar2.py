@@ -4,8 +4,9 @@ import swaybar
 import datetime
 import dbus
 import inflection
-from typing import Optional
+from typing import Optional, cast
 import pulsectl_asyncio as pctl
+from pulsectl_asyncio.pulsectl_async import PulseSinkInfo
 
 class Time(swaybar.Module):
     def __init__(self, bar: swaybar.Bar):
@@ -182,34 +183,34 @@ class BatteryIndicator(swaybar.Module):
 class Volume(swaybar.Module):
     NAME_MAX=16
 
-    @classmethod
-    def format_sink(cls, sink):
-        return f"{sink.description[:cls.NAME_MAX]}: {sink.volume.value_flat*100:0.0f}%"
+    def show_volume(self, sink):
+        name = sink.description[:type(self).NAME_MAX]
+        percentage = sink.volume.value_flat*100
+        self.print(f"{name}: {percentage:0.0f}%")
+
+    async def update_server_info(self, pulse: pctl.PulseAsync):
+        self.server_info = await pulse.server_info()
+        self.sink = await pulse.get_sink_by_name(self.server_info.default_sink_name)
 
     async def run(self):
+        self.i = getattr(self, 'i', 0)+1
         try:
             async with pctl.PulseAsync('listener' + self._id) as pulse:
-                srv = await pulse.server_info()
-                sink = None
-                while True:
-                    try:
-                        sink = await pulse.get_sink_by_name(srv.default_sink_name)
-                        break
-                    except pctl.pulsectl_async.PulseIndexError:
-                        continue
+                await self.update_server_info(pulse)
 
-                self.print(Volume.format_sink(sink))
-                default_sink_id = sink.index
+                self.show_volume(self.sink)
+                default_sink_id = self.sink.index
                 async for evt in pulse.subscribe_events('sink'):
                     if evt.t == 'change':
                         sink = await pulse.sink_info(evt.index)
                         if sink.index == default_sink_id:
-                            self.print(Volume.format_sink(sink))
-                    else:
-                        self.print(repr(evt))
+                            self.show_volume(sink)
+                        else:
+                            await self.update_server_info(pulse)
+                            self.print(str(evt))
+                    
         except Exception as e:
-            self.print(repr(e))
-            return
+            self.print(str(e))
 
 def main():
     import sys
