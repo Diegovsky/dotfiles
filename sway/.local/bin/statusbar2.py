@@ -194,23 +194,24 @@ class Volume(swaybar.Module):
 
     async def run(self):
         self.i = getattr(self, 'i', 0)+1
-        try:
-            async with pctl.PulseAsync('listener' + self._id) as pulse:
-                await self.update_server_info(pulse)
+        async with pctl.PulseAsync('listener' + self._id) as pulse:
+            await self.update_server_info(pulse)
 
-                self.show_volume(self.sink)
-                default_sink_id = self.sink.index
-                async for evt in pulse.subscribe_events('sink'):
+            self.show_volume(self.sink)
+            default_sink_id = self.sink.index
+            async for evt in pulse.subscribe_events('sink'):
+                try:
                     if evt.t == 'change':
                         sink = await pulse.sink_info(evt.index)
                         if sink.index == default_sink_id:
                             self.show_volume(sink)
                         else:
                             await self.update_server_info(pulse)
-                            self.print(str(evt))
-                    
-        except Exception as e:
-            self.print(str(e))
+                            self.print('evt:' + str(evt))
+                        
+                except Exception as e:
+                    self.print(str(e))
+                    await self.update_server_info(pulse)
 
 def main():
     import sys

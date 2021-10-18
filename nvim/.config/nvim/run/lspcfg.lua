@@ -1,7 +1,63 @@
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
 
+local cmp_comparators = require'cmp.config.compare'
+local kind_priority_comparator = function(priority_table)
+    local lsp_types = require('cmp.types').lsp
+    local default_priority = 3
+    return function(entry1, entry2)
+      if entry1.source.name ~= 'nvim_lsp' then
+        if entry2.source.name == 'nvim_lsp' then
+          return false
+        else
+          return nil
+        end
+      end
+      local kind1 = lsp_types.CompletionItemKind[entry1:get_kind()]
+      local kind2 = lsp_types.CompletionItemKind[entry2:get_kind()]
+
+      local priority1 = priority_table[kind1] or default_priority
+      local priority2 = priority_table[kind2] or default_priority
+      if priority1 == priority2 then
+        return nil
+      end
+      return priority2 < priority1
+    end
+end
+
 cmp.setup({
+  sorting = {
+    comparators = {
+      cmp_comparators.offset,
+      cmp_comparators.exact,
+      kind_priority_comparator {
+        Enum = 11,
+        EnumMember = 11,
+        Field = 11,
+        Property = 11,
+        Event = 10,
+        Function = 10,
+        Method = 10,
+        Operator = 10,
+        Reference = 10,
+        Struct = 10,
+        Variable = 9,
+        Constant = 9,
+        File = 8,
+        Folder = 8,
+        Class = 5,
+        Color = 5,
+        Module = 5,
+        Keyword = 2,
+        Constructor = 1,
+        Interface = 1,
+        Snippet = 0,
+        Text = 1,
+        TypeParameter = 1,
+        Unit = 1,
+        Value = 1,
+    }}
+  };
   snippet = {
     expand = function(args)
       -- For `vsnip` user.
@@ -19,21 +75,17 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({
+      select = true;
+      behavior = cmp.ConfirmBehavior.Replace,
+    }),
     ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'}),
-    ['<Shift><Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'}),
+    ['<S-tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i', 's'}),
   },
   sources = {
     { name = 'nvim_lsp' },
 
-    -- For vsnip user.
-    -- { name = 'vsnip' },
-
-    -- For luasnip user.
-    -- { name = 'luasnip' },
-
-    -- For ultisnips user.
-    -- { name = 'ultisnips' },
+    { name = 'vsnip' },
 
     { name = 'buffer' },
   }
@@ -42,7 +94,7 @@ cmp.setup({
 -- Autoparen
 require("nvim-autopairs.completion.cmp").setup({
   map_cr = true, --  map <CR> on insert mode
-  map_complete = true -- it will auto insert `(` after select function or method item
+  map_complete = true, -- it will auto insert `(` after select function or method item
 })
 
 vim.api.nvim_exec([[
@@ -52,10 +104,19 @@ vim.api.nvim_exec([[
 local lspconfig = require'lspconfig'
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
+  require'lsp_signature'.on_attach({
+    bind = true;
+    always_trigger = false;
+    handler_opts = {
+      border = 'single';
+    };
+    doc_lines = 5;
+    hint_prefix = "parameter: ";
+  }, bufnr)
   -- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   local opts = { noremap=true, silent=true }
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -90,7 +151,6 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   }
 }
 capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
-
 
 local quirks = {
     ['vala_ls'] = {

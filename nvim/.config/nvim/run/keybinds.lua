@@ -109,10 +109,10 @@ keymapf{
 -- Cd to config folder
 for key, file in pairs(key_to_file) do
     utils.keymapf {
-        combo = '<leader>cf'..key,
-        run = openconfigfile,
-        args = {file},
-        name = ('Open file %s'):format(file)
+        combo = '<leader>cf'..key;
+        run = openconfigfile;
+        args = {file};
+        name = ('Open file %s'):format(file);
     }
 end
 
@@ -122,9 +122,33 @@ for k in simple_keys:gmatch('.') do
     winCmd {key=k, command=k }
 end
 
+utils.keymapf{
+  combo = '<leader>po';
+  run = require'projection'.goto_project;
+  name = 'Open a project'
+}
+
+utils.keymapf{
+  combo = '<leader>pa';
+  run = function() require'projection'.add_project() end;
+  name = 'Add a project'
+}
+
+utils.keymapf{
+  combo = '<leader>pd';
+  run = function() require'projection'.remove_project() end;
+  name = 'Add a project'
+}
+
+utils.keymapf {
+  combo = '<C-p>';
+  run = function() vim.lsp.buf.signature_help() end;
+  mode = 'i';
+  name = 'LSP show signature help'
+}
 -- Window commands that don't have the same name as their key
-local key_map = {
+--[[ local key_map = {
 }
 for key, wincmd in pairs(key_map) do
     winCmd {key=key, command=wincmd}
-end
+end ]]

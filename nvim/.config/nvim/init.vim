@@ -1,4 +1,4 @@
-call plug#begin(stdpath('config') . 'init.vim')
+call plug#begin(stdpath('data') . '/plugins')
 
 Plug 'tpope/vim-sensible'
 Plug 'neovim/nvim-lspconfig'
@@ -9,14 +9,17 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
 Plug 'b3nj5m1n/kommentary'
 Plug 'tpope/vim-surround'
-Plug 'nvim-treesitter/playground'
-Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'nvim-treesitter/playground', {'on': '<Plug>TSPlaygroundToggle'}
+" Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'unblevable/quick-scope' 
 Plug 'glepnir/dashboard-nvim'
 Plug 'eraserhd/parinfer-rust', {'do': 'cargo build --release'}
 Plug 'windwp/nvim-autopairs'
 Plug 'Olical/conjure'
-Plug 'mfussenegger/nvim-dap'
+
+" Autotag
+" Plug 'windwp/nvim-ts-autotag'
+Plug 'tpope/vim-ragtag'
 
 " Vim git
 Plug 'tpope/vim-fugitive'
@@ -29,15 +32,15 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'ray-x/lsp_signature.nvim'
 
 " Vala support
-Plug 'arrufat/vala.vim'
+Plug 'arrufat/vala.vim', {'for': 'vala'}
 
 " telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-treesitter/playground'
 
 " themes 
 Plug 'navarasu/onedark.nvim'
@@ -48,6 +51,7 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
 call plug#end()
+
 
 let mapleader = ' ' 
 
@@ -76,5 +80,8 @@ for f in files
 		execute 'source' x
 	endif
 endfor
+
+" Local plugin
+execute 'set' 'rtp+=' . g:nvim_config_folder .. 'plugins/projection.nvim'
 
 execute 'luafile' g:nvim_config_folder . 'main.lua'

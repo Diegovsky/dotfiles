@@ -243,7 +243,7 @@ input "type:touchpad" {
 
 gaps inner 10
 
-exec .local/bin/wayonce.sh
+exec .local/bin/wayonce.sh &
 for_window [class="steam_app*"] inhibit_idle focus
 
 exec zsh -c 'for i in `seq 0 9`; do swaymsg "bindsym \$mod+KP_$i workspace number $i"; done' &

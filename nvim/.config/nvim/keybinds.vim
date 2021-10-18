@@ -1,4 +1,4 @@
-nnoremap <leader>hrr <cmd>execute 'source' g:nvim_init_file<cr><cr>
+nnoremap <leader>hrr <cmd>execute 'source' g:nvim_init_file<cr>
 nnoremap <leader>hpi <cmd>PlugInstall<cr>
 nnoremap <leader>hpu <cmd>PlugUpdate<cr>
 
@@ -18,7 +18,7 @@ nnoremap <leader>tc <cmd>tabclose<cr>
 
 nnoremap <leader><leader> <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <C-space> <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 tnoremap <Esc> <C-\><C-n>
@@ -27,5 +27,3 @@ nnoremap <leader>cdc <cmd>cd ~/.config/nvim/<cr>
 nnoremap <leader>cdb <cmd>cd -<cr>
 
 nnoremap <leader>bd <cmd>bd<cr>
-
-command Config exec 'cd' stdpath('config')

@@ -11,6 +11,21 @@ local askfor = function (t)
   return vim.fn.input(text, cwd, typ)
 end
 
+local cached = function(f, ...)
+  return setmetatable({
+      value = nil;
+      f = f;
+      args = {...};
+    },{
+      __call = function(self)
+        if self.value == nil then
+          self.value = self.f(unpack(self.args))
+        end
+        return self.value
+      end
+    })
+end
+
 
 local dap = require'dap'
 local dapui = require'dapui'
@@ -35,21 +50,30 @@ end
 
 -- DAP profiles
 local configurations = {
+    ['python'] = {
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch python file',
+        program = cached(askfor, {text = 'Path to python file: '}),
+      },
+      {
+        type = 'python';
+        cwd = vim.fn.getcwd(),
+        args = {'-k build_tree'},
+        pythonArgs = {'-m pytest', '--pdb'},
+        request = 'launch',
+        debugger = 'debugpy',
+        name = 'Pyton :: Run pytest';
+        program = 'pipenv run python';
+      }
+    };
     ['ccppr_vsc'] = { {
         name = "Launch file";
         type = 'cpptools';
         MIMode = 'gdb';
         request = 'launch';
-        program = function()
-          if DAP_FILE_NAME then
-            return DAP_FILE_NAME
-          else
-            DAP_FILE_NAME = askfor {
-              text = 'Path to exe: ',
-            }
-            return DAP_FILE_NAME
-          end
-        end;
+        program = cached(askfor, {text = 'Path to exe:'});
         cwd = '${workspaceFolder}';
         env = {};
         args = function()

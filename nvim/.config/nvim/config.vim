@@ -5,6 +5,7 @@ let g:vimsyn_embed = 'l'
 setglobal number relativenumber
 setglobal mouse=a
 setglobal splitright
+setglobal nowrap
 
 " Theme stuff
 let g:onedark_style = 'warmer'
@@ -22,6 +23,10 @@ let g:qs_buftype_blacklist = ['terminal', 'nofile']
 setglobal expandtab
 setglobal shiftwidth=4
 setglobal softtabstop=4
+
+" Auto tags
+" let g:closetag_filenames = '*.html,*.xhtml,*.phtml,.xml'
+au FileType xml CloseTagEnable
 
 " ctrlspace
 let g:CtrlSpaceSaveWorkspaceOnSwitch = 1

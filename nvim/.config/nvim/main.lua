@@ -16,6 +16,7 @@
     )
 end)()
 
+require'projection'.init{}
 
 -- Icon theme
 local wdi = require'nvim-web-devicons'
@@ -24,8 +25,7 @@ wdi.setup {
 	default = true;
 }
 -- treesitter
-local treesitter = require'nvim-treesitter.configs'
-treesitter.setup {
+require'nvim-treesitter.configs'.setup {
   highlight = {
           enable = true;
   };
@@ -44,8 +44,6 @@ kommentary.use_extended_mappings()
 local autopairs = require('nvim-autopairs')
 autopairs.setup {
     disable_filetype = {"TelescopePrompt", "terminal"},
-    ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]],"%s+", ""),
-    fast_wrap = {},
 }
 
 -- Telescope Settings
@@ -100,4 +98,5 @@ local path = require'plenary.path'
 
 -- Run all lua files on run/
 local luapath = path:new(vim.g.nvim_config_folder, 'run')
+print(luapath)
 scandir.scan_dir(tostring(luapath), {on_insert = dofile})
