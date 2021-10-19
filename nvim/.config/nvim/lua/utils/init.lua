@@ -1,4 +1,4 @@
-local M ={}
+local M ={keybinds={}}
 
 function M.normpath(s)
     if s:sub(#s, #s) ~= '/' then
@@ -13,6 +13,17 @@ function M.merge(a, b)
         b[k] = v
     end
     return b
+end
+
+function M.get_pargs(t, args, defaults)
+  local retlist = {}
+  defaults = defaults or {}
+  for index, name in ipairs(args) do
+    local newvalue = t[index] or t[name] or defaults[name]
+    -- This is necessary to handle nils
+    retlist[index] = newvalue
+  end
+  return unpack(retlist)
 end
 
 local chars = {}
@@ -61,7 +72,10 @@ end
 
 function M.ensuretype(value, type_, name)
     name = name or 'argument'
-    assert(type(value) == type_, 'Expected `'..name..'` to be string, found ' .. type_)
+    if type(value) ~= type_ then
+       error('Expected `'..name..'` to be `'..type_..'`, found ' .. type(value), 1)
+    end
+    return value
 end
 
 -- Call a lua function with a keybind.
@@ -72,25 +86,14 @@ end
 -- @param t.args the args to pass to the function [Default: {}]
 -- @param t.opt neovim's keymap options.
 function M.keymapf(t)
-    local mode = t.mode or 'n'
-    local combo = assert(t.combo, '`combo` must be specified')
-    local run = assert(t.run, '`run` must me specified')
-    local args = t.args or {}
-    local opt = M.merge({noremap=true}, t.options)
-
-    M.ensuretype(mode, 'string', 'mode')
-    M.ensuretype(combo, 'string', 'combo')
+  local mode, combo, run, args, opt = M.get_pargs(t, {'mode', 'combo', 'run', 'args', 'options'}, {
+    mode = 'n';
+    args = {};
+  })
+    mode = M.ensuretype(mode, 'string', 'mode')
+    combo = M.ensuretype(combo, 'string', 'combo')
+    opt = M.merge({noremap=true}, opt)
     M.ensuretype(run, 'function', 'run')
-
-    local function generate()
-        return 'diegovsky#'..M.randomstring(8)
-    end
-
-    local tmpname = generate()
-    -- Avoid collisions
-    while _G[tmpname] do
-        tmpname = generate()
-    end
 
     local wrapper = {
         name = t.name
@@ -102,14 +105,14 @@ function M.keymapf(t)
     else
         wrapper.run = run
     end
-    _G[tmpname] = setmetatable(wrapper, {
+    table.insert(M.keybinds, setmetatable(wrapper, {
         __call = function(self)
             self.run()
         end;
         __tostring = function(self) return self.name end
-    })
+    }))
 
- vim.api.nvim_set_keymap(mode, combo, ('<cmd>lua _G["%s"]()<cr>'):format(tmpname), opt)
+ vim.api.nvim_set_keymap(mode, combo, ('<cmd>lua require"utils".keybinds[%s]()<cr>'):format(#M.keybinds), opt)
 end
 
 function M.debug(...)

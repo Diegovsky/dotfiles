@@ -1,6 +1,7 @@
 syntax enable
 setglobal synmaxcol=512
 filetype plugin indent on
+set omnifunc=syntaxcomplete#Complete
 let g:vimsyn_embed = 'l'
 setglobal number relativenumber
 setglobal mouse=a
@@ -26,7 +27,6 @@ setglobal softtabstop=4
 
 " Auto tags
 " let g:closetag_filenames = '*.html,*.xhtml,*.phtml,.xml'
-au FileType xml CloseTagEnable
 
 " ctrlspace
 let g:CtrlSpaceSaveWorkspaceOnSwitch = 1

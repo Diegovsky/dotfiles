@@ -18,7 +18,6 @@ Plug 'windwp/nvim-autopairs'
 Plug 'Olical/conjure'
 
 " Autotag
-" Plug 'windwp/nvim-ts-autotag'
 Plug 'tpope/vim-ragtag'
 
 " Vim git
@@ -70,13 +69,13 @@ set splitbelow
 
 let files = [
 \ 'keybinds',
-\ 'commands',
 \ 'config',
 \]
 
 for f in files
 	let x = g:nvim_config_folder . f . '.vim'
 	if filereadable(x)
+                echo x
 		execute 'source' x
 	endif
 endfor

@@ -18,3 +18,8 @@ if [ -n "$DESKTOP_SESSION" ];then
     export SSH_AUTH_SOCK
 fi
 /lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+WAYINIT_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/wayinit.d/"
+export WAYINIT_DIR
+
+source "WAYINIT_DIR/session.sh"

@@ -146,6 +146,21 @@ utils.keymapf {
   mode = 'i';
   name = 'LSP show signature help'
 }
+
+local gitcmds = {
+  ['A'] = 'add -A';
+  ['c'] = 'commit';
+  ['ca'] = 'commit --amend';
+  ['p'] = 'pull';
+  ['u'] = 'push';
+}
+for key, cmd in pairs(gitcmds) do
+  keymap('n', ('<leader>g%s'):format(key), ('<cmd>Git %s<cr>'):format(cmd), {noremap=true})
+end
+
+if vim.fn.maparg('<C-Space>', 'i') then
+  keymap('i', '<C-Space>', '<C-x><C-o>', {})
+end
 -- Window commands that don't have the same name as their key
 --[[ local key_map = {
 }
