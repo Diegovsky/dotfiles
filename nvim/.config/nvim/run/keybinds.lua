@@ -146,17 +146,27 @@ utils.keymapf {
   mode = 'i';
   name = 'LSP show signature help'
 }
-
-local gitcmds = {
-  ['A'] = 'add -A';
-  ['c'] = 'commit';
-  ['ca'] = 'commit --amend';
-  ['p'] = 'pull';
-  ['u'] = 'push';
-}
-for key, cmd in pairs(gitcmds) do
-  keymap('n', ('<leader>g%s'):format(key), ('<cmd>Git %s<cr>'):format(cmd), {noremap=true})
+do
+  local gitcmd_prefix = "<leader>g"
+  local gitcmds = {
+    ['A'] = 'add -A';
+    ['c'] = 'commit';
+    ['ca'] = 'commit --amend';
+    ['p'] = 'pull';
+    ['u'] = 'push';
+  }
+  for key, cmd in pairs(gitcmds) do
+    keymap('n', gitcmd_prefix..key, ('<cmd>Git %s<cr>'):format(cmd), {noremap=true})
+  end
+  utils.keymapf{'n', gitcmd_prefix..'C', function()
+    local repo = utils.askfor{'Git repo: ', 'git@github.com:Diegovsky/', 'none'}
+    local where = utils.askfor{'Where should it be: ', vim.fn.getenv('HOME')..'/Projects', 'dir'}
+    if repo and where then
+      vim.cmd(("Git clone '%s' '%s'"):format(repo, where))
+    end
+  end, opt={noremap=true}}
 end
+
 
 if vim.fn.maparg('<C-Space>', 'i') then
   keymap('i', '<C-Space>', '<C-x><C-o>', {})

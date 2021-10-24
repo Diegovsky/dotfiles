@@ -3,28 +3,8 @@ local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
 dap_install.setup()
 
-local askfor = function (t)
-  local text = t.text
-  local cwd = t.cwd or vim.fn.getcwd() .. '/'
-  local typ = t.type or 'file'
+local askfor, cached = require'utils'.askfor, require'utils'.cached
 
-  return vim.fn.input(text, cwd, typ)
-end
-
-local cached = function(f, ...)
-  return setmetatable({
-      value = nil;
-      f = f;
-      args = {...};
-    },{
-      __call = function(self)
-        if self.value == nil then
-          self.value = self.f(unpack(self.args))
-        end
-        return self.value
-      end
-    })
-end
 
 
 local dap = require'dap'
@@ -53,19 +33,20 @@ local configurations = {
     ['python'] = {
       {
         type = 'python',
+        debugger = 'debugpy',
         request = 'launch',
         name = 'Launch python file',
-        program = cached(askfor, {text = 'Path to python file: '}),
+        program = cached(askfor, {'Path to python file: '}),
       },
       {
         type = 'python';
         cwd = vim.fn.getcwd(),
         args = {'-k build_tree'},
-        pythonArgs = {'-m pytest', '--pdb'},
+        pythonArgs = {'--pdb'},
         request = 'launch',
         debugger = 'debugpy',
         name = 'Pyton :: Run pytest';
-        program = 'pipenv run python';
+        program = 'pytest';
       }
     };
     ['ccppr_vsc'] = { {
@@ -73,14 +54,14 @@ local configurations = {
         type = 'cpptools';
         MIMode = 'gdb';
         request = 'launch';
-        program = cached(askfor, {text = 'Path to exe:'});
+        program = cached(askfor, {'Path to exe:'});
         cwd = '${workspaceFolder}';
         env = {};
         args = function()
           local args = {}
           local i = 1
           while true do
-            local arg = askfor{text="Arg "..i..": ", type=''}
+            local arg = askfor{"Arg "..i..": ", type=''}
             if #arg == 0 then break end
             table.insert(args, arg)
             i = i + 1

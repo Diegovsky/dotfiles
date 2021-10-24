@@ -75,7 +75,6 @@ let files = [
 for f in files
 	let x = g:nvim_config_folder . f . '.vim'
 	if filereadable(x)
-                echo x
 		execute 'source' x
 	endif
 endfor

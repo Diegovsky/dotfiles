@@ -15,6 +15,29 @@ function M.merge(a, b)
     return b
 end
 
+function M.cached(f, ...)
+  local value = nil;
+  local args = {...};
+  return function()
+    if value == nil then
+      value = f(unpack(args))
+    end
+    return value
+  end
+end
+
+function M.askfor(t)
+  local prompt, text, typ = M.get_pargs(t, {'prompt', 'text', 'type'},
+                                           {text=vim.fn.getcwd(), type='file'})
+  -- The docs say 'typ' should be `nothing`.
+  -- Nil does not work, so this workaround is needed.
+  if typ ~= 'none' then
+    return vim.fn.input(prompt, text, typ)
+  else
+    return vim.fn.input(prompt, text)
+  end
+end
+
 function M.get_pargs(t, args, defaults)
   local retlist = {}
   defaults = defaults or {}
@@ -73,9 +96,19 @@ end
 function M.ensuretype(value, type_, name)
     name = name or 'argument'
     if type(value) ~= type_ then
-       error('Expected `'..name..'` to be `'..type_..'`, found ' .. type(value), 1)
+       error(('Expected `%s` to be `%s`, found %S'):format(name, type_, type(value)), 1)
     end
     return value
+end
+
+function M.ensurecallable(value, name)
+  if type(value) == 'function' then
+    return value
+  elseif type(value) == 'table' and getmetatable(value).__call then
+    return value
+  else
+    error(("Expected '%s' to be callable, got `%s` instead."):format(name, type(value)), 2)
+  end
 end
 
 -- Call a lua function with a keybind.
@@ -93,7 +126,7 @@ function M.keymapf(t)
     mode = M.ensuretype(mode, 'string', 'mode')
     combo = M.ensuretype(combo, 'string', 'combo')
     opt = M.merge({noremap=true}, opt)
-    M.ensuretype(run, 'function', 'run')
+    M.ensurecallable(run, 'run')
 
     local wrapper = {
         name = t.name
