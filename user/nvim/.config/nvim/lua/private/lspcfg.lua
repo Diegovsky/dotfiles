@@ -1,5 +1,8 @@
+local M = {}
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
+
+local merge = require'private'.merge
 
 local cmp_comparators = require'cmp.config.compare'
 local kind_priority_comparator = function(priority_table)
@@ -25,7 +28,7 @@ local kind_priority_comparator = function(priority_table)
     end
 end
 
-local lsp_init = function()
+M.cmp_init = function()
   cmp.setup({
     sorting = {
       comparators = {
@@ -91,23 +94,25 @@ local lsp_init = function()
       { name = 'buffer' },
     }
   })
-end
 
+  -- Prevemt cmp from messing with telescope
+  vim.api.nvim_exec([[
+    autocmd FileType TelescopePrompt lua require('cmp').setup.buffer{enable=false}
+  ]], true)
+
+end
 -- Autoparen
 require("nvim-autopairs.completion.cmp").setup({
   map_cr = true, --  map <CR> on insert mode
   map_complete = true, -- it will auto insert `(` after select function or method item
 })
 
-vim.api.nvim_exec([[
-  autocmd FileType TelescopePrompt lua require('cmp').setup.buffer{enable=false}
-]], true)
-
 local lspconfig = require'lspconfig'
-local on_attach = function(client, bufnr)
+
+M.on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
-  lsp_init()
+  M.cmp_init()
   require'lsp_signature'.on_attach({
     bind = true;
     always_trigger = false;
@@ -142,20 +147,20 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pyright", "rust_analyzer", "zls", 'vala_ls', 'clangd', 'dartls', 'sumneko_lua'}
+M.servers = { "pyright", "rust_analyzer", "zls", 'vala_ls', 'clangd', 'dartls', 'sumneko_lua'}
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.capabilities.textDocument.completion.completionItem.resolveSupport = {
   properties = {
     'documentation',
     'detail',
     'additionalTextEdits',
   }
 }
-capabilities = require'cmp_nvim_lsp'.update_capabilities(capabilities)
+M.capabilities = require'cmp_nvim_lsp'.update_capabilities(M.capabilities)
 
-local quirks = {
+M.quirks = {
     ['vala_ls'] = {
         cmd = { '/usr/bin/vala-language-server' }
     };
@@ -170,25 +175,30 @@ local quirks = {
                 workspace = {
                     library = vim.api.nvim_get_runtime_file('', true),
                 },
-                runtime = { version = 'LuaJIT'},
+                runtime = { version = 'LuaJIT', path=vim.split(package.path, ';')},
             }
         }
     }
 }
 
-for _, lsp in ipairs(servers) do
-  if lsp == nil then break end
+function M.setup_server(name, opt)
   local args = {
-    on_attach = on_attach,
-    capabilities = capabilities,
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
     flags = {
       debounce_text_changes = 150,
     }
   }
-  for k, v in pairs(quirks[lsp] or {}) do
-      args[k] = v
-  end
-  lspconfig[lsp].setup(args)
+  merge(args, M.quirks[name])
+  merge(args, opt)
+  lspconfig[name].setup(args)
 end
 
+function M.init()
+  for _, lsp in ipairs(M.servers) do
+    if lsp == nil then print(_, 'nil')
+    else M.setup_server(lsp) end
+  end
+end
 
+return M

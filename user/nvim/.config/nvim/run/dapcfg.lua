@@ -3,7 +3,7 @@ local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
 dap_install.setup()
 
-local askfor, cached = require'utils'.askfor, require'utils'.cached
+local askfor, cached = require'private'.askfor, require'private'.cached
 
 
 
@@ -22,7 +22,7 @@ require('dapui').setup()
 -- DAP keybinds
 local key_prefix = '<leader>d%s'
 for key, func in pairs(keybinds) do
-  require'utils'.keymapf {
+  require'private'.keymapf {
     combo = key_prefix:format(key);
     run = func
   }

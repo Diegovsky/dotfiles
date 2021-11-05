@@ -16,7 +16,7 @@
     )
 end)()
 
-require'projection'.init{}
+require'projection'.init{enable_sorting=true}
 
 -- Icon theme
 local wdi = require'nvim-web-devicons'
@@ -98,5 +98,6 @@ local path = require'plenary.path'
 
 -- Run all lua files on run/
 local luapath = path:new(vim.g.nvim_config_folder, 'run')
-print(luapath)
 scandir.scan_dir(tostring(luapath), {on_insert = dofile})
+
+require'private.lspcfg'.init()

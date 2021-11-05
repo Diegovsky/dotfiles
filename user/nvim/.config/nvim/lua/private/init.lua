@@ -8,11 +8,11 @@ function M.normpath(s)
 end
 
 function M.merge(a, b)
-    b = b or {}
-    for k, v in pairs(a) do
-        b[k] = v
+    a = a or {}
+    for k, v in pairs(b or {}) do
+        a[k] = v
     end
-    return b
+    return a
 end
 
 function M.cached(f, ...)
@@ -123,42 +123,25 @@ function M.keymapf(t)
     mode = 'n';
     args = {};
   })
-    mode = M.ensuretype(mode, 'string', 'mode')
-    combo = M.ensuretype(combo, 'string', 'combo')
-    opt = M.merge({noremap=true}, opt)
-    M.ensurecallable(run, 'run')
+  mode = M.ensuretype(mode, 'string', 'mode')
+  combo = M.ensuretype(combo, 'string', 'combo')
+  opt = M.merge({noremap=true}, opt)
+  M.ensurecallable(run, 'run')
 
-    local wrapper = {
-        name = t.name
-    }
-    if #args > 0 then
-        wrapper.run = function()
-            run(unpack(args))
-        end
-    else
-        wrapper.run = run
-    end
-    table.insert(M.keybinds, setmetatable(wrapper, {
-        __call = function(self)
-            self.run()
-        end;
-        __tostring = function(self) return self.name end
-    }))
+  if #args > 0 then
+      local wrapper = function()
+          run(unpack(args))
+      end
+      run = wrapper
+  end
+  table.insert(M.keybinds, run)
 
- vim.api.nvim_set_keymap(mode, combo, ('<cmd>lua require"utils".keybinds[%s]()<cr>'):format(#M.keybinds), opt)
+  vim.api.nvim_set_keymap(mode, combo, ('<cmd>lua require"private".keybinds[%s]()<cr>'):format(#M.keybinds), opt)
 end
 
 function M.debug(...)
-    print(...)
-    if select('#', ...) <= 1 then
-        return ...
-    else
-        return setmetatable({ ... }, {
-            __tostring = function(self)
-                return '('..table.concat(self, ', ')..')'
-            end
-        })
-    end
+    print(vim.inspect(...))
+    return ...
 end
 
 function M.t(s) return vim.api.nvim_replace_termcodes(s, true, true, true) end
