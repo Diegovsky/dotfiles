@@ -1,0 +1,19 @@
+# Enable vim mode
+bindkey -v
+
+# History based command completion
+bindkey -M vicmd 'k' history-search-backward
+bindkey -M vicmd 'j' history-search-forward
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
+
+# Auto complete menu navigation
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect '\e' send-break
+bindkey -M menuselect ' ' accept-and-infer-next-history
+
+# Clear current command on <ESC><ESC>
+bindkey -M vicmd '\e' send-break
