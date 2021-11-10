@@ -1,5 +1,5 @@
 -- Initializes math.random
-(function()
+do
     -- Plenary's python-like context manager import
     local context_manager = require'plenary.context_manager'
     local with = context_manager.with
@@ -14,7 +14,7 @@
         math.randomseed(seed)
     end
     )
-end)()
+end
 
 require'projection'.init{enable_sorting=true}
 
@@ -38,11 +38,9 @@ require'nvim-treesitter.configs'.setup {
   autopairs = {enable = true};
 }
 -- Comment plugin settings
-local kommentary = require'kommentary.config'
-kommentary.use_extended_mappings()
+require'kommentary.config'.use_default_mappings()
 
-local autopairs = require('nvim-autopairs')
-autopairs.setup {
+require('nvim-autopairs').setup {
     disable_filetype = {"TelescopePrompt", "terminal"},
 }
 
@@ -97,7 +95,7 @@ local scandir = require'plenary.scandir'
 local path = require'plenary.path'
 
 -- Run all lua files on run/
-local luapath = path:new(vim.g.nvim_config_folder, 'run')
+local luapath = path:new(NVIM_CONFIG_FOLDER, 'run')
 scandir.scan_dir(tostring(luapath), {on_insert = dofile})
 
 require'private.lspcfg'.init()

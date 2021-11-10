@@ -4,16 +4,11 @@ local keymap = vim.api.nvim_set_keymap
 
 local function split()
   if vim.g['diegovsky#^splithor'] then
-    vim.cmd('new')
+    vim.cmd('split')
   else
-    vim.cmd('vnew')
+    vim.cmd('vsplit')
   end
 end
-
-local function openExternTerm()
-  vim.cmd('silent !alacritty&')
-end
-
 
 local function openTerm(cmd)
   split()
@@ -37,7 +32,7 @@ end
 local vimcmd = function(cmd) return ('<cmd>%s<cr>'):format(cmd) end
 
 local normalkeymap = {
-  ['<leader>oT'] = openExternTerm,
+  ['<leader>oT'] = function() vim.cmd('silent !alacritty&') end,
   ['<leader>ot'] = openTerm,
   ['<leader>mr'] = startguilerepl,
   ['<M-i>'] =  function() vim.g['diegovsky#^splithor'] = false end,
@@ -51,6 +46,7 @@ local normalkeymap = {
   ['<leader><leader>'] = vimcmd'Telescope find_files';
   ['<leader>fg'] = vimcmd'Telescope live_grep';
 }
+
 for key, cmd in pairs(normalkeymap) do
   if type(cmd) == 'string' then
     keymap('n', key, cmd, {noremap=true})
@@ -108,22 +104,24 @@ do
   for key, cmd in pairs(gitcmds) do
     keymap('n', gitcmd_prefix..key, ('<cmd>Git %s<cr>'):format(cmd), {noremap=true})
   end
+  -- Keybind for a special git clone
   private.keymapf{'n', gitcmd_prefix..'C', function()
     local repo = private.askfor{'Git repo: ', 'git@github.com:Diegovsky/', 'none'}
-    local where = private.askfor{'Where should it be: ', vim.fn.getenv('HOME')..'/Projects', 'dir'}
-    if repo and where then
+    local where = private.askfor{'Where should it be: ', vim.fn.getenv('HOME')..'/Projects', 'dir'} if repo and where then
       vim.cmd(("Git clone '%s' '%s'"):format(repo, where))
     end
   end, opt={noremap=true}}
 end
 
-
+--  Map C-Spc to omifunc if no lsp is present.
 if vim.fn.maparg('<C-Space>', 'i') then
   keymap('i', '<C-Space>', '<C-x><C-o>', {})
 end
--- Window commands that don't have the same name as their key
---[[ local key_map = {
-}
-for key, wincmd in pairs(key_map) do
-    winCmd {key=key, command=wincmd}
-end ]]
+
+-- Add copy and pasting like common GUIs.
+private.keymapf{ 'i', '<M-v>', function()
+  vim.cmd'normal "+p'
+  vim.fn.cursor(vim.fn.line('.'), vim.fn.col('.')+1)
+end }
+keymap('v', '<M-y>', '"+y', {})
+keymap('n', '<M-p>', '"+p', {})

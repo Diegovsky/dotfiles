@@ -1,4 +1,4 @@
-PROMPT='%K{#444}%F{#ff0055}%n%f@%F{#dd6}%m%f: %~>%k '
+PROMPT='%F{#ff0055}%n%f@%F{#dd6}%m%f: %~> '
 
 # PLUGINS
 source "$ZDOTDIR/ls_colours"
@@ -34,6 +34,6 @@ source "$ZDOTDIR/bindings"
 alias ls="exa"
 alias la="exa -la"
 alias search="pacman -Ss"
-alias install="pacman -Syu"
+alias install="sudo pacman -Syu"
 alias reload="source $ZDOTDIR/.zshrc"
 

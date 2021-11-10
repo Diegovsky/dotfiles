@@ -25,12 +25,7 @@ setglobal expandtab
 setglobal shiftwidth=4
 setglobal softtabstop=4
 
-" Auto tags
-" let g:closetag_filenames = '*.html,*.xhtml,*.phtml,.xml'
 
-" ctrlspace
-let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
-let g:CtrlSpaceSaveWorkspaceOnExit = 1
 " Conjure config
 let g:conjure#filetype#scheme = "conjure.client.guile.socket"
 let g:conjure#client#guile#socket#pipename = "guile-repl.socket"
