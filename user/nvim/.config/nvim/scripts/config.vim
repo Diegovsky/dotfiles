@@ -36,8 +36,7 @@ setglobal hidden
 setglobal encoding=utf-8
 
 " Folding
-setglobal foldmethod=expr
-setglobal foldexpr=nvim_treesitter#foldexpr()
+setglobal foldmethod=indent
 setglobal nofoldenable
 setglobal foldlevelstart=99
 

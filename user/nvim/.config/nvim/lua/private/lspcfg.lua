@@ -125,6 +125,7 @@ M.on_attach = function(client, bufnr)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('i', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>pra', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<leader>prr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<leader>pl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
@@ -164,15 +165,9 @@ M.quirks = {
     };
     ['sumneko_lua'] = {
         cmd = {'/usr/bin/lua-language-server'},
-        settings = {
-            Lua = {
-                diagnostics ={globals = {'vim', 'love'}},
-                workspace = {
-                    library = vim.api.nvim_get_runtime_file('', true),
-                },
-                runtime = { version = 'LuaJIT', path=vim.split(package.path, ';')},
-            }
-        }
+        Lua = {
+          runtime = { version = 'Lua54' }
+      }
     }
 }
 
