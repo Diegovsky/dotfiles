@@ -1,19 +1,45 @@
+# Load zkbd settings if it is there
+kbdfile="$ZDOTDIR/.zkbd/$TERM-$HOST"
+if [[ -f $kbdfile ]]; then source $kbdfile; else echo "no zkbd found at $kbdfile"; fi
+unset kbdfile
+
 # Enable vim mode
-bindkey -v
+# bindkey -v
+
+# Special char information:
+# \e : ESC
+# [A : up key
+# [B : down key
 
 # History based command completion
-bindkey -M vicmd 'k' history-search-backward
-bindkey -M vicmd 'j' history-search-forward
-bindkey '\e[A' history-search-backward
-bindkey '\e[B' history-search-forward
+search_backward=history-beginning-search-backward
+search_forward=history-beginning-search-forward
+bindkey -M vicmd 'k' $search_backward
+bindkey -M vicmd 'j' $search_forward
+bindkey '\e[A' $search_backward
+bindkey '\e[B' $search_forward
+unset search_backward
+unset search_forward
 
 # Auto complete menu navigation
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-bindkey -M menuselect '\e' send-break
-bindkey -M menuselect ' ' accept-and-infer-next-history
+bindkey -M menuselect '^[[Z' vi-up-line-or-history
+bindkey -M menuselect '\t' vi-down-line-or-history
+# bindkey -M menuselect 'h' vi-backward-char
+# bindkey -M menuselect 'j' vi-down-line-or-history
+# bindkey -M menuselect 'k' vi-up-line-or-history
+# bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect "$key[Delete]" backward-delete-word
+# bindkey -M menuselect "^C" send-break
+# bindkey -M menuselect '/' accept-and-infer-next-history
+
+# Make Delete work
+bindkey $key[Delete] delete-char
+bindkey -M vicmd $key[Delete] delete-char
+# Re-enable C-a and C-e
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+bindkey -M vicmd '^A' beginning-of-line
+bindkey -M vicmd '^E' end-of-line
 
 # Clear current command on <ESC><ESC>
-bindkey -M vicmd '\e' send-break
+# bindkey -M vicmd "\e" send-break

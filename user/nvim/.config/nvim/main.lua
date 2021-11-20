@@ -1,29 +1,7 @@
 -- Initializes math.random
-do
-    -- Plenary's python-like context manager import
-    local context_manager = require'plenary.context_manager'
-    local with = context_manager.with
-    local open = context_manager.open
-    -- Even if this function fails, the file is always closed.
-    with(open('/dev/random'), function(reader)
-        -- Start the seed with a 'salt'
-        local seed = 0x9823
-        for b in reader:read():gmatch('.') do
-            seed = seed + string.byte(b)
-        end
-        math.randomseed(seed)
-    end
-    )
-end
+math.randomseed(0xab2093)
 
-require'projection'.init{enable_sorting=true}
 
--- Icon theme
-local wdi = require'nvim-web-devicons'
-wdi.setup {
-	override = { };
-	default = true;
-}
 -- treesitter
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -37,12 +15,7 @@ require'nvim-treesitter.configs'.setup {
   };
   autopairs = {enable = true};
 }
--- Comment plugin settings
-require'kommentary.config'.use_default_mappings()
 
-require('nvim-autopairs').setup {
-    disable_filetype = {"TelescopePrompt", "terminal"},
-}
 
 -- Telescope Settings
 

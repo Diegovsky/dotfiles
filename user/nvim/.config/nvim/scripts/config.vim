@@ -3,9 +3,10 @@ setglobal synmaxcol=512
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 let g:vimsyn_embed = 'l'
-setglobal number relativenumber
-setglobal mouse=a
+set number relativenumber
+set mouse=a
 setglobal splitright
+setglobal splitbelow
 setglobal nowrap
 
 " Theme stuff
@@ -24,6 +25,12 @@ let g:qs_buftype_blacklist = ['terminal', 'nofile']
 setglobal expandtab
 setglobal shiftwidth=4
 setglobal softtabstop=4
+
+if !exists('g:INIT_HAPPENED') == 1
+    set expandtab<
+    set shiftwidth<
+    set softtabstop<
+endif
 
 
 " Conjure config
@@ -50,3 +57,5 @@ autocmd FileType xml setlocal softtabstop=2 shiftwidth=2
 
 " Actually close git files after closing the buffer.
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+
+let g:INIT_HAPPENED = 1

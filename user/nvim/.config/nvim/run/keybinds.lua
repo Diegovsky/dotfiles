@@ -45,13 +45,20 @@ local normalkeymap = {
   ['<leader>tc'] = vimcmd'tabclose';
   ['<leader><leader>'] = vimcmd'Telescope find_files';
   ['<leader>fg'] = vimcmd'Telescope live_grep';
+  -- ['<leader>ss'] = {action=''}
 }
 
 for key, cmd in pairs(normalkeymap) do
+  local options = {noremap=true}
+  if type(cmd) == 'table' then
+    cmd = cmd.action
+    options = private.merge(options, cmd.options)
+  end
+
   if type(cmd) == 'string' then
-    keymap('n', key, cmd, {noremap=true})
+    keymap('n', key, cmd, options)
   else
-    private.keymapf{'n', key, cmd}
+    private.keymapf{'n', key, cmd, options=options}
   end
 end
 
@@ -71,26 +78,22 @@ end
 private.keymapf{
   combo = '<leader>po';
   run = require'projection'.goto_project;
-  name = 'Open a project'
 }
 
 private.keymapf{
   combo = '<leader>pa';
   run = require'projection'.add_project;
-  name = 'Add a project'
 }
 
 private.keymapf{
   combo = '<leader>pd';
   run = require'projection'.remove_project;
-  name = 'Add a project'
 }
 
 private.keymapf {
   combo = '<C-p>';
   run = vim.lsp.buf.signature_help;
   mode = 'i';
-  name = 'LSP show signature help'
 }
 do
   local gitcmd_prefix = "<leader>g"
@@ -113,15 +116,23 @@ do
   end, opt={noremap=true}}
 end
 
---  Map C-Spc to omifunc if no lsp is present.
+--  Map C-Spc to omnifunc if no lsp is present.
 if vim.fn.maparg('<C-Space>', 'i') then
   keymap('i', '<C-Space>', '<C-x><C-o>', {})
+end
+
+-- Omnifunc mappings
+do
+  keymap('o', '<Tab>', '<C-N>', {})
+  keymap('o', '<S-Tab>', '<C-P>', {})
 end
 
 -- Add copy and pasting like common GUIs.
 private.keymapf{ 'i', '<M-v>', function()
   vim.cmd'normal "+p'
+  -- advance cursor a character
   vim.fn.cursor(vim.fn.line('.'), vim.fn.col('.')+1)
 end }
 keymap('v', '<M-y>', '"+y', {})
 keymap('n', '<M-p>', '"+p', {})
+keymap('n', '<M-P>', '"+P', {})
