@@ -2,8 +2,8 @@ nnoremap <leader>hrr <cmd>execute 'source' g:nvim_init_file<cr>
 nnoremap <leader>hpi <cmd>PackerInstall<cr>
 nnoremap <leader>hpu <cmd>PackerUpdate<cr>
 
-nnoremap <leader>oo <cmd>execute 'CHADopen' expand('%:p')<cr>
-nnoremap <leader>oO <cmd>CHADopen<cr>
+nnoremap <leader>oO <cmd>execute 'CHADopen' expand('%:p')<cr>
+nnoremap <leader>oo <cmd>CHADopen<cr>
 
 nnoremap <leader>tn <cmd>tabnew<cr>
 nnoremap <leader>tc <cmd>tabclose<cr>

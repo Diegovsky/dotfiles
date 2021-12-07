@@ -17,16 +17,16 @@ end
 
 -- Start Guile REPL
 local function startguilerepl()
-    local token = _G['sgr#session']
-    if not token then
-        _G['sgr#session'] = private.randomstring(8, 12)
-        return startguilerepl()
-    end
-    local sockname = '/tmp/nvim.guile.'..token..'.socket'
-    vim.g['conjure#client#guile#socket#pipename'] = sockname
-    vim.cmd('split')
-    openTerm(("guile '--listen=%s'"):format(sockname))
-    vim.b.hidden = true
+  local token = _G['sgr#session']
+  if not token then
+    _G['sgr#session'] = private.randomstring(8, 12)
+    return startguilerepl()
+  end
+  local sockname = '/tmp/nvim.guile.'..token..'.socket'
+  openTerm(("guile '--listen=%s'"):format(sockname))
+  vim.b.hidden = true
+  vim.g['conjure#client#guile#socket#pipename'] = sockname
+  vim.cmd('ConjureConnect')
 end
 
 local vimcmd = function(cmd) return ('<cmd>%s<cr>'):format(cmd) end
