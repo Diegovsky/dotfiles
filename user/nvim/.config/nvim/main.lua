@@ -1,5 +1,5 @@
 -- Initializes math.random
-math.randomseed(0xab2093)
+_ = math.randomseed(0xab2093)
 
 
 -- treesitter
@@ -16,9 +16,7 @@ require'nvim-treesitter.configs'.setup {
   autopairs = {enable = true};
 }
 
-
 -- Telescope Settings
-
 require('telescope').setup{
   defaults = {
     vimgrep_arguments = {

@@ -49,10 +49,8 @@ setglobal foldlevelstart=99
 let $NVIM_CMD = "echo 'Failed to connect to nvim.\nQuitting.'; exit"
 let $GIT_EDITOR = 'nvr -cc split --remote-wait'
 
-" tabbing for lua files
-autocmd FileType lua setlocal softtabstop=2 shiftwidth=2
-" tabbing for xml files
-autocmd FileType xml setlocal softtabstop=2 shiftwidth=2
+" tabbing for lua, xml, dart and coffee files
+autocmd FileType lua,xml,dart,coffee setlocal softtabstop=2 shiftwidth=2
 
 " Actually close git files after closing the buffer.
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete

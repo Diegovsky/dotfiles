@@ -30,7 +30,7 @@ require'packer'.startup(function(use)
       }
     end
   }
-  use {'nvim-treesitter/nvim-treesitter', {run = '<cmd>TSUpdate'}} 
+  use {'nvim-treesitter/nvim-treesitter', {run = '<cmd>TSUpdate'}}
   use { 'b3nj5m1n/kommentary',
     config = function ()
       -- Comment plugin settings
@@ -61,6 +61,9 @@ require'packer'.startup(function(use)
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
+  use { 'jvgrootveld/telescope-zoxide', required = {'nvim-telescope/telescope.nvim'}, config = function()
+    require'telescope'.load_extension('zoxide')
+  end}
   use 'navarasu/onedark.nvim'
   use 'Pocco81/DAPInstall.nvim'
   use 'mfussenegger/nvim-dap'

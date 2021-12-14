@@ -4,6 +4,18 @@ local cmp = require'cmp'
 
 local merge = require'private'.merge
 
+M.servers = {
+  "pyright";
+  "rust_analyzer";
+  "zls";
+  'vala_ls';
+  'clangd';
+  'dartls';
+  'sumneko_lua';
+  'hls'
+}
+
+
 local cmp_comparators = require'cmp.config.compare'
 local kind_priority_comparator = function(priority_table)
     local lsp_types = require('cmp.types').lsp
@@ -133,17 +145,13 @@ M.on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>Telescope lsp_code_actions<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
 end
-
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-M.servers = { "pyright", "rust_analyzer", "zls", 'vala_ls', 'clangd', 'dartls', 'sumneko_lua'}
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true

@@ -41,6 +41,7 @@ local normalkeymap = {
   ['<leader>hrr'] = vimcmd('luafile '..NVIM_INIT_FILE);
   ['<leader>hpi'] = vimcmd'PackerInstall';
   ['<leader>hpu'] = vimcmd'PackerUpdate';
+  ['<leader>cd']  = vimcmd('Telescope zoxide list');
   ['<leader>tn'] = vimcmd'tabnew';
   ['<leader>tc'] = vimcmd'tabclose';
   ['<leader><leader>'] = vimcmd'Telescope find_files';
