@@ -9,8 +9,6 @@ setglobal splitright
 setglobal splitbelow
 setglobal nowrap
 
-" Theme stuff
-let g:onedark_style = 'warmer'
 colorscheme onedark
 setglobal guifont=FiraCode\ Nerd\ Font:h14
 
@@ -45,6 +43,9 @@ setglobal encoding=utf-8
 setglobal foldmethod=indent
 setglobal nofoldenable
 setglobal foldlevelstart=99
+
+" Vim termux navigator custom keybinds
+let g:tmux_navigator_no_mappings = 1
 
 let $NVIM_CMD = "echo 'Failed to connect to nvim.\nQuitting.'; exit"
 let $GIT_EDITOR = 'nvr -cc split --remote-wait'

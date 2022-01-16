@@ -18,9 +18,10 @@ require'packer'.startup(function(use)
 
   -- dhall support
   use 'vmchale/dhall-vim'
+
   use 'neovim/nvim-lspconfig'
   use 'onsails/lspkind-nvim'
-  use {'ms-jpq/chadtree', {branch='chad', run = 'python -m chadtree deps'}}
+  use {'ms-jpq/chadtree', branch='chad', run = '<cmd>CHADdeps'}
   use { 'kyazdani42/nvim-web-devicons',
     config = function ()
       -- Icon theme
@@ -30,17 +31,17 @@ require'packer'.startup(function(use)
       }
     end
   }
-  use {'nvim-treesitter/nvim-treesitter', {run = '<cmd>TSUpdate'}}
+  use {'nvim-treesitter/nvim-treesitter', run = '<cmd>TSUpdate'}
   use { 'b3nj5m1n/kommentary',
     config = function ()
       -- Comment plugin settings
       require'kommentary.config'.use_default_mappings()
     end
   }
-  use {'nvim-treesitter/playground', {cmd='<Plug>TSPlaygroundToggle'} }
+  use {'nvim-treesitter/playground', cmd='<Plug>TSPlaygroundToggle' }
   use 'unblevable/quick-scope'
   -- use 'glepnir/dashboard-nvim'
-  use {'eraserhd/parinfer-rust', {run = 'cargo build --release'} }
+  use {'eraserhd/parinfer-rust', rus = 'cargo build --release' }
   use { 'windwp/nvim-autopairs',
     config = function ()
       require('nvim-autopairs').setup {
@@ -51,28 +52,41 @@ require'packer'.startup(function(use)
   use 'Olical/conjure'
   use 'tpope/vim-fugitive'
   use {'hrsh7th/nvim-cmp',
-        requires={
-          'hrsh7th/cmp-nvim-lsp',
-          'hrsh7th/vim-vsnip'
-        }
+    requires={
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/vim-vsnip'
+    }
       }
   use 'ray-x/lsp_signature.nvim'
-  use {'arrufat/vala.vim', {ft='vala'}}
+  use {'arrufat/vala.vim', ft='vala'}
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
-  use { 'jvgrootveld/telescope-zoxide', required = {'nvim-telescope/telescope.nvim'}, config = function()
+  use { 'jvgrootveld/telescope-zoxide', requires = {'nvim-telescope/telescope.nvim'}, config = function()
     require'telescope'.load_extension('zoxide')
   end}
-  use 'navarasu/onedark.nvim'
+  use { 'navarasu/onedark.nvim', config = function()
+    require'onedark'.setup {
+      style = 'darker'
+    }
+  end }
   use 'Pocco81/DAPInstall.nvim'
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/nvim-dap-ui'
+  use 'direnv/direnv.vim'
+  use { 'christoomey/vim-tmux-navigator',
+        config = function ()
+      end}
   use {
     NVIM_CONFIG_FOLDER..'/plugins/projection.nvim',
-    as = 'projection',
+    as = 'projection-local',
     config = function ()
-      require'projection'.init{enable_sorting=true}
+      local _, err = pcall(function()
+        require'projection'.init{enable_sorting=true}
+      end)
+      if err ~= nil then
+        print(err)
+      end
     end
   }
 end)

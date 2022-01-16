@@ -39,14 +39,19 @@ local normalkeymap = {
   ['<M-o>'] =  function() vim.g['diegovsky#^splithor'] = true end,
   ['<M-n>'] = split;
   ['<leader>hrr'] = vimcmd('luafile '..NVIM_INIT_FILE);
+  ['<leader>hhr'] = function() package.loaded['private.lspcfg'] = nil; dofile(NVIM_INIT_FILE) end;
   ['<leader>hpi'] = vimcmd'PackerInstall';
   ['<leader>hpu'] = vimcmd'PackerUpdate';
   ['<leader>cd']  = vimcmd('Telescope zoxide list');
+  ['<leader>of']  = vimcmd('Telescope oldfiles');
   ['<leader>tn'] = vimcmd'tabnew';
   ['<leader>tc'] = vimcmd'tabclose';
   ['<leader><leader>'] = vimcmd'Telescope find_files';
   ['<leader>fg'] = vimcmd'Telescope live_grep';
-  -- ['<leader>ss'] = {action=''}
+  ['<M-h>'] = vimcmd'TmuxNavigateLeft';
+  ['<M-j>'] = vimcmd'TmuxNavigateDown';
+  ['<M-k>'] = vimcmd'TmuxNavigateUp';
+  ['<M-l>'] = vimcmd'TmuxNavigateRight';
 }
 
 for key, cmd in pairs(normalkeymap) do
@@ -71,7 +76,7 @@ local function winCmd(opts)
 end
 
 -- Remap <C-w><key> to <M-<key>>
-local simple_keys = 'hjklwHJKLT|_=' .. '<>'
+local simple_keys = 'wHJKLT|_=' .. '<>'
 for k in simple_keys:gmatch('.') do
     winCmd {key=k, command=k }
 end

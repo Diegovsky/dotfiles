@@ -32,6 +32,7 @@ setopt PUSHD_SILENT
 # VIM mod
 source $ZDOTDIR/'cursor_mode'
 export KEYTIMEOUT=1
+
 # Load other keybindings
 source "$ZDOTDIR/bindings"
 
@@ -44,9 +45,10 @@ alias reload="source $ZDOTDIR/.zshrc"
 alias zei="zellij"
 
 source "$ZDOTDIR/prompt_name"
+source "$ZDOTDIR/direnv"
 
 # Start gnome keyring
-if [ -e "$DESKTOP_SESSION" ];then
+if [ -n "$DESKTOP_SESSION" ];then
     eval $(gnome-keyring-daemon --start)
     export SSH_AUTH_SOCK
 fi

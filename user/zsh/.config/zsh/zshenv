@@ -2,10 +2,11 @@
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share"
 
 path+="$HOME/.local/bin"
+path+="$HOME/.luarocks/bin"
 
 # Save zsh history
 export HISTFILE="$ZDOTDIR/.zhistory"    

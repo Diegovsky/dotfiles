@@ -8,7 +8,7 @@ echo $DESKTOP_SESSION >> /tmp/wayinit.log
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY SWAYSOCK SSH_AUTH_SOCK DBUS_SESSION_BUS_ADDRESS XAUTHORITY XDG_CURRENT_DESKTOP=$COMPOSITOR &
 xsettingsd &
 dex -a -e $COMPOSITOR &
-solaar -w hide &
+# solaar -w hide &
 mako &
 
 kanshi &

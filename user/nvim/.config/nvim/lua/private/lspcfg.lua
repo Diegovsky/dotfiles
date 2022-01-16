@@ -1,3 +1,4 @@
+local lspconfig = require'lspconfig'
 local M = {}
 vim.o.completeopt = "menuone,noselect"
 local cmp = require'cmp'
@@ -15,6 +16,21 @@ M.servers = {
   'hls'
 }
 
+function M.setup_server(name, opt)
+  local args = {
+    on_attach = M.on_attach,
+    capabilities = M.capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+  merge(args, M.quirks[name])
+  merge(args, opt)
+  if DEBUG ~= nil then
+    print(vim.inspect(args))
+  end
+  lspconfig[name].setup(args)
+end
 
 local cmp_comparators = require'cmp.config.compare'
 local kind_priority_comparator = function(priority_table)
@@ -114,8 +130,6 @@ M.cmp_init = function()
 
 end
 
-local lspconfig = require'lspconfig'
-
 M.on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
@@ -129,6 +143,7 @@ M.on_attach = function(client, bufnr)
     doc_lines = 5;
     hint_prefix = "parameter: ";
   }, bufnr)
+  -- vim.diagnostic.config{virtual_text=false}
   -- local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   local opts = { noremap=true, silent=true }
@@ -178,19 +193,6 @@ M.quirks = {
       }
     }
 }
-
-function M.setup_server(name, opt)
-  local args = {
-    on_attach = M.on_attach,
-    capabilities = M.capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
-  merge(args, M.quirks[name])
-  merge(args, opt)
-  lspconfig[name].setup(args)
-end
 
 function M.init()
   for _, lsp in ipairs(M.servers) do

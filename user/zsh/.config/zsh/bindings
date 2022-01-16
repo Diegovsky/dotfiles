@@ -1,6 +1,12 @@
+# vim: set ft=zsh:
 # Load zkbd settings if it is there
 kbdfile="$ZDOTDIR/.zkbd/$TERM-$HOST"
-if [[ -f $kbdfile ]]; then source $kbdfile; else echo "no zkbd found at $kbdfile"; fi
+if [[ -f $kbdfile ]]; then
+    source $kbdfile
+else
+    declare keys
+    keys[Delete] = '\e[3~'
+fi
 unset kbdfile
 
 # Enable vim mode

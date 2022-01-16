@@ -67,6 +67,12 @@ local path = require'plenary.path'
 
 -- Run all lua files on run/
 local luapath = path:new(NVIM_CONFIG_FOLDER, 'run')
-scandir.scan_dir(tostring(luapath), {on_insert = dofile})
+scandir.scan_dir(tostring(luapath), {on_insert = function(file)
+  local _, err = pcall(function() dofile(file) end)
+  if err ~= nil then
+    print(('An error occoured while parsing a file: "%s"'):format(err))
+  end
+end
+})
 
 require'private.lspcfg'.init()
