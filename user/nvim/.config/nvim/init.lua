@@ -71,6 +71,7 @@ require'packer'.startup(function(use)
     }
   end }
   use 'Pocco81/DAPInstall.nvim'
+  use {'yioneko/nvim-yati', requires='nvim-treesitter/nvim-treesitter'}
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/nvim-dap-ui'
   use 'direnv/direnv.vim'

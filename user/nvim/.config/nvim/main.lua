@@ -11,8 +11,10 @@ require'nvim-treesitter.configs'.setup {
     enable = true
   };
   indent = {
-    enable = true
+    enable = true;
+    disable = {"python", "rust"}
   };
+  yati = { enable = true };
   autopairs = {enable = true};
 }
 
