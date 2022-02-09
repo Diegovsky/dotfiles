@@ -109,6 +109,7 @@ do
     ['ca'] = 'commit --amend';
     ['p'] = 'pull';
     ['u'] = 'push';
+    ['a'] = 'add %';
   }
   for key, cmd in pairs(gitcmds) do
     keymap('n', gitcmd_prefix..key, ('<cmd>Git %s<cr>'):format(cmd), {noremap=true})
