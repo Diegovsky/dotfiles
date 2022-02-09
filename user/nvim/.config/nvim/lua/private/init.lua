@@ -144,5 +144,6 @@ function M.debug(...)
     return ...
 end
 
+
 function M.t(s) return vim.api.nvim_replace_termcodes(s, true, true, true) end
 return M

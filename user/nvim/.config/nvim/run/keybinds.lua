@@ -102,6 +102,7 @@ private.keymapf {
   mode = 'i';
 }
 do
+  local kutils = require'private.keybindutils'
   local gitcmd_prefix = "<leader>g"
   local gitcmds = {
     ['A'] = 'add -A';
@@ -110,10 +111,15 @@ do
     ['p'] = 'pull';
     ['u'] = 'push';
     ['a'] = 'add %';
+    ['s'] = 'status';
   }
-  for key, cmd in pairs(gitcmds) do
-    keymap('n', gitcmd_prefix..key, ('<cmd>Git %s<cr>'):format(cmd), {noremap=true})
-  end
+  kutils.declmaps(
+    'n',
+    gitcmds,
+    kutils.vimcmd("Git "),
+    kutils.prefix(gitcmd_prefix)
+  )
+
   -- Keybind for a special git clone
   private.keymapf{'n', gitcmd_prefix..'C', function()
     local repo = private.askfor{'Git repo: ', 'git@github.com:Diegovsky/', 'none'}
