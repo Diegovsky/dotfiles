@@ -42,7 +42,6 @@ alias la="exa -la"
 alias search="pacman -Ss"
 alias install="sudo pacman -Syu"
 alias reload="source $ZDOTDIR/.zshrc"
-alias zei="zellij"
 
 source "$ZDOTDIR/prompt_name"
 source "$ZDOTDIR/direnv"
