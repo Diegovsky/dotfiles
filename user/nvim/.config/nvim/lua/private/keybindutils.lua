@@ -8,6 +8,22 @@ function M.prefix(prefix)
   end
 end
 
+function M.fmt(template)
+  return function(arg)
+    return template:format(arg)
+  end
+end
+
+function M.mirroredtable(iter)
+  local val = nil
+  local t = {}
+  repeat
+    val = iter(val)
+    t[val] = val
+  until val == nil
+  return t
+end
+
 function M.vimcmd(prefix)
   prefix = prefix or ""
   return function(val)
@@ -28,6 +44,7 @@ function M.declmaps(mode, t, mapval, mapkey, opts)
     return ("<cmd>%s<cr>"):format(val)
   end
   opts = utils.merge(opts, {noremap=true})
+
   for key, value in pairs(t) do
     key = mapkey(key)
     if type(value) == "string" then

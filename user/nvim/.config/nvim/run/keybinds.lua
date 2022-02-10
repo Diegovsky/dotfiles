@@ -1,17 +1,11 @@
 local private = require'private'
+local kutils = require'private.keybindutils'
+local splits = require'private.splits'
 
 local keymap = vim.api.nvim_set_keymap
 
-local function split()
-  if vim.g['diegovsky#^splithor'] then
-    vim.cmd('split')
-  else
-    vim.cmd('vsplit')
-  end
-end
-
 local function openTerm(cmd)
-  split()
+  splits.split()
   vim.cmd('terminal '..(cmd or ""))
 end
 
@@ -31,70 +25,53 @@ end
 
 local vimcmd = function(cmd) return ('<cmd>%s<cr>'):format(cmd) end
 
-local normalkeymap = {
-  ['<leader>oT'] = function() vim.cmd('silent !alacritty&') end,
-  ['<leader>ot'] = openTerm,
-  ['<leader>mr'] = startguilerepl,
-  ['<M-i>'] =  function() vim.g['diegovsky#^splithor'] = false end,
-  ['<M-o>'] =  function() vim.g['diegovsky#^splithor'] = true end,
-  ['<M-n>'] = split;
-  ['<leader>hrr'] = vimcmd('luafile '..NVIM_INIT_FILE);
+local normalkeymap = kutils.declmaps('n', {
+  ['<leader>oT'] = 'silent !alacritty&';
+  ['<leader>ot'] = openTerm;
+  ['<leader>mr'] = startguilerepl;
+  ['<M-i>'] =  function() splits.state = false end;
+  ['<M-o>'] =  function() splits.state = true end;
+  ['<M-n>'] = splits.split;
+  ['<leader>hrr'] = 'luafile '..NVIM_INIT_FILE;
   ['<leader>hhr'] = function() package.loaded['private.lspcfg'] = nil; dofile(NVIM_INIT_FILE) end;
-  ['<leader>hpi'] = vimcmd'PackerInstall';
-  ['<leader>hpu'] = vimcmd'PackerUpdate';
-  ['<leader>cd']  = vimcmd('Telescope zoxide list');
-  ['<leader>of']  = vimcmd('Telescope oldfiles');
-  ['<leader>tn'] = vimcmd'tabnew';
-  ['<leader>tc'] = vimcmd'tabclose';
-  ['<leader><leader>'] = vimcmd'Telescope find_files';
-  ['<leader>fg'] = vimcmd'Telescope live_grep';
-  ['<M-h>'] = vimcmd'TmuxNavigateLeft';
-  ['<M-j>'] = vimcmd'TmuxNavigateDown';
-  ['<M-k>'] = vimcmd'TmuxNavigateUp';
-  ['<M-l>'] = vimcmd'TmuxNavigateRight';
-}
-
-for key, cmd in pairs(normalkeymap) do
-  local options = {noremap=true}
-  if type(cmd) == 'table' then
-    cmd = cmd.action
-    options = private.merge(options, cmd.options)
-  end
-
-  if type(cmd) == 'string' then
-    keymap('n', key, cmd, options)
-  else
-    private.keymapf{'n', key, cmd, options=options}
-  end
-end
-
--- Set maps to be used with windows
-local function winCmd(opts)
-    local prefix = opts.prefix or '<M-%s>'
-    local cmdfmt = opts.cmdfmt or '<cmd>wincmd %s<cr>'
-    keymap('n', prefix:format(opts.key), cmdfmt:format(opts.command), {noremap = true})
-end
+  ['<leader>hpi'] = 'PackerInstall';
+  ['<leader>hpu'] = 'PackerUpdate';
+  ['<leader>cd']  = 'Telescope zoxide list';
+  ['<leader>of']  = 'Telescope oldfiles';
+  ['<leader>tn'] = 'tabnew';
+  ['<leader>tc'] = 'tabclose';
+  ['<leader><leader>'] = 'Telescope find_files';
+  ['<leader>fg'] = 'Telescope live_grep';
+  ['<M-h>'] = 'TmuxNavigateLeft';
+  ['<M-j>'] = 'TmuxNavigateDown';
+  ['<M-k>'] = 'TmuxNavigateUp';
+  ['<M-l>'] = 'TmuxNavigateRight';
+})
 
 -- Remap <C-w><key> to <M-<key>>
-local simple_keys = 'wHJKLT|_=' .. '<>'
-for k in simple_keys:gmatch('.') do
-    winCmd {key=k, command=k }
+do
+  -- Set maps to be used with windows
+  local function winCmd(opts)
+      local key = opts.key
+      local command = opts.command
+      keymap('n', ('<M-%s>'):format(key), ('<cmd>wincmd %s<cr>'):format(command), {noremap = true})
+  end
+
+  local winkeys = 'wHJKLT|_=<>'
+  for key in winkeys:gmatch('.') do
+    winCmd(key)
+  end
 end
 
-private.keymapf{
-  combo = '<leader>po';
-  run = require'projection'.goto_project;
-}
-
-private.keymapf{
-  combo = '<leader>pa';
-  run = require'projection'.add_project;
-}
-
-private.keymapf{
-  combo = '<leader>pd';
-  run = require'projection'.remove_project;
-}
+kutils.declmaps('n',
+ {
+  o = require'projection'.goto_project;
+  a = require'projection'.add_project;
+  d = require'projection'.remove_project;
+ },
+ nil,
+ kutils.prefix"<leader>p"
+)
 
 private.keymapf {
   combo = '<C-p>';
@@ -102,7 +79,6 @@ private.keymapf {
   mode = 'i';
 }
 do
-  local kutils = require'private.keybindutils'
   local gitcmd_prefix = "<leader>g"
   local gitcmds = {
     ['A'] = 'add -A';
@@ -141,11 +117,13 @@ do
 end
 
 -- Add copy and pasting like common GUIs.
-private.keymapf{ 'i', '<M-v>', function()
-  vim.cmd'normal "+p'
-  -- advance cursor a character
-  vim.fn.cursor(vim.fn.line('.'), vim.fn.col('.')+1)
-end }
-keymap('v', '<M-y>', '"+y', {})
+kutils.declmaps('n', {
+  y = 'y';
+  Y = 'Y';
+  P = 'P';
+  p = 'p';
+}, kutils.prefix('"+'), kutils.fmt("<M-%s>"))
+
+--[[ keymap('v', '<M-y>', '"+y', {})
 keymap('n', '<M-p>', '"+p', {})
-keymap('n', '<M-P>', '"+P', {})
+keymap('n', '<M-P>', '"+P', {}) ]]
