@@ -11,23 +11,21 @@ end
 
 -- Start Guile REPL
 local function startguilerepl()
-  local token = _G['sgr#session']
+  local token = _G["sgr#session"]
   if not token then
-    _G['sgr#session'] = private.randomstring(8, 12)
+    _G["sgr#session"] = private.randomstring(8, 12)
     return startguilerepl()
   end
-  local sockname = '/tmp/nvim.guile.'..token..'.socket'
+  local sockname = "/tmp/nvim.guile." .. token .. ".socket"
   openTerm(("guile '--listen=%s'"):format(sockname))
   vim.b.hidden = true
-  vim.g['conjure#client#guile#socket#pipename'] = sockname
-  vim.cmd('ConjureConnect')
+  vim.g["conjure#client#guile#socket#pipename"] = sockname
+  vim.cmd "ConjureConnect"
 end
 
-local vimcmd = function(cmd) return ('<cmd>%s<cr>'):format(cmd) end
-
-local normalkeymap = kutils.declmaps('n', {
-  ['<leader>oT'] = 'silent !alacritty&';
-  ['<leader>ot'] = openTerm;
+kutils.declmaps('n', {
+  ['<leader>ot'] = 'silent !alacritty&';
+  ['<leader>oT'] = openTerm;
   ['<leader>mr'] = startguilerepl;
   ['<M-i>'] =  function() splits.state = false end;
   ['<M-o>'] =  function() splits.state = true end;
@@ -51,10 +49,8 @@ local normalkeymap = kutils.declmaps('n', {
 -- Remap <C-w><key> to <M-<key>>
 do
   -- Set maps to be used with windows
-  local function winCmd(opts)
-      local key = opts.key
-      local command = opts.command
-      keymap('n', ('<M-%s>'):format(key), ('<cmd>wincmd %s<cr>'):format(command), {noremap = true})
+  local function winCmd(key)
+      keymap('n', ('<M-%s>'):format(key), ('<cmd>wincmd %s<cr>'):format(key), {noremap = true})
   end
 
   local winkeys = 'wHJKLT|_=<>'
@@ -74,9 +70,9 @@ kutils.declmaps('n',
 )
 
 private.keymapf {
-  combo = '<C-p>';
-  run = vim.lsp.buf.signature_help;
-  mode = 'i';
+  combo = "<C-p>",
+  run = vim.lsp.buf.signature_help,
+  mode = "i",
 }
 do
   local gitcmd_prefix = "<leader>g"
@@ -97,23 +93,33 @@ do
   )
 
   -- Keybind for a special git clone
-  private.keymapf{'n', gitcmd_prefix..'C', function()
-    local repo = private.askfor{'Git repo: ', 'git@github.com:Diegovsky/', 'none'}
-    local where = private.askfor{'Where should it be: ', vim.fn.getenv('HOME')..'/Projects', 'dir'} if repo and where then
-      vim.cmd(("Git clone '%s' '%s'"):format(repo, where))
-    end
-  end, opt={noremap=true}}
+  private.keymapf {
+    "n",
+    gitcmd_prefix .. "C",
+    function()
+      local repo = private.askfor { "Git repo: ", "git@github.com:Diegovsky/", "none" }
+      local where = private.askfor {
+        "Where should it be: ",
+        vim.fn.getenv "HOME" .. "/Projects",
+        "dir",
+      }
+      if repo and where then
+        vim.cmd(("Git clone '%s' '%s'"):format(repo, where))
+      end
+    end,
+    opt = { noremap = true },
+  }
 end
 
 --  Map C-Spc to omnifunc if no lsp is present.
-if vim.fn.maparg('<C-Space>', 'i') then
-  keymap('i', '<C-Space>', '<C-x><C-o>', {})
+if vim.fn.maparg("<C-Space>", "i") then
+  keymap("i", "<C-Space>", "<C-x><C-o>", {})
 end
 
 -- Omnifunc mappings
 do
-  keymap('o', '<Tab>', '<C-N>', {})
-  keymap('o', '<S-Tab>', '<C-P>', {})
+  keymap("o", "<Tab>", "<C-N>", {})
+  keymap("o", "<S-Tab>", "<C-P>", {})
 end
 
 -- Add copy and pasting like common GUIs.
@@ -124,6 +130,3 @@ kutils.declmaps('n', {
   p = 'p';
 }, kutils.prefix('"+'), kutils.fmt("<M-%s>"))
 
---[[ keymap('v', '<M-y>', '"+y', {})
-keymap('n', '<M-p>', '"+p', {})
-keymap('n', '<M-P>', '"+P', {}) ]]

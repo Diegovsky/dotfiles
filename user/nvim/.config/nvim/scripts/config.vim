@@ -9,7 +9,6 @@ setglobal splitright
 setglobal splitbelow
 setglobal nowrap
 
-colorscheme onedark
 setglobal guifont=FiraCode\ Nerd\ Font:h14
 
 " Dashboard
@@ -32,7 +31,7 @@ endif
 
 
 " Conjure config
-let g:conjure#filetype#scheme = "conjure.client.guile.socket"
+let g:conjure#filetype#scheme = 'conjure.client.guile.socket'
 
 " Recommended
 setglobal nocompatible
@@ -43,6 +42,9 @@ setglobal encoding=utf-8
 setglobal foldmethod=indent
 setglobal nofoldenable
 setglobal foldlevelstart=99
+
+" Prevent Autopairs from messing with my stuff
+let g:AutoPairsShortcutJump = "<C-n>"
 
 " Vim termux navigator custom keybinds
 let g:tmux_navigator_no_mappings = 1

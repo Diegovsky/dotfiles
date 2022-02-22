@@ -74,6 +74,11 @@ _G.packer_plugins = {
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/DAPInstall.nvim",
     url = "https://github.com/Pocco81/DAPInstall.nvim"
   },
+  ["auto-pairs"] = {
+    loaded = true,
+    path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/auto-pairs",
+    url = "https://github.com/jiangmiao/auto-pairs"
+  },
   chadtree = {
     loaded = true,
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/chadtree",
@@ -99,6 +104,12 @@ _G.packer_plugins = {
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/direnv.vim",
     url = "https://github.com/direnv/direnv.vim"
   },
+  ["fidget.nvim"] = {
+    config = { "\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vfidget\frequire\0" },
+    loaded = true,
+    path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
+  },
   kommentary = {
     config = { "\27LJ\2\nN\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\25use_default_mappings\22kommentary.config\frequire\0" },
     loaded = true,
@@ -106,6 +117,7 @@ _G.packer_plugins = {
     url = "https://github.com/b3nj5m1n/kommentary"
   },
   ["lsp_signature.nvim"] = {
+    config = { "\27LJ\2\nª\1\0\2\6\0\6\0\n6\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0005\5\4\0=\5\5\4\18\5\1\0B\2\3\1K\0\1\0\17handler_opts\1\0\1\vborder\vsingle\1\0\4\14doc_lines\3\5\tbind\2\19always_trigger\1\16hint_prefix\16parameter: \14on_attach\18lsp_signature\frequireP\1\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0003\3\3\0B\1\2\1K\0\1\0\0\25register_attach_hook\19private.lspcfg\frequire\0" },
     loaded = true,
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
     url = "https://github.com/ray-x/lsp_signature.nvim"
@@ -115,11 +127,11 @@ _G.packer_plugins = {
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
     url = "https://github.com/onsails/lspkind-nvim"
   },
-  ["nvim-autopairs"] = {
-    config = { "\27LJ\2\ny\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21disable_filetype\1\0\0\1\3\0\0\20TelescopePrompt\rterminal\nsetup\19nvim-autopairs\frequire\0" },
+  ["null-ls.nvim"] = {
+    config = { "\27LJ\2\nÊ\1\0\0\6\0\f\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0034\4\4\0009\5\6\0009\5\a\0059\5\b\5>\5\1\0049\5\6\0009\5\a\0059\5\t\5>\5\2\0049\5\6\0009\5\a\0059\5\n\5>\5\3\4=\4\v\3B\1\2\1K\0\1\0\fsources\15uncrustify\nblack\vstylua\15formatting\rbuiltins\blog\1\0\0\1\0\2\venable\1\nlevel\twarn\nsetup\fnull-ls\frequire\0" },
     loaded = true,
-    path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
-    url = "https://github.com/windwp/nvim-autopairs"
+    path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
+    url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -152,13 +164,8 @@ _G.packer_plugins = {
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
-  ["nvim-yati"] = {
-    loaded = true,
-    path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/nvim-yati",
-    url = "https://github.com/yioneko/nvim-yati"
-  },
   ["onedark.nvim"] = {
-    config = { "\27LJ\2\nI\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\nstyle\vdarker\nsetup\fonedark\frequire\0" },
+    config = { "\27LJ\2\nb\0\0\3\0\5\0\f6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\4\0B\0\1\1K\0\1\0\tload\1\0\1\nstyle\vdarker\nsetup\fonedark\frequire\0" },
     loaded = true,
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/onedark.nvim",
     url = "https://github.com/navarasu/onedark.nvim"
@@ -208,6 +215,12 @@ _G.packer_plugins = {
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
+  ["trouble.nvim"] = {
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0" },
+    loaded = true,
+    path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
+  },
   ["vala.vim"] = {
     loaded = false,
     needs_bufread = true,
@@ -231,7 +244,6 @@ _G.packer_plugins = {
     url = "https://github.com/tpope/vim-surround"
   },
   ["vim-tmux-navigator"] = {
-    config = { "\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0" },
     loaded = true,
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/vim-tmux-navigator",
     url = "https://github.com/christoomey/vim-tmux-navigator"
@@ -244,34 +256,42 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\ny\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21disable_filetype\1\0\0\1\3\0\0\20TelescopePrompt\rterminal\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
--- Config for: vim-tmux-navigator
-time([[Config for vim-tmux-navigator]], true)
-try_loadstring("\27LJ\2\n\v\0\0\1\0\0\0\1K\0\1\0\0", "config", "vim-tmux-navigator")
-time([[Config for vim-tmux-navigator]], false)
--- Config for: projection-local
-time([[Config for projection-local]], true)
-try_loadstring("\27LJ\2\nN\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\19enable_sorting\2\tinit\15projection\frequire8\1\0\5\0\3\0\t6\0\0\0003\2\1\0B\0\2\3\n\1\0\0X\2\3€6\2\2\0\18\4\1\0B\2\2\1K\0\1\0\nprint\0\npcall\0", "config", "projection-local")
-time([[Config for projection-local]], false)
 -- Config for: onedark.nvim
 time([[Config for onedark.nvim]], true)
-try_loadstring("\27LJ\2\nI\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\nstyle\vdarker\nsetup\fonedark\frequire\0", "config", "onedark.nvim")
+try_loadstring("\27LJ\2\nb\0\0\3\0\5\0\f6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\4\0B\0\1\1K\0\1\0\tload\1\0\1\nstyle\vdarker\nsetup\fonedark\frequire\0", "config", "onedark.nvim")
 time([[Config for onedark.nvim]], false)
--- Config for: kommentary
-time([[Config for kommentary]], true)
-try_loadstring("\27LJ\2\nN\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\25use_default_mappings\22kommentary.config\frequire\0", "config", "kommentary")
-time([[Config for kommentary]], false)
+-- Config for: fidget.nvim
+time([[Config for fidget.nvim]], true)
+try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
+time([[Config for fidget.nvim]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
 -- Config for: telescope-zoxide
 time([[Config for telescope-zoxide]], true)
 try_loadstring("\27LJ\2\nK\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\vzoxide\19load_extension\14telescope\frequire\0", "config", "telescope-zoxide")
 time([[Config for telescope-zoxide]], false)
+-- Config for: kommentary
+time([[Config for kommentary]], true)
+try_loadstring("\27LJ\2\nN\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\25use_default_mappings\22kommentary.config\frequire\0", "config", "kommentary")
+time([[Config for kommentary]], false)
+-- Config for: lsp_signature.nvim
+time([[Config for lsp_signature.nvim]], true)
+try_loadstring("\27LJ\2\nª\1\0\2\6\0\6\0\n6\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0005\5\4\0=\5\5\4\18\5\1\0B\2\3\1K\0\1\0\17handler_opts\1\0\1\vborder\vsingle\1\0\4\14doc_lines\3\5\tbind\2\19always_trigger\1\16hint_prefix\16parameter: \14on_attach\18lsp_signature\frequireP\1\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0003\3\3\0B\1\2\1K\0\1\0\0\25register_attach_hook\19private.lspcfg\frequire\0", "config", "lsp_signature.nvim")
+time([[Config for lsp_signature.nvim]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+try_loadstring("\27LJ\2\nÊ\1\0\0\6\0\f\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0034\4\4\0009\5\6\0009\5\a\0059\5\b\5>\5\1\0049\5\6\0009\5\a\0059\5\t\5>\5\2\0049\5\6\0009\5\a\0059\5\n\5>\5\3\4=\4\v\3B\1\2\1K\0\1\0\fsources\15uncrustify\nblack\vstylua\15formatting\rbuiltins\blog\1\0\0\1\0\2\venable\1\nlevel\twarn\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
+time([[Config for null-ls.nvim]], false)
 -- Config for: nvim-web-devicons
 time([[Config for nvim-web-devicons]], true)
 try_loadstring("\27LJ\2\n`\0\0\4\0\5\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\0\0=\3\4\2B\0\2\1K\0\1\0\roverride\1\0\1\fdefault\2\nsetup\22nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")
 time([[Config for nvim-web-devicons]], false)
+-- Config for: projection-local
+time([[Config for projection-local]], true)
+try_loadstring("\27LJ\2\nN\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\19enable_sorting\2\tinit\15projection\frequire8\1\0\5\0\3\0\t6\0\0\0003\2\1\0B\0\2\3\n\1\0\0X\2\3€6\2\2\0\18\4\1\0B\2\2\1K\0\1\0\nprint\0\npcall\0", "config", "projection-local")
+time([[Config for projection-local]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)

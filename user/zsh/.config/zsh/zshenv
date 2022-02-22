@@ -7,6 +7,7 @@ export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.local/share"
 
 path+="$HOME/.local/bin"
 path+="$HOME/.luarocks/bin"
+path+="$HOME/.local/share/gem/ruby/3.0.0/bin"
 
 # Save zsh history
 export HISTFILE="$ZDOTDIR/.zhistory"    

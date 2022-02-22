@@ -1,5 +1,7 @@
 # vim: set ft=gitconfig :
 # This is Git's per-user configuration file.
+[commit]
+    gpgsign = true
 [user]
     name = Diego Augusto S. C
     email = diego.augusto@protonmail.com
