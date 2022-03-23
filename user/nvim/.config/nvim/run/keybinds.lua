@@ -1,13 +1,8 @@
 local private = require'private'
 local kutils = require'private.keybindutils'
+local keymap = vim.api.nvim_set_keymap
 local splits = require'private.splits'
 
-local keymap = vim.api.nvim_set_keymap
-
-local function openTerm(cmd)
-  splits.split()
-  vim.cmd('terminal '..(cmd or ""))
-end
 
 -- Start Guile REPL
 local function startguilerepl()
@@ -17,15 +12,18 @@ local function startguilerepl()
     return startguilerepl()
   end
   local sockname = "/tmp/nvim.guile." .. token .. ".socket"
-  openTerm(("guile '--listen=%s'"):format(sockname))
+  private.openTerm(("guile '--listen=%s'"):format(sockname))
   vim.b.hidden = true
   vim.g["conjure#client#guile#socket#pipename"] = sockname
   vim.cmd "ConjureConnect"
 end
 
+keymap('n', 'qq', '%', {})
+
 kutils.declmaps('n', {
   ['<leader>ot'] = 'silent !alacritty&';
-  ['<leader>oT'] = openTerm;
+  ['<leader>oT'] = private.openTerm;
+  ['<leader>ol'] = require'private.logbuf'.toggle;
   ['<leader>mr'] = startguilerepl;
   ['<M-i>'] =  function() splits.state = false end;
   ['<M-o>'] =  function() splits.state = true end;

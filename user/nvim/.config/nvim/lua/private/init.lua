@@ -2,6 +2,16 @@ local M = { keybinds = {} }
 
 CALL_ONCE = {}
 
+function M.openTerm(cmd)
+  local splits = require'private.splits'
+  splits.split()
+  vim.cmd('terminal '..(cmd or ""))
+end
+
+function M.nativeTerm(cmd, term)
+  vim.cmd('!'..(term or 'alacritty')..' '..cmd)
+end
+
 function M.normpath(s)
   if s:sub(#s, #s) ~= "/" then
     return s .. "/"

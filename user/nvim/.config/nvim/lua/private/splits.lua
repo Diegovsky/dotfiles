@@ -15,11 +15,14 @@ local M = setmetatable({}, {
   end
 })
 
-function M.split()
+function M.split(bufname)
   if vim.g['diegovsky#^splithor'] then
     vim.cmd('split')
   else
     vim.cmd('vsplit')
+  end
+  if bufname then
+    vim.cmd('e '..bufname)
   end
 end
 

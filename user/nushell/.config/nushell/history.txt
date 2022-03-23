@@ -1,0 +1,32 @@
+ls
+clear
+ls
+clear
+def-enf
+def-env
+append
+def-env PATH ./.local/bin/ 
+let-env PATH = ($env.PATH | prepend ./.local/bin/)
+$env
+$env | filter path
+$env | select Name
+$env | select 1
+$env | select 0
+$env 
+$env | select PATH
+$env | select PATH | select 2
+$env | select PATH | select 1
+$env | select PATH | select 0
+$env | get PATH
+z
+cd ./dotfiles/user/
+ls
+mkdir nushell
+cd nushell
+mkdir -p .config/nushell
+mkdir --help
+mkdir .config/nushell
+rmdir ./.config/nushell/
+cd ..
+git status
+gstat

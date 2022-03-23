@@ -7,12 +7,24 @@ vim.g.nvim_config_folder = NVIM_CONFIG_FOLDER
 vim.g.nvim_init_file = NVIM_INIT_FILE
 vim.g.asyncrun_open = 12
 
+if DEBUG then
+  print("Debug mode activated")
+  package.loaded['private'] = nil
+  package.loaded['private.lspcfg'] = nil
+end
+
 require("packer").startup(function(use)
   -- Sensible vim defaults
   use {
     "tpope/vim-surround",
   }
   use "tpope/vim-sensible"
+
+  use "elihunter173/dirbuf.nvim"
+
+  --[[ use { "tanvirtin/vgit.nvim", config = function ()
+    require'vgit'.setup()
+  end } ]]
 
   -- dhall support
   use "vmchale/dhall-vim"
@@ -121,7 +133,6 @@ require("packer").startup(function(use)
         sources = {
           null.builtins.formatting.stylua, -- aur: stylua
           null.builtins.formatting.black, -- pacman python-black
-          null.builtins.formatting.uncrustify, -- pacman: uncrustify
           -- null.builtins.formatting.rustfmt,
         },
       }

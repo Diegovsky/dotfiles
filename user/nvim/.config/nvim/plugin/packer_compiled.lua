@@ -99,6 +99,11 @@ _G.packer_plugins = {
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/dhall-vim",
     url = "https://github.com/vmchale/dhall-vim"
   },
+  ["dirbuf.nvim"] = {
+    loaded = true,
+    path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/dirbuf.nvim",
+    url = "https://github.com/elihunter173/dirbuf.nvim"
+  },
   ["direnv.vim"] = {
     loaded = true,
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/direnv.vim",
@@ -117,7 +122,7 @@ _G.packer_plugins = {
     url = "https://github.com/b3nj5m1n/kommentary"
   },
   ["lsp_signature.nvim"] = {
-    config = { "\27LJ\2\nª\1\0\2\6\0\6\0\n6\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0005\5\4\0=\5\5\4\18\5\1\0B\2\3\1K\0\1\0\17handler_opts\1\0\1\vborder\vsingle\1\0\4\14doc_lines\3\5\tbind\2\19always_trigger\1\16hint_prefix\16parameter: \14on_attach\18lsp_signature\frequireP\1\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0003\3\3\0B\1\2\1K\0\1\0\0\25register_attach_hook\19private.lspcfg\frequire\0" },
+    config = { "\27LJ\2\nª\1\0\2\6\0\6\0\n6\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0005\5\4\0=\5\5\4\18\5\1\0B\2\3\1K\0\1\0\17handler_opts\1\0\1\vborder\vsingle\1\0\4\19always_trigger\1\16hint_prefix\16parameter: \14doc_lines\3\5\tbind\2\14on_attach\18lsp_signature\frequireP\1\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0003\3\3\0B\1\2\1K\0\1\0\0\25register_attach_hook\19private.lspcfg\frequire\0" },
     loaded = true,
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
     url = "https://github.com/ray-x/lsp_signature.nvim"
@@ -128,7 +133,7 @@ _G.packer_plugins = {
     url = "https://github.com/onsails/lspkind-nvim"
   },
   ["null-ls.nvim"] = {
-    config = { "\27LJ\2\nÊ\1\0\0\6\0\f\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0034\4\4\0009\5\6\0009\5\a\0059\5\b\5>\5\1\0049\5\6\0009\5\a\0059\5\t\5>\5\2\0049\5\6\0009\5\a\0059\5\n\5>\5\3\4=\4\v\3B\1\2\1K\0\1\0\fsources\15uncrustify\nblack\vstylua\15formatting\rbuiltins\blog\1\0\0\1\0\2\venable\1\nlevel\twarn\nsetup\fnull-ls\frequire\0" },
+    config = { "\27LJ\2\n¯\1\0\0\6\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0034\4\3\0009\5\6\0009\5\a\0059\5\b\5>\5\1\0049\5\6\0009\5\a\0059\5\t\5>\5\2\4=\4\n\3B\1\2\1K\0\1\0\fsources\nblack\vstylua\15formatting\rbuiltins\blog\1\0\0\1\0\2\venable\1\nlevel\twarn\nsetup\fnull-ls\frequire\0" },
     loaded = true,
     path = "/home/diegovsky/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
     url = "https://github.com/jose-elias-alvarez/null-ls.nvim"
@@ -256,18 +261,26 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: onedark.nvim
-time([[Config for onedark.nvim]], true)
-try_loadstring("\27LJ\2\nb\0\0\3\0\5\0\f6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\4\0B\0\1\1K\0\1\0\tload\1\0\1\nstyle\vdarker\nsetup\fonedark\frequire\0", "config", "onedark.nvim")
-time([[Config for onedark.nvim]], false)
 -- Config for: fidget.nvim
 time([[Config for fidget.nvim]], true)
 try_loadstring("\27LJ\2\n8\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\vfidget\frequire\0", "config", "fidget.nvim")
 time([[Config for fidget.nvim]], false)
+-- Config for: nvim-web-devicons
+time([[Config for nvim-web-devicons]], true)
+try_loadstring("\27LJ\2\n`\0\0\4\0\5\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\0\0=\3\4\2B\0\2\1K\0\1\0\roverride\1\0\1\fdefault\2\nsetup\22nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")
+time([[Config for nvim-web-devicons]], false)
 -- Config for: trouble.nvim
 time([[Config for trouble.nvim]], true)
 try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
 time([[Config for trouble.nvim]], false)
+-- Config for: onedark.nvim
+time([[Config for onedark.nvim]], true)
+try_loadstring("\27LJ\2\nb\0\0\3\0\5\0\f6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\4\0B\0\1\1K\0\1\0\tload\1\0\1\nstyle\vdarker\nsetup\fonedark\frequire\0", "config", "onedark.nvim")
+time([[Config for onedark.nvim]], false)
+-- Config for: lsp_signature.nvim
+time([[Config for lsp_signature.nvim]], true)
+try_loadstring("\27LJ\2\nª\1\0\2\6\0\6\0\n6\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0005\5\4\0=\5\5\4\18\5\1\0B\2\3\1K\0\1\0\17handler_opts\1\0\1\vborder\vsingle\1\0\4\19always_trigger\1\16hint_prefix\16parameter: \14doc_lines\3\5\tbind\2\14on_attach\18lsp_signature\frequireP\1\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0003\3\3\0B\1\2\1K\0\1\0\0\25register_attach_hook\19private.lspcfg\frequire\0", "config", "lsp_signature.nvim")
+time([[Config for lsp_signature.nvim]], false)
 -- Config for: telescope-zoxide
 time([[Config for telescope-zoxide]], true)
 try_loadstring("\27LJ\2\nK\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0'\2\3\0B\0\2\1K\0\1\0\vzoxide\19load_extension\14telescope\frequire\0", "config", "telescope-zoxide")
@@ -276,22 +289,14 @@ time([[Config for telescope-zoxide]], false)
 time([[Config for kommentary]], true)
 try_loadstring("\27LJ\2\nN\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\25use_default_mappings\22kommentary.config\frequire\0", "config", "kommentary")
 time([[Config for kommentary]], false)
--- Config for: lsp_signature.nvim
-time([[Config for lsp_signature.nvim]], true)
-try_loadstring("\27LJ\2\nª\1\0\2\6\0\6\0\n6\2\0\0'\4\1\0B\2\2\0029\2\2\0025\4\3\0005\5\4\0=\5\5\4\18\5\1\0B\2\3\1K\0\1\0\17handler_opts\1\0\1\vborder\vsingle\1\0\4\14doc_lines\3\5\tbind\2\19always_trigger\1\16hint_prefix\16parameter: \14on_attach\18lsp_signature\frequireP\1\0\4\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\1\2\0003\3\3\0B\1\2\1K\0\1\0\0\25register_attach_hook\19private.lspcfg\frequire\0", "config", "lsp_signature.nvim")
-time([[Config for lsp_signature.nvim]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-try_loadstring("\27LJ\2\nÊ\1\0\0\6\0\f\0\0236\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0034\4\4\0009\5\6\0009\5\a\0059\5\b\5>\5\1\0049\5\6\0009\5\a\0059\5\t\5>\5\2\0049\5\6\0009\5\a\0059\5\n\5>\5\3\4=\4\v\3B\1\2\1K\0\1\0\fsources\15uncrustify\nblack\vstylua\15formatting\rbuiltins\blog\1\0\0\1\0\2\venable\1\nlevel\twarn\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
-time([[Config for null-ls.nvim]], false)
--- Config for: nvim-web-devicons
-time([[Config for nvim-web-devicons]], true)
-try_loadstring("\27LJ\2\n`\0\0\4\0\5\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\0\0=\3\4\2B\0\2\1K\0\1\0\roverride\1\0\1\fdefault\2\nsetup\22nvim-web-devicons\frequire\0", "config", "nvim-web-devicons")
-time([[Config for nvim-web-devicons]], false)
 -- Config for: projection-local
 time([[Config for projection-local]], true)
 try_loadstring("\27LJ\2\nN\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\19enable_sorting\2\tinit\15projection\frequire8\1\0\5\0\3\0\t6\0\0\0003\2\1\0B\0\2\3\n\1\0\0X\2\3€6\2\2\0\18\4\1\0B\2\2\1K\0\1\0\nprint\0\npcall\0", "config", "projection-local")
 time([[Config for projection-local]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+try_loadstring("\27LJ\2\n¯\1\0\0\6\0\v\0\0196\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\4\0005\4\3\0=\4\5\0034\4\3\0009\5\6\0009\5\a\0059\5\b\5>\5\1\0049\5\6\0009\5\a\0059\5\t\5>\5\2\4=\4\n\3B\1\2\1K\0\1\0\fsources\nblack\vstylua\15formatting\rbuiltins\blog\1\0\0\1\0\2\venable\1\nlevel\twarn\nsetup\fnull-ls\frequire\0", "config", "null-ls.nvim")
+time([[Config for null-ls.nvim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -315,5 +320,6 @@ if should_profile then save_profiles() end
 end)
 
 if not no_errors then
+  error_msg = error_msg:gsub('"', '\\"')
   vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
 end

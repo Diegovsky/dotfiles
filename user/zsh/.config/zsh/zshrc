@@ -1,4 +1,4 @@
-PROMPT='%F{#ff0055}%n%f@%F{#dd6}%m%f: %~> '
+PROMPT="%F{#ff0055}%n%f@%F{#dd6}%m%f %(?.%F{#00dd00}%f.%F{#aa0000}%?%f)%  %~> "
 
 # PLUGINS
 source "$ZDOTDIR/ls_colours"

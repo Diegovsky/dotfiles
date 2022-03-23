@@ -25,7 +25,8 @@ M.servers = {
   "dartls",
   "sumneko_lua",
   "hls",
-  "solargraph"
+  "solargraph",
+  "teal_ls"
 }
 
 --- @param f OnAttachHook
@@ -45,9 +46,6 @@ function M.setup_server(name, opt)
   }
   merge(args, M.quirks[name])
   merge(args, opt)
-  if DEBUG ~= nil then
-    print(vim.inspect(args))
-  end
   lspconfig[name].setup(args)
 end
 
