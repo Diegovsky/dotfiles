@@ -195,7 +195,7 @@ let $config = {
   float_precision: 2
   use_ansi_coloring: true
   filesize_format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, zb, zib, auto
-  edit_mode: emacs # emacs, vi
+  edit_mode: vi # emacs, vi
   max_history_size: 10000
   menu_config: {
     columns: 4
@@ -258,3 +258,7 @@ let $config = {
     }
   ]
 }
+
+# My stuff
+
+# source zoxide.nu

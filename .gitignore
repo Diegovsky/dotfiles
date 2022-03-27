@@ -1,4 +1,4 @@
 .zhistory
 .zcompdump
 packer_compiled.lua
-history.txt
+**/history.txt
