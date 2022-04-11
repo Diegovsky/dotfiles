@@ -37,12 +37,12 @@ end
 --- @param mapkey fun(string):string
 --- @param opts table<string, string>
 function M.declmaps(mode, t, mapval, mapkey, opts)
+  mapval = mapval or M.vimcmd()
+
   mapkey = mapkey or function (key)
     return key
   end
-  mapval = mapval or function (val)
-    return ("<cmd>%s<cr>"):format(val)
-  end
+
   opts = utils.merge(opts, {noremap=true})
 
   for key, value in pairs(t) do

@@ -1,10 +1,8 @@
 local lspconfig = require "lspconfig"
 local M = {}
 vim.o.completeopt = "menuone,noselect"
-local cmp = require "cmp"
 
 local merge = require("private").merge
-local runonce = require("private").runonce
 
 -- [[
 -- !TODO: Make an OOP API
@@ -46,45 +44,20 @@ function M.setup_server(name, opt)
   }
   merge(args, M.quirks[name])
   merge(args, opt)
+  M.cmp_init()
   lspconfig[name].setup(args)
 end
 
-local cmp_comparators = require "cmp.config.compare"
-local kind_priority_comparator = function(priority_table)
-  local lsp_types = require("cmp.types").lsp
-  local default_priority = 3
-  return function(entry1, entry2)
-    if entry1.source.name ~= "nvim_lsp" then
-      if entry2.source.name == "nvim_lsp" then
-        return false
-      else
-        return nil
-      end
-    end
-    local kind1 = lsp_types.CompletionItemKind[entry1:get_kind()]
-    local kind2 = lsp_types.CompletionItemKind[entry2:get_kind()]
-
-    local priority1 = priority_table[kind1] or default_priority
-    local priority2 = priority_table[kind2] or default_priority
-    if priority1 == priority2 then
-      return nil
-    end
-    return priority2 < priority1
-  end
-end
-
 M.cmp_init = function()
+  local cmp = require'cmp'
   cmp.setup {
-    sorting = {
-      comparators = {
-        cmp_comparators.offset,
-        cmp_comparators.exact,
-      },
+    completion = {
+      autocomplete = true,
     },
     snippet = {
       expand = function(args)
         -- For `vsnip` user.
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
+        vim.fn["UltiSnips#Anon"](args.body) -- For `vsnip` user.
 
         -- For `luasnip` user.
         -- require('luasnip').lsp_expand(args.body)
@@ -108,27 +81,21 @@ M.cmp_init = function()
     sources = {
       { name = "nvim_lsp" },
 
-      { name = "vsnip" },
-
-      { name = "buffer" },
+      { name = "ultisnips" },
     },
   }
 
   -- Prevemt cmp from messing with telescope
-  vim.api.nvim_exec(
-    [[
-    autocmd FileType TelescopePrompt lua require('cmp').setup.buffer{enable=false}
-  ]],
+  --[[ vim.api.nvim_exec(
+    "autocmd FileType TelescopePrompt lua require('cmp').setup.buffer{enable=false}",
     true
-  )
+  ) ]]
 end
 
 M.on_attach = function(client, bufnr)
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
-
-  M.cmp_init()
 
   for _, cb in ipairs(hooks) do
     cb(client, bufnr)
@@ -170,6 +137,7 @@ M.capabilities.textDocument.completion.completionItem.resolveSupport = {
   },
 }
 M.capabilities = require("cmp_nvim_lsp").update_capabilities(M.capabilities)
+-- M.capabilities = require'coq'.lsp_ensure_capabilities(M.capabilities)
 
 M.quirks = {
   ["vala_ls"] = {
@@ -190,13 +158,8 @@ M.quirks = {
   },
 }
 
-local function callonce(f)
-  return function()
-    runonce("nvim-lsp-init", f)
-  end
-end
-
-M.init = callonce(function()
+M.init = function()
+  print('Lsp init')
   for _, lsp in ipairs(M.servers) do
     if lsp == nil then
       print(_, "nil")
@@ -204,6 +167,6 @@ M.init = callonce(function()
       M.setup_server(lsp)
     end
   end
-end)
+end
 
 return M

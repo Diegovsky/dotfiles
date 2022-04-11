@@ -109,15 +109,15 @@ do
   }
 end
 
---  Map C-Spc to omnifunc if no lsp is present.
-if vim.fn.maparg("<C-Space>", "i") then
-  keymap("i", "<C-Space>", "<C-x><C-o>", {})
-end
-
 -- Omnifunc mappings
 do
-  keymap("o", "<Tab>", "<C-N>", {})
-  keymap("o", "<S-Tab>", "<C-P>", {})
+  local opt = {noremap = false}
+  --  Map C-Spc to omnifunc if no lsp is present.
+  if vim.fn.maparg("<C-Space>", "i") then
+    keymap("i", "<C-Space>", "<C-x><C-o>", opt)
+  end
+  keymap("o", "<Tab>", "<C-N>", opt)
+  keymap("o", "<S-Tab>", "<C-P>", opt)
 end
 
 -- Add copy and pasting like common GUIs.
@@ -128,3 +128,9 @@ kutils.declmaps('n', {
   p = 'p';
 }, kutils.prefix('"+'), kutils.fmt("<M-%s>"))
 
+kutils.declmaps('i', {
+  v = '"+p';
+  V = '"+P';
+  p = 'p';
+  P = 'P';
+}, kutils.prefix('<C-o>'), kutils.fmt("<C-%s>"))

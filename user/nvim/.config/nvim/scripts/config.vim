@@ -44,9 +44,6 @@ setglobal foldmethod=indent
 setglobal nofoldenable
 setglobal foldlevelstart=99
 
-" Prevent Autopairs from messing with my stuff
-let g:AutoPairsShortcutJump = "<C-n>"
-
 " Vim termux navigator custom keybinds
 let g:tmux_navigator_no_mappings = 1
 
