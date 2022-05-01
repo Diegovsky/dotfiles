@@ -1,3 +1,4 @@
+return [[
 local dap_install = require'dap-install'
 local dbg_list = require("dap-install.api.debuggers").get_installed_debuggers()
 
@@ -75,3 +76,4 @@ local configurations = {
 for adapter, conf in pairs(configurations) do
   dap_install.config(adapter,{ configurations = conf })
 end
+]]

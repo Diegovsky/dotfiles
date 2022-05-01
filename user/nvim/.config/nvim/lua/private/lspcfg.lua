@@ -44,6 +44,7 @@ function M.setup_server(name, opt)
   }
   merge(args, M.quirks[name])
   merge(args, opt)
+  table.insert(_G['private#initServers'], name)
   M.cmp_init()
   lspconfig[name].setup(args)
 end
@@ -51,9 +52,6 @@ end
 M.cmp_init = function()
   local cmp = require'cmp'
   cmp.setup {
-    completion = {
-      autocomplete = true,
-    },
     snippet = {
       expand = function(args)
         -- For `vsnip` user.
@@ -93,6 +91,9 @@ M.cmp_init = function()
 end
 
 M.on_attach = function(client, bufnr)
+  if bufnr == nil then
+    bufnr = vim.api.nvim_get_current_buf()
+  end
   local function buf_set_keymap(...)
     vim.api.nvim_buf_set_keymap(bufnr, ...)
   end
@@ -101,13 +102,13 @@ M.on_attach = function(client, bufnr)
     cb(client, bufnr)
   end
 
+  print('Buf nr', bufnr)
+
   local opts = { noremap = true, silent = true }
   buf_set_keymap("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   buf_set_keymap("n", "gd", "<Cmd>Telescope lsp_definitions<CR>", opts)
-  buf_set_keymap("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   buf_set_keymap("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_set_keymap("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  buf_set_keymap("n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   buf_set_keymap("n", "<leader>pra", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>", opts)
   buf_set_keymap("n", "<leader>prr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>", opts)
   buf_set_keymap(
@@ -159,7 +160,11 @@ M.quirks = {
 }
 
 M.init = function()
+  if not require'private'.try_run('LSP_INIT') then
+    return
+  end
   print('Lsp init')
+  _G['private#initServers'] = {}
   for _, lsp in ipairs(M.servers) do
     if lsp == nil then
       print(_, "nil")

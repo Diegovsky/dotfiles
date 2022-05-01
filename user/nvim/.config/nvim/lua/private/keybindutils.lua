@@ -14,16 +14,6 @@ function M.fmt(template)
   end
 end
 
-function M.mirroredtable(iter)
-  local val = nil
-  local t = {}
-  repeat
-    val = iter(val)
-    t[val] = val
-  until val == nil
-  return t
-end
-
 function M.vimcmd(prefix)
   prefix = prefix or ""
   return function(val)
@@ -32,6 +22,7 @@ function M.vimcmd(prefix)
 end
 --- @alias DeclarativeMapping string|fun(...)
 
+--- @param mode string|string[]
 --- @param t table<string, DeclarativeMapping>
 --- @param mapval fun(string):string
 --- @param mapkey fun(string):string
@@ -49,15 +40,8 @@ function M.declmaps(mode, t, mapval, mapkey, opts)
     key = mapkey(key)
     if type(value) == "string" then
       value = mapval(value)
-      vim.api.nvim_set_keymap(mode, key, value, opts)
-    else
-      utils.keymapf{
-        mode = mode,
-        combo = key,
-        run = value,
-        opt = opts,
-      }
     end
+    vim.keymap.set(mode, key, value, opts)
   end
 end
 

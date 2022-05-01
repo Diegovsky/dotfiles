@@ -10,7 +10,7 @@ setglobal splitbelow
 setglobal nowrap
 
 setglobal guifont=FiraCode\ Nerd\ Font:h14
-command -nargs=+ -complete=lua Lua lua require'private'.debug(<args>)
+" command -nargs=+ -complete=lua Lua lua require'private'.debug(<args>)
 
 " Dashboard
 let g:dashboard_default_executive ='telescope'

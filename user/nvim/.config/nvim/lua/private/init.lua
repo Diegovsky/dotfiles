@@ -28,12 +28,17 @@ function M.merge(a, b)
 end
 
 --- @param gvarname string
---- @param f function
-function M.runonce(gvarname, f)
+function M.try_run(gvarname)
   if CALL_ONCE[gvarname] == nil then
-    f()
     CALL_ONCE[gvarname] = true
+    return true
+  else
+    return false
   end
+end
+
+function M.unrun(gvarname)
+  CALL_ONCE[gvarname] = nil
 end
 
 --- @param f function

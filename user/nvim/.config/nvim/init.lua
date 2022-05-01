@@ -1,4 +1,4 @@
-vim.cmd "let mapleader=' '"
+vim.g.mapleader = ' '
 
 NVIM_CONFIG_FOLDER = vim.fn.stdpath "config" .. "/"
 NVIM_INIT_FILE = NVIM_CONFIG_FOLDER .. "/init.lua"
@@ -7,14 +7,9 @@ vim.g.nvim_config_folder = NVIM_CONFIG_FOLDER
 vim.g.nvim_init_file = NVIM_INIT_FILE
 vim.g.asyncrun_open = 12
 
-if DEBUG then
-  print "Debug mode activated"
-  package.loaded["private"] = nil
-  package.loaded["private.lspcfg"] = nil
-end
-
 -- Run .vim files before loading plugins
 local scandir = require "plenary.scandir"
+
 scandir.scan_dir(NVIM_CONFIG_FOLDER .. "/scripts", {
   on_insert = function(file)
     local result, msg = pcall(function()
@@ -32,6 +27,11 @@ require("packer").startup(function(use)
   use {
     "tpope/vim-surround",
   }
+
+  -- Lsp extensions for rust
+  use { "simrat39/rust-tools.nvim", ft="rust", config=function ()
+    require'rust-tools'.setup{}
+  end }
 
   -- File manager
   use "elihunter173/dirbuf.nvim"
@@ -57,10 +57,25 @@ require("packer").startup(function(use)
       "hrsh7th/cmp-nvim-lsp",
       "SirVer/ultisnips",
       "quangnguyen30192/cmp-nvim-ultisnips",
-      "cmp-nvim-lsp-signature-help"
+      "hrsh7th/cmp-nvim-lsp-signature-help"
     },
   }
-  use { "nvim-treesitter/nvim-treesitter", run = "<cmd>TSUpdate" }
+  use { "nvim-treesitter/nvim-treesitter", run = "<cmd>TSUpdate", config=function ()
+    require'nvim-treesitter.configs'.setup {
+  highlight = {
+          enable = true;
+  };
+  incremental_selection = {
+    enable = true
+  };
+  indent = {
+    enable = true;
+    disable = {"python", "rust"}
+  };
+  yati = { enable = true };
+  autopairs = {enable = true};
+}
+  end }
   use {
     "b3nj5m1n/kommentary",
     config = function()
@@ -85,6 +100,12 @@ require("packer").startup(function(use)
       require("mini.pairs").setup()
     end,
   }
+  -- Lsp outlines
+  use { 'simrat39/symbols-outline.nvim',
+    config = function ()
+      -- vim.g.symbols_outline = {}
+    end
+  }
   -- LSP Loading progress
   use {
     "j-hui/fidget.nvim",
@@ -95,7 +116,58 @@ require("packer").startup(function(use)
   use { "arrufat/vala.vim", ft = "vala" }
   use "nvim-lua/popup.nvim"
   use "nvim-lua/plenary.nvim"
-  use "nvim-telescope/telescope.nvim"
+  -- Telescope and Plugin
+  use { "nvim-telescope/telescope.nvim",
+      config = function ()
+        require('telescope').setup{
+  extensions = {
+    ['ui-select'] = {
+    }
+  };
+  defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case'
+    },
+    prompt_prefix = "> ",
+    selection_caret = "> ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+    },
+    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+    file_ignore_patterns = {'build/'},
+    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
+    winblend = 0,
+    border = {},
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    color_devicons = true,
+    use_less = true,
+    path_display = {},
+    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+
+    -- Developer configurations: Not meant for general override
+    buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
+  }
+}
+      end}
   use {
     "jvgrootveld/telescope-zoxide",
     requires = { "nvim-telescope/telescope.nvim" },
@@ -103,6 +175,12 @@ require("packer").startup(function(use)
       require("telescope").load_extension "zoxide"
     end,
   }
+  use {'nvim-telescope/telescope-ui-select.nvim',
+  requires = { "nvim-telescope/telescope.nvim" },
+  config = function ()
+    require'telescope'.load_extension'ui-select'
+  end}
+
   use {
     "navarasu/onedark.nvim",
     config = function()
@@ -112,7 +190,7 @@ require("packer").startup(function(use)
       require("onedark").load()
     end,
   }
-  use "Pocco81/DAPInstall.nvim"
+  -- use "Pocco81/DAPInstall.nvim"
   use "mfussenegger/nvim-dap"
   use "rcarriga/nvim-dap-ui"
   use "direnv/direnv.vim"
@@ -136,7 +214,7 @@ require("packer").startup(function(use)
         },
         sources = {
           null.builtins.formatting.stylua, -- aur: stylua
-          null.builtins.formatting.black, -- pacman python-black
+          null.builtins.formatting.black, -- pacman: python-black
           -- null.builtins.formatting.rustfmt,
         },
       }
@@ -147,7 +225,7 @@ require("packer").startup(function(use)
     as = "projection-local",
     config = function()
       local _, err = pcall(function()
-        require("projection").init { enable_sorting = true }
+        require("projection").init { enable_sorting = true; should_title = true; }
       end)
       if err ~= nil then
         print(err)
@@ -156,4 +234,14 @@ require("packer").startup(function(use)
   }
 end)
 
-dofile(NVIM_CONFIG_FOLDER .. "/main.lua")
+-- Run all lua files on run/
+local luapath = require'plenary.path':new(NVIM_CONFIG_FOLDER, 'run')
+scandir.scan_dir(tostring(luapath), {on_insert = function(file)
+  local _, err = pcall(function() dofile(file) end)
+  if err ~= nil then
+    print(('An error occoured while parsing a file: "%s"'):format(err))
+  end
+end
+})
+
+require'private.lspcfg'.init()

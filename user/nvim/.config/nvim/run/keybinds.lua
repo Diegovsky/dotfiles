@@ -1,22 +1,7 @@
 local private = require'private'
 local kutils = require'private.keybindutils'
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 local splits = require'private.splits'
-
-
--- Start Guile REPL
-local function startguilerepl()
-  local token = _G["sgr#session"]
-  if not token then
-    _G["sgr#session"] = private.randomstring(8, 12)
-    return startguilerepl()
-  end
-  local sockname = "/tmp/nvim.guile." .. token .. ".socket"
-  private.openTerm(("guile '--listen=%s'"):format(sockname))
-  vim.b.hidden = true
-  vim.g["conjure#client#guile#socket#pipename"] = sockname
-  vim.cmd "ConjureConnect"
-end
 
 keymap('n', 'qq', '%', {})
 
@@ -24,6 +9,7 @@ kutils.declmaps('n', {
   ['<leader>ot'] = 'silent !alacritty&';
   ['<leader>oT'] = private.openTerm;
   ['<leader>ol'] = require'private.logbuf'.toggle;
+  ['<leader>os'] = 'SymbolsOutline';
   ['<leader>mr'] = startguilerepl;
   ['<M-i>'] =  function() splits.state = false end;
   ['<M-o>'] =  function() splits.state = true end;
@@ -42,6 +28,25 @@ kutils.declmaps('n', {
   ['<M-j>'] = 'TmuxNavigateDown';
   ['<M-k>'] = 'TmuxNavigateUp';
   ['<M-l>'] = 'TmuxNavigateRight';
+  ['<leader>bw'] = function()
+    local buflist = vim.fn.getbufinfo({buflisted = 1})
+    local c = 0
+    local lastbuf
+    for _, buf in pairs(buflist) do
+      if #buf.windows == 0 and buf.changed == 0 then
+        c = c + 1
+        lastbuf = buf.name
+        vim.api.nvim_buf_delete(buf.bufnr, {force=false})
+      end
+    end
+    if c > 1 then
+      print("Wiped "..c.." buffers")
+    elseif c == 1 then
+      print('Wiped '..lastbuf)
+    else
+      print('No buffers wiped')
+    end
+  end;
 })
 
 -- Remap <C-w><key> to <M-<key>>
