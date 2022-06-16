@@ -6,10 +6,11 @@ set $right l
 set $term alacritty
 set $editor nvim-gtk
 set $browser firefox
-set $menu wofi --show run
+# set $menu wofi --show run
+set $menu dlauncher-toggle
 set $status_command "$HOME/.local/bin/statusbar2.py"
 set $mouse "Logitech_G903_LS"
-output * bg $HOME/Pictures/wallpaper.png fill
+output * bg $(xdg-user-dir PICTURES)/wallpaper.png fill
 
 # bindsym $mod+shift+r exec bash -c 'swaymsg bar bar-0 status_command -; swaymsg bar bar-0 status_command $status_command'
 bindsym $mod+Return exec $term
@@ -23,12 +24,13 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym Ctrl+Print exec grim -o `swaymsg -t get_outputs | jq 'select(.[].focused == true)' | jq '.[0].name' -r` - | wl-copy
-bindsym Ctrl+Shift+Print exec bash -c 'grim -g "$(slurp -d)" - | wl-copy'
-bindsym XF86AudioPlay exec playerctl play-pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
-bindsym XF86AudioStop exec playerctl stop
+bindsym Ctrl+Print exec wlr-screenshot output
+bindsym Ctrl+Shift+Print exec wlr-screenshot select
+bindsym Ctrl+Alt+Print exec wlr-screenshot current-window
+bindsym XF86AudioPlay exec playerctl --player playerctld play-pause
+bindsym XF86AudioNext exec playerctl --player playerctld next
+bindsym XF86AudioPrev exec playerctl --player playerctld previous
+bindsym XF86AudioStop exec playerctl --player playerctld stop
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
@@ -130,7 +132,17 @@ gaps inner 10
 # STARTUP PROGRAMS
 exec waybar
 exec swayidle
-exec .local/bin/wayonce.sh &
-exec_always bash -c "killall kanshi; kanshi""
+exec wf-panel
+exec mako
+exec xsettingsd
+exec dex -a -e sway
+exec_always 'pkill kanshi; kanshi'
+exec /lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec dlauncher &
+exec wlr-clipboard-history -t &
+# Remembers last played player
+exec playerctld &
 
 for_window [class="steam_app*"] inhibit_idle focus
+
+include /etc/sway/config.d/*

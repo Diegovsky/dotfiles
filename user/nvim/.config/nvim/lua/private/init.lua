@@ -1,6 +1,16 @@
-local M = { keybinds = {} }
+local M = {}
 
-CALL_ONCE = {}
+CALL_ONCE = setmetatable({}, {
+  __call = function (self, i)
+    if self[i] == nil or self[i] == 'fail' then
+      return true
+    else
+      return false
+    end
+  end
+})
+
+M.call_once = CALL_ONCE
 
 function M.openTerm(cmd)
   local splits = require'private.splits'
@@ -19,18 +29,12 @@ function M.normpath(s)
   return s
 end
 
-function M.merge(a, b)
-  a = a or {}
-  for k, v in pairs(b or {}) do
-    a[k] = v
-  end
-  return a
-end
-
 --- @param gvarname string
 function M.try_run(gvarname)
-  if CALL_ONCE[gvarname] == nil then
-    CALL_ONCE[gvarname] = true
+  if CALL_ONCE(gvarname) then
+    if CALL_ONCE[gvarname] == nil then
+      CALL_ONCE[gvarname] = true
+    end
     return true
   else
     return false
@@ -38,7 +42,9 @@ function M.try_run(gvarname)
 end
 
 function M.unrun(gvarname)
-  CALL_ONCE[gvarname] = nil
+  local r = CALL_ONCE[gvarname]
+  CALL_ONCE[gvarname] = 'fail'
+  return r
 end
 
 --- @param f function
@@ -51,32 +57,6 @@ function M.cached(f, ...)
     end
     return value
   end
-end
-
-function M.askfor(t)
-  local prompt, text, typ = M.get_pargs(
-    t,
-    { "prompt", "text", "type" },
-    { text = vim.fn.getcwd(), type = "file" }
-  )
-  -- The docs say 'typ' should be `nothing`.
-  -- Nil does not work, so this workaround is needed.
-  if typ ~= "none" then
-    return vim.fn.input(prompt, text, typ)
-  else
-    return vim.fn.input(prompt, text)
-  end
-end
-
-function M.get_pargs(t, args, defaults)
-  local retlist = {}
-  defaults = defaults or {}
-  for index, name in ipairs(args) do
-    local newvalue = t[index] or t[name] or defaults[name]
-    -- This is necessary to handle nils
-    retlist[index] = newvalue
-  end
-  return unpack(retlist)
 end
 
 local chars = {}
@@ -141,49 +121,24 @@ function M.ensurecallable(value, name)
   end
 end
 
---- @class KeymapFParam
---- @field mode string  @comment the vim mode [Default: 'n']
---- @field combo string @comment the key combination to be bound
---- @field run function @comment the function to be run
---- @field args table @comment the args to pass to the function [Default: {}]
---- @field opt table @comment neovim's keymap options.
-local _decl
--- Call a lua function with a keybind.
--- Gives you the hability to map a key to a lua function.
---- @param t KeymapFParam
-function M.keymapf(t)
-  local mode, combo, run, args, opt =
-    M.get_pargs(t, { "mode", "combo", "run", "args", "options" }, {
-      mode = "n",
-      args = {},
-    })
-  mode = M.ensuretype(mode, "string", "mode")
-  combo = M.ensuretype(combo, "string", "combo")
-  opt = M.merge({ noremap = true }, opt)
-  M.ensurecallable(run, "run")
-
-  if #args > 0 then
-    local wrapper = function()
-      run(unpack(args))
-    end
-    run = wrapper
-  end
-  table.insert(M.keybinds, run)
-
-  vim.api.nvim_set_keymap(
-    mode,
-    combo,
-    ('<cmd>lua require"private".keybinds[%s]()<cr>'):format(#M.keybinds),
-    opt
-  )
-end
-
 function M.debug(...)
   print(vim.inspect(...))
   return ...
 end
 
+function M.onft(ft, desc, func, ...)
+  local args = {...}
+  vim.api.nvim_create_autocmd({"FileType"}, {
+    pattern = ft,
+    desc = desc or 'private.onft callback',
+    callback = function ()
+      func(unpack(args))
+    end
+  })
+end
+
 function M.t(s)
   return vim.api.nvim_replace_termcodes(s, true, true, true)
 end
+Priv = M
 return M

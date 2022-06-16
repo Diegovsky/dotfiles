@@ -1,6 +1,5 @@
 syntax enable
 setglobal synmaxcol=512
-filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 let g:vimsyn_embed = 'l'
 set number relativenumber
@@ -9,8 +8,10 @@ setglobal splitright
 setglobal splitbelow
 setglobal nowrap
 
+let g:do_filetype_lua = 1
+let g:did_load_filetypes = 0
+
 setglobal guifont=FiraCode\ Nerd\ Font:h14
-" command -nargs=+ -complete=lua Lua lua require'private'.debug(<args>)
 
 " Dashboard
 let g:dashboard_default_executive ='telescope'
@@ -46,9 +47,6 @@ setglobal foldlevelstart=99
 
 " Vim termux navigator custom keybinds
 let g:tmux_navigator_no_mappings = 1
-
-let $NVIM_CMD = "echo 'Failed to connect to nvim.\nQuitting.'; exit"
-let $GIT_EDITOR = 'nvr -cc split --remote-wait'
 
 " tabbing for lua, xml, dart and coffee files
 autocmd FileType lua,xml,dart,coffee setlocal softtabstop=2 shiftwidth=2

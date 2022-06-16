@@ -38,7 +38,8 @@ alias search="pacman -Ss"
 alias install="sudo pacman -Syu"
 alias reload="source $ZDOTDIR/.zshrc"
 alias tempdir='cd `mktemp -d`'
-
+alias cat='bat'
+alias tempdir='cd `mktemp -d`'
 # VIM mod
 source $ZDOTDIR/'cursor_mode'
 
@@ -47,8 +48,16 @@ source "$ZDOTDIR/bindings"
 source "$ZDOTDIR/prompt_name"
 source "$ZDOTDIR/direnv"
 
-# Start gnome keyring
-if [ -n "$DESKTOP_SESSION" ];then
-    eval $(gnome-keyring-daemon --start)
-    export SSH_AUTH_SOCK
+if [ "$DESKTOP_SESSION" != "gnome" ]
+then
+    export MOZ_ENABLE_WAYLAND=1
 fi
+
+unset LC_MESSAGES
+source /etc/locale.conf
+
+# Start gnome keyring
+# if [ -n "$DESKTOP_SESSION" ];then
+#     eval $(gnome-keyring-daemon --start)
+#     export SSH_AUTH_SOCK
+# fi

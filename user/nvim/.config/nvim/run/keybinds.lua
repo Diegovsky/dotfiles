@@ -3,14 +3,18 @@ local kutils = require'private.keybindutils'
 local keymap = vim.keymap.set
 local splits = require'private.splits'
 
-keymap('n', 'qq', '%', {})
+keymap({'n', 'v', 'o'}, 'qq', '%', {remap=true})
+-- Rebinds
+kutils.declmaps({ 'n', 'v' }, {
+  ['<M-x>'] = ':e %:h/',
+}, kutils.noop(), kutils.noop(), {remap=true})
 
+---@diagnostic disable-next-line: missing-parameter
 kutils.declmaps('n', {
   ['<leader>ot'] = 'silent !alacritty&';
   ['<leader>oT'] = private.openTerm;
   ['<leader>ol'] = require'private.logbuf'.toggle;
   ['<leader>os'] = 'SymbolsOutline';
-  ['<leader>mr'] = startguilerepl;
   ['<M-i>'] =  function() splits.state = false end;
   ['<M-o>'] =  function() splits.state = true end;
   ['<M-n>'] = splits.split;
@@ -22,7 +26,14 @@ kutils.declmaps('n', {
   ['<leader>of']  = 'Telescope oldfiles';
   ['<leader>tn'] = 'tabnew';
   ['<leader>tc'] = 'tabclose';
-  ['<leader><leader>'] = 'Telescope find_files';
+  ['<C-s>'] = 'write';
+  ['<leader><leader>'] = function ()
+    if vim.fn.getcwd() == vim.fn.getenv("HOME") then
+      print("You can't do that, you're at ~!")
+    else
+      require'telescope.builtin'.find_files()
+    end
+  end;
   ['<leader>fg'] = 'Telescope live_grep';
   ['<M-h>'] = 'TmuxNavigateLeft';
   ['<M-j>'] = 'TmuxNavigateDown';
@@ -53,7 +64,7 @@ kutils.declmaps('n', {
 do
   -- Set maps to be used with windows
   local function winCmd(key)
-      keymap('n', ('<M-%s>'):format(key), ('<cmd>wincmd %s<cr>'):format(key), {noremap = true})
+      keymap('n', ('<M-%s>'):format(key), ('<cmd>wincmd %s<cr>'):format(key), {})
   end
 
   local winkeys = 'wHJKLT|_=<>'
@@ -72,11 +83,6 @@ kutils.declmaps('n',
  kutils.prefix"<leader>p"
 )
 
-private.keymapf {
-  combo = "<C-p>",
-  run = vim.lsp.buf.signature_help,
-  mode = "i",
-}
 do
   local gitcmd_prefix = "<leader>g"
   local gitcmds = {
@@ -94,39 +100,19 @@ do
     kutils.vimcmd("Git "),
     kutils.prefix(gitcmd_prefix)
   )
-
-  -- Keybind for a special git clone
-  private.keymapf {
-    "n",
-    gitcmd_prefix .. "C",
-    function()
-      local repo = private.askfor { "Git repo: ", "git@github.com:Diegovsky/", "none" }
-      local where = private.askfor {
-        "Where should it be: ",
-        vim.fn.getenv "HOME" .. "/Projects",
-        "dir",
-      }
-      if repo and where then
-        vim.cmd(("Git clone '%s' '%s'"):format(repo, where))
-      end
-    end,
-    opt = { noremap = true },
-  }
 end
 
 -- Omnifunc mappings
-do
-  local opt = {noremap = false}
-  --  Map C-Spc to omnifunc if no lsp is present.
-  if vim.fn.maparg("<C-Space>", "i") then
-    keymap("i", "<C-Space>", "<C-x><C-o>", opt)
-  end
-  keymap("o", "<Tab>", "<C-N>", opt)
-  keymap("o", "<S-Tab>", "<C-P>", opt)
+if require'private'.try_run('omnifunc-bindings') then
+  local opt = {expr=true, silent=true}
+  local keymap = function(key, expr) keymap("i", key, kutils.not_lsp(expr, key), opt) end
+  keymap("<C-Space>", "<C-x><C-o>")
+  keymap("<Tab>", "<C-N>")
+  keymap("<S-Tab>", "<C-P>")
 end
 
 -- Add copy and pasting like common GUIs.
-kutils.declmaps('n', {
+kutils.declmaps({'n', 'v'}, {
   y = 'y';
   Y = 'Y';
   P = 'P';
@@ -138,4 +124,4 @@ kutils.declmaps('i', {
   V = '"+P';
   p = 'p';
   P = 'P';
-}, kutils.prefix('<C-o>'), kutils.fmt("<C-%s>"))
+}, kutils.fmt('<cmd>norm h%sll<cr>'), kutils.fmt("<C-%s>"))

@@ -16,3 +16,19 @@ export SAVEHIST=10000
 
 export EDITOR="nvim"
 export VISUAL="nvim"
+
+# Stuff to prevent $HOME cluttering
+export ATOM_HOME="$XDG_DATA_HOME"/atom
+export CABAL_CONFIG="$XDG_CONFIG_HOME"/cabal/config
+export CABAL_DIR="$XDG_CACHE_HOME"/cabal
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg
+export GOPATH="$XDG_DATA_HOME"/go
+export GRADLE_USER_HOME="$XDG_DATA_HOME"/gradle
+export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+export KDEHOME="$XDG_CONFIG_HOME"/kde
+export ICEAUTHORITY="$XDG_CACHE_HOME"/ICEauthority
+export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
+export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
+
+path+="$CARGO_HOME/bin"
