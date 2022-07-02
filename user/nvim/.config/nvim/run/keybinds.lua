@@ -3,6 +3,8 @@ local kutils = require'private.keybindutils'
 local keymap = vim.keymap.set
 local splits = require'private.splits'
 
+keymap('t', '<esc>', '<C-\\><C-n>')
+
 keymap({'n', 'v', 'o'}, 'qq', '%', {remap=true})
 -- Rebinds
 kutils.declmaps({ 'n', 'v' }, {
@@ -18,15 +20,17 @@ kutils.declmaps('n', {
   ['<M-i>'] =  function() splits.state = false end;
   ['<M-o>'] =  function() splits.state = true end;
   ['<M-n>'] = splits.split;
+  ['<C-s>'] = 'write';
   ['<leader>hrr'] = 'luafile '..NVIM_INIT_FILE;
   ['<leader>hhr'] = function() package.loaded['private.lspcfg'] = nil; dofile(NVIM_INIT_FILE) end;
   ['<leader>hpi'] = 'PackerInstall';
   ['<leader>hpu'] = 'PackerUpdate';
+  ['<C-space>']   = 'Telescope buffers';
   ['<leader>cd']  = 'Telescope zoxide list';
   ['<leader>of']  = 'Telescope oldfiles';
+  ['<leader>fg'] = 'Telescope live_grep';
   ['<leader>tn'] = 'tabnew';
   ['<leader>tc'] = 'tabclose';
-  ['<C-s>'] = 'write';
   ['<leader><leader>'] = function ()
     if vim.fn.getcwd() == vim.fn.getenv("HOME") then
       print("You can't do that, you're at ~!")
@@ -34,11 +38,11 @@ kutils.declmaps('n', {
       require'telescope.builtin'.find_files()
     end
   end;
-  ['<leader>fg'] = 'Telescope live_grep';
   ['<M-h>'] = 'TmuxNavigateLeft';
   ['<M-j>'] = 'TmuxNavigateDown';
   ['<M-k>'] = 'TmuxNavigateUp';
   ['<M-l>'] = 'TmuxNavigateRight';
+  ['<leader>oo'] = 'ChadOpen';
   ['<leader>bw'] = function()
     local buflist = vim.fn.getbufinfo({buflisted = 1})
     local c = 0

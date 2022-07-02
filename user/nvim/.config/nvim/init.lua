@@ -1,8 +1,3 @@
-vim.g.mapleader = " "
-vim.o.showmode = false
-vim.o.laststatus = 3
-vim.o.termguicolors = true
-vim.o.linebreak = true
 
 -- Try to set language to english because I don't like to mix my language with
 -- programming
@@ -10,6 +5,8 @@ vim.cmd "language en_GB.utf8"
 
 NVIM_CONFIG_FOLDER = vim.fn.stdpath "config" .. "/"
 NVIM_INIT_FILE = NVIM_CONFIG_FOLDER .. "/init.lua"
+
+dofile(NVIM_CONFIG_FOLDER..'/config.lua')
 
 vim.g.nvim_config_folder = NVIM_CONFIG_FOLDER
 vim.g.nvim_init_file = NVIM_INIT_FILE
@@ -310,5 +307,7 @@ scandir.scan_dir(tostring(luapath), {
     end
   end,
 })
+
+INIT_HAPPENED=true
 
 require("private.lspcfg").init()
