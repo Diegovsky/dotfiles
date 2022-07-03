@@ -15,17 +15,6 @@ vim.g.asyncrun_open = 12
 -- Run .vim files before loading plugins
 local scandir = require "plenary.scandir"
 
-scandir.scan_dir(NVIM_CONFIG_FOLDER .. "/scripts", {
-  on_insert = function(file)
-    local result, msg = pcall(function()
-      vim.cmd("source " .. file)
-    end)
-    if not result then
-      print(msg)
-    end
-  end,
-})
-
 require("packer").startup(function(use)
   -- Sensible vim defaults
   use "tpope/vim-sensible"
@@ -307,7 +296,5 @@ scandir.scan_dir(tostring(luapath), {
     end
   end,
 })
-
-INIT_HAPPENED=true
 
 require("private.lspcfg").init()

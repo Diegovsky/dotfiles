@@ -2,30 +2,33 @@ vim.fn.setenv('NVIM_CMD', "echo 'Failed to connect to nvim.\nQuitting.'; exit")
 vim.fn.setenv('NVIM_LISTEN_ADDRESS', vim.v.servername)
 vim.fn.setenv('GIT_EDITOR', 'nvr --servername ' .. vim.v.servername .. ' -cc split --remote-wait')
 
+if not require'private'.try_run('CONFIG') then
+    return
+end
 vim.g.mapleader = " "
 vim.o.showmode = false
 vim.o.laststatus = 3
 vim.o.termguicolors = true
 vim.o.linebreak = true
 
-vim.go.synmaxcol=512
-vim.go.omnifunc="syntaxcomplete#Complete"
-vim.go.number=true
-vim.go.relativenumber=true
-vim.go.mouse="a"
-vim.go.splitright=true
-vim.go.splitbelow=true
-vim.go.wrap=false
-vim.go.guifont="FiraCode Nerd Font:h14"
-vim.go.expandtab=true
-vim.go.shiftwidth=4
-vim.go.softtabstop=4
-vim.go.compatible=false
-vim.go.hidden=true
-vim.go.encoding="utf-8"
-vim.go.foldmethod="indent"
-vim.go.foldenable=false
-vim.go.foldlevelstart=99
+vim.o.synmaxcol=512
+vim.o.omnifunc="syntaxcomplete#Complete"
+vim.o.number=true
+vim.o.relativenumber=true
+vim.o.mouse="a"
+vim.o.splitright=true
+vim.o.splitbelow=true
+vim.o.wrap=false
+vim.o.guifont="FiraCode Nerd Font:h14"
+vim.o.expandtab=true
+vim.o.shiftwidth=4
+vim.o.softtabstop=4
+vim.o.compatible=false
+vim.o.hidden=true
+vim.o.encoding="utf-8"
+vim.o.foldmethod="indent"
+vim.o.foldenable=false
+vim.o.foldlevelstart=99
 
 -- global options
 vim.g['vimsyn_embed'] = 'l'
