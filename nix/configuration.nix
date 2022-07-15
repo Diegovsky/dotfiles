@@ -49,8 +49,12 @@
     ports  = [ 6534 ];
   };
   
-  
-
+  nix = {
+      package = pkgs.nixFlakes;
+    extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+    };
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -107,6 +111,8 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  programs.zsh.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # Global Programs
@@ -118,6 +124,7 @@
     tree
     home-manager
     zsh
+    mlocate
     #user utils
     firefox
     tdesktop
