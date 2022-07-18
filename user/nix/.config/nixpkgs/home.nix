@@ -11,9 +11,10 @@
     direnv
     # zsh plugins etc
     nix-zsh-completions
+    zsh-syntax-highlighting
     zsh-completions
     ];
-  # programs.home-manager.enable = true;
+  programs.home-manager.enable = true;
   home.stateVersion = "22.05";
 
   # programs.nixvim = {
@@ -36,6 +37,7 @@
     # '';
   };
   programs.neovim = {
+    package = pkgs.neovim-nightly;
     enable = true;
     extraConfig =
     ''
