@@ -1,13 +1,9 @@
 
-if true then 
-	return
-end
-
 -- Try to set language to english because I don't like to mix my language with
 -- programming
 vim.cmd "language en_GB.utf8"
 
-NVIM_CONFIG_FOLDER = vim.fn.stdpath "config" .. "/"
+NVIM_CONFIG_FOLDER = NVIM_CONFIG_FOLDER or vim.fn.stdpath "config" .. "/"
 NVIM_INIT_FILE = NVIM_CONFIG_FOLDER .. "/init.lua"
 
 dofile(NVIM_CONFIG_FOLDER..'/config.lua')
@@ -15,9 +11,6 @@ dofile(NVIM_CONFIG_FOLDER..'/config.lua')
 vim.g.nvim_config_folder = NVIM_CONFIG_FOLDER
 vim.g.nvim_init_file = NVIM_INIT_FILE
 vim.g.asyncrun_open = 12
-
--- Run .vim files before loading plugins
-local scandir = require "plenary.scandir"
 
 require("packer").startup(function(use)
   -- Sensible vim defaults
@@ -289,6 +282,9 @@ end)
 
 -- Bootstrap fennel support
 require "hotpot"
+-- Run .vim files before loading plugins
+local scandir = require "plenary.scandir"
+
 
 -- Run all lua files on run/
 local luapath = require("plenary.path"):new(NVIM_CONFIG_FOLDER, "run")
