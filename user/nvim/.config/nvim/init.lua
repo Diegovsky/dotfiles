@@ -75,6 +75,7 @@ require("packer").startup(function(use)
   use {
     "nvim-treesitter/nvim-treesitter",
     run = "<cmd>TSUpdate",
+    requires = {"nvim-treesitter/nvim-treesitter-textobjects"},
     config = function()
       require("nvim-treesitter.configs").setup {
         highlight = {
@@ -89,13 +90,6 @@ require("packer").startup(function(use)
         },
         yati = { enable = true },
         autopairs = { enable = true },
-      }
-    end,
-  }
-  use {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    config = function()
-      require("nvim-treesitter-textobjects").setup {
         textobjects = {
           swap = {
             enable = true,
@@ -111,10 +105,11 @@ require("packer").startup(function(use)
             lookahead = true,
             keymaps = {},
           },
-        },
+        }
       }
     end,
   }
+
   use {
     "b3nj5m1n/kommentary",
     config = function()
