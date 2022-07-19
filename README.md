@@ -13,7 +13,7 @@ stow nvim
 TLDR;
 ```sh
 cd $HOME &&
-git clone https://github.com/Diegovsky/dotfiles &&
+git clone https://github.com/Diegovsky/dotfiles --recurse-submodules &&
 cd dotfiles/user &&
 stow *
 ```
