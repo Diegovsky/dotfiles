@@ -34,8 +34,18 @@ export KEYTIMEOUT=1
 # Command aliases
 alias ls="exa"
 alias la="exa -la"
-alias search="pacman -Ss"
-alias install="sudo pacman -Syu"
+if [[ -z "$IS_NIX" ]]; then
+    alias search="pacman -Ss"
+    alias install="sudo pacman -Syu"
+else
+    alias search="nix search nixpkgs"
+    function install() {
+        if [[ $# -lt 1 ]]; then
+            return -1
+        fi
+        nix profile install "nixpkgs#$1"
+    }
+fi
 alias reload="source $ZDOTDIR/.zshrc"
 alias tempdir='cd `mktemp -d`'
 alias cat='bat'
@@ -55,6 +65,22 @@ fi
 
 unset LC_MESSAGES
 source /etc/locale.conf
+
+if [[ "$IS_NIX" = 1 ]]; then
+    remove_profile() {
+        if [[ $# -lt 1 ]]; then
+            return 0
+        fi
+        profile=$(nix profile list | rg -i "$1" | cut -d' ' -f 1)
+        if [[ -z $profile ]]; then
+            echo  "No matching package found for '$1'"
+            return -1
+        fi
+        nix profile remove $profile
+        shift
+        $0 "$@"
+    }
+fi
 
 # Start gnome keyring
 # if [ -n "$DESKTOP_SESSION" ];then

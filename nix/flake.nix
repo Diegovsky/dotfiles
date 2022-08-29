@@ -1,7 +1,6 @@
 {
   inputs = {
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
-      # nixvim.url  = "github:pta2002/nixvim";
       home-manager.url = "github:nix-community/home-manager";
       neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
     };

@@ -21,7 +21,6 @@
     python3
     rustup
     clang-tools
-    gcc
     luajit
     gdb
     ];
@@ -41,6 +40,7 @@
       export PRIVATE_CONFIG_PREFIX="$HOME/dotfiles/user/zsh/"
       source "$PRIVATE_CONFIG_PREFIX/dot-zshenv"
       export ZDOTDIR="$PRIVATE_CONFIG_PREFIX/.config/zsh/"
+      export IS_NIX=1
       '';
     # initExtra =
     # ''
@@ -94,6 +94,7 @@
     package.path = NVIM_CONFIG_FOLDER..'lua/?.lua;'..package.path
     package.path = NVIM_CONFIG_FOLDER..'lua/?/init.lua;'..package.path
     require'packer'.init()
+    NVIM_IS_NIX=true
     dofile(NVIM_CONFIG_FOLDER..'init.lua')
     EOF
     '';
