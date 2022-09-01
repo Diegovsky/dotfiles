@@ -1,1 +1,1 @@
-../user/nix/.config/nixpkgs/home.nix
+../.config/nixpkgs/home.nix
