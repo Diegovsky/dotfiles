@@ -37,15 +37,16 @@
     enable = true;
     envExtra =
       ''
-      export PRIVATE_CONFIG_PREFIX="$HOME/dotfiles/user/zsh/"
-      source "$PRIVATE_CONFIG_PREFIX/dot-zshenv"
-      export ZDOTDIR="$PRIVATE_CONFIG_PREFIX/.config/zsh/"
+      if [[ -z "$XDG_CONFIG_HOME" ]]; then
+      	export XDG_CONFIG_HOME="$HOME/.config/"
+      fi
+      export ZDOTDIR="$XDG_CONFIG_HOME/zsh/"
       export IS_NIX=1
       '';
-    # initExtra =
-    # ''
-    # source $PRIVATE_CONFIG_PREFIX/zshrc
-    # '';
+    initExtra =
+      ''
+      source $ZDOTDIR/zshrc
+      '';
   };
   programs.neovim = {
     package = pkgs.neovim-nightly;
