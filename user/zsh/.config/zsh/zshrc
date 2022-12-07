@@ -1,3 +1,19 @@
+unset LC_MESSAGES
+source /etc/locale.conf
+
+if [[ $- != *i* ]]; then
+    return
+fi
+
+source $ZDOTDIR/store.zsh
+source $ZDOTDIR/aliases.zsh
+
+setopt MENU_COMPLETE ALWAYS_TO_END
+setopt HIST_SAVE_NO_DUPS
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
 PROMPT="%F{#ff0055}%n%f@%F{#dd6}%m%f %(?.%F{#00dd00}%f.%F{#aa0000}%?%f)%  %~> "
 
 # PLUGINS
@@ -23,33 +39,8 @@ zstyle ':completion:*' group-name ''
 
 _comp_options+=(globdots)
 
-setopt MENU_COMPLETE ALWAYS_TO_END
-setopt HIST_SAVE_NO_DUPS
-setopt AUTO_PUSHD
-setopt PUSHD_IGNORE_DUPS
-setopt PUSHD_SILENT
-
 export KEYTIMEOUT=1
 
-# Command aliases
-alias ls="exa"
-alias la="exa -la"
-if [[ -z "$IS_NIX" ]]; then
-    alias search="pacman -Ss"
-    alias install="sudo pacman -Syu"
-else
-    alias search="nix search nixpkgs"
-    function install() {
-        if [[ $# -lt 1 ]]; then
-            return -1
-        fi
-        nix profile install "nixpkgs#$1"
-    }
-fi
-alias reload="source $ZDOTDIR/.zshrc"
-alias tempdir='cd `mktemp -d`'
-alias cat='bat'
-alias tempdir='cd `mktemp -d`'
 # VIM mod
 source $ZDOTDIR/'cursor_mode'
 
@@ -62,9 +53,6 @@ if [ "$DESKTOP_SESSION" != "gnome" ]
 then
     export MOZ_ENABLE_WAYLAND=1
 fi
-
-unset LC_MESSAGES
-source /etc/locale.conf
 
 if [[ "$IS_NIX" = 1 ]]; then
     remove_profile() {
