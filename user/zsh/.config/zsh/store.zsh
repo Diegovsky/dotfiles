@@ -18,13 +18,15 @@ function db_load() {
     if [[ -f "$ZSH_DB" ]]; then
         source "$ZSH_DB"
     else
-        echo -n "Failed to read $ZSH_DB"
+        error "Failed to read $ZSH_DB"
+        return 1
     fi
 }
 function db_flush() {
     db_create
     for key value in ${(kv)__zsh_db}; do
         echo "__zsh_db[$key]=$value" >> $ZSH_DB
+        return 1
     done
 }
 
@@ -47,5 +49,7 @@ function db_get() {
     fi
     echo ${__zsh_db[$1]}
 }
-
-db_load
+db_load 2>/dev/null
+if [[ $? -ne 0 ]]; then
+    db_create
+fi

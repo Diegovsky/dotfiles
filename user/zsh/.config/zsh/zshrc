@@ -14,20 +14,28 @@ setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
-PROMPT="%F{#ff0055}%n%f@%F{#dd6}%m%f %(?.%F{#00dd00}%f.%F{#aa0000}%?%f)%  %~> "
-
 # PLUGINS
 source "$ZDOTDIR/ls_colours"
 source "$ZDOTDIR/zoxide"
 # This must be before compinit
 zmodload zsh/complist
-# Case insensitive completion
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-autoload -U compinit; compinit
+autoload -U compinit promptinit
+compinit
+promptinit
+
+# Help command
+autoload -Uz run-help;
+(( ${+aliases[run-help]} )) && unalias run-help
+alias help=run-help
+autoload -Uz run-help-git run-help-ip run-help-openssl run-help-p4 run-help-sudo run-help-svk run-help-svn
+
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Case insensitive completion
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' completer _extensions _complete _approximate
 zstyle ':completion:*' squeeze-slashes true
+zstyle ':completion::complete:*' gain-privileges 1
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache/}/zsh/.zcompcache"
 zstyle ':completion:*' menu select interactive search 
@@ -43,6 +51,9 @@ export KEYTIMEOUT=1
 
 # VIM mod
 source $ZDOTDIR/'cursor_mode'
+
+source "$ZDOTDIR/prompt"
+
 
 # Load other keybindings
 source "$ZDOTDIR/bindings"
