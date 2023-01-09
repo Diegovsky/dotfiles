@@ -23,3 +23,13 @@ alias tempdir='cd `mktemp -d`'
 if which helix > /dev/null; then
     alias hx=helix
 fi
+
+
+# Help command
+autoload -Uz run-help-git run-help-ip run-help-openssl run-help-p4 run-help-sudo run-help-svk run-help-svn
+autoload -Uz run-help;
+
+(( ${+aliases[run-help]} )) && unalias run-help
+help() {
+    PAGER='less -S' run-help $@
+}
