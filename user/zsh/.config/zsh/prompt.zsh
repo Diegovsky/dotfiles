@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 # enable vcs_info
-autoload -Uz vcs_info
+autoload -Uz vcs_info add-zsh-hook
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:*' max-exports 3
 zstyle ':vcs_info:git:*' check-for-changes true

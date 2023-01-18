@@ -1,10 +1,6 @@
 unset LC_MESSAGES
 source /etc/locale.conf
 
-if [[ $- != *i* ]]; then
-    return
-fi
-
 # quck function to source scripts from zsh folder
 function import() {
     if [[ $# -eq 0 ]]; then
@@ -18,9 +14,10 @@ function import() {
 # holds important functionality for other parts
 import store.zsh
 
-import aliases.zsh
+import lua-server/server.zsh
 
 # PLUGINS
-import etc.zsh zoxide.zsh direnv.zsh cursor_mode.zsh bindings.zsh prompt.zsh prompt_name.zsh 
+import etc.zsh zoxide.zsh direnv.zsh cursor_mode.zsh
+import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

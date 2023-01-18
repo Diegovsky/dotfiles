@@ -3,6 +3,7 @@ declare -g -A keycode
 keycode[up]='^[[A'
 keycode[down]='^[[B'
 keycode[Delete]='\e[3~'
+keycode[Backspace]='^?'
 
 # Enable vim mode
 # bindkey -v
@@ -24,7 +25,7 @@ bindkey -M menuselect '\e' send-break
 # bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect "$keycode[Delete]" send-break
 bindkey -M menuselect "^H" backward-delete-word
-bindkey -M menuselect '^?' send-break
+bindkey -M menuselect '^?' backward-delete-char
 # bindkey -M menuselect "^C" send-break
 # bindkey -M menuselect '/' accept-and-infer-next-history
 

@@ -12,10 +12,18 @@ setopt PUSHD_SILENT
 
 # This must be before loading keybinds
 zmodload zsh/complist
-autoload -U compinit promptinit
+autoload -U compinit
 compinit
-promptinit
 
+# Taken from here: https://thevaluable.dev/zsh-completion-guide-examples/
+# Pattern:
+#   :completion:<function>:<completer>:<command>:<argument>:<tag>
+# - completion - String acting as a namespace, to avoid pattern collisions with other scripts also using zstyle.
+# - <function> - Apply the style to the completion of an external function or widget.
+# - <completer> - Apply the style to a specific completer. We need to drop the underscore from the completer’s name here.
+# - <command> - Apply the style to a specific command, like cd, rm, or sed for example.
+# - <argument> - Apply the style to the nth option or the nth argument. It’s not available for many styles.
+# - <tag> - Apply the style to a specific tag.
 # Case insensitive completion
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' completer _extensions _complete _approximate
@@ -33,7 +41,6 @@ zstyle ':completion:*' group-name ''
 _comp_options+=(globdots)
 
 export KEYTIMEOUT=1
-export MOZ_ENABLE_WAYLAND=1
 
 if [[ "$IS_NIX" = 1 ]]; then
     remove_profile() {
