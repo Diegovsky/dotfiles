@@ -18,6 +18,17 @@ function replace_for() {
 }
 replace_for 'cat' 'bat'
 replace_for 'ls' 'exa'
+
+if which nvim > /dev/null; then
+    function nvim() {
+        if [[ -n "$NVIM_LISTEN_ADDRESS" ]]; then
+            nvr -o "$@"
+        else
+            command nvim "$@"
+        fi
+    }
+fi
+
 alias la="ls -la"
 alias tempdir='cd `mktemp -d`'
 if which helix > /dev/null; then
@@ -33,3 +44,28 @@ autoload -Uz run-help;
 help() {
     PAGER='less -S' run-help $@
 }
+
+function notify-me() {
+    local code=$?
+    local cmd
+    if [[ $# == 0 ]]; then
+        cmd=$( echo "$history[$HISTCMD]" | cut -d';' -f1 )
+    else
+        $@
+        code=$?
+        cmd="$@"
+    fi
+    local img
+    local msg
+    if [[ $code == 0 ]]; then
+        img="$ZDOTDIR/img/ok.png"
+        msg="Finished <b>successfully</b>"
+    else
+        img="$ZDOTDIR/img/error.png"
+        msg="Failed with error code <b>$code</b>"
+    fi
+    notify-send -e --icon="$img" "Command '$cmd'" "$msg"
+
+}
+
+alias notme=notify-me

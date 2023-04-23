@@ -1,6 +1,14 @@
 unset LC_MESSAGES
 source /etc/locale.conf
 
+if zmodload lua; then
+    HAS_LUA=1
+    zmodload lua
+    lua-source "$ZDOTDIR/init.lua"
+    alias lua=lua-eval
+fi
+
+
 # quck function to source scripts from zsh folder
 function import() {
     if [[ $# -eq 0 ]]; then
@@ -11,10 +19,15 @@ function import() {
     import $@
 }
 
+function lua-source() {
+    if [[ -n "$HAS_LUA" ]]; then
+        builtin lua-source $1
+    fi
+}
+
+
 # holds important functionality for other parts
 import store.zsh
-
-import lua-server/server.zsh
 
 # PLUGINS
 import etc.zsh zoxide.zsh direnv.zsh cursor_mode.zsh
