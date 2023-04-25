@@ -41,7 +41,7 @@ function meta::osc() {
 }
 
 function meta::osc7() {
-    osc 7 "file://$PWD"
+    meta::osc 7 "file://$PWD"
 }
 
 # holds important functionality for other parts
