@@ -25,6 +25,24 @@ function lua-source() {
     fi
 }
 
+autoload -U add-zsh-hook
+
+function meta::join() {
+    local sep=$1
+    shift
+    eval "print \${(j.${sep}.)@}"
+}
+
+function meta::osc() {
+    if [[ $# -eq 0 ]]; then
+        print 'fail to osc' args: $@
+    fi
+    print -Pn "\e]$(meta::join ';' $@)\e\\"
+}
+
+function meta::osc7() {
+    osc 7 "file://$PWD"
+}
 
 # holds important functionality for other parts
 import store.zsh
@@ -32,5 +50,8 @@ import store.zsh
 # PLUGINS
 import etc.zsh zoxide.zsh direnv.zsh cursor_mode.zsh
 import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh
+
+
+add-zsh-hook chpwd meta::osc7
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

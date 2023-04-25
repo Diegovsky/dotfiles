@@ -50,6 +50,7 @@ function notify-me() {
     local cmd
     if [[ $# == 0 ]]; then
         cmd=$( echo "$history[$HISTCMD]" | cut -d';' -f1 )
+        cmd="${cmd## }"
     else
         $@
         code=$?
@@ -57,14 +58,20 @@ function notify-me() {
     fi
     local img
     local msg
+    local category
     if [[ $code == 0 ]]; then
         img="$ZDOTDIR/img/ok.png"
         msg="Finished <b>successfully</b>"
+        category='transfer.complete'
     else
         img="$ZDOTDIR/img/error.png"
         msg="Failed with error code <b>$code</b>"
+        category='transfer.fail'
     fi
-    notify-send -e --icon="$img" "Command '$cmd'" "$msg"
+    if [[ ${#cmd} -ge 15 ]]; then
+        cmd="${cmd::12}..."
+    fi
+    notify-send --category="$category" --icon="$img" "Command '${cmd}' finished" "$msg"
 
 }
 

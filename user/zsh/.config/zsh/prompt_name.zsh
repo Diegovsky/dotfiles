@@ -1,7 +1,6 @@
 
 function set-title { 
-    local OUTPUT="\033]0;$1\a"
-    echo -en "$OUTPUT"
+    meta::osc 0 "$1"
 }
 
 function command-name {
