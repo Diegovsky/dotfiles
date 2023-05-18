@@ -59,12 +59,13 @@ bindkey "eOH" beginning-of-line
 bindkey "eOF" end-of-line
 
 if which fzf >> /dev/null; then
+    alias choose='fzf --bind=tab:up --bind=shift-tab:down'
     function fuzzy-history() {
-    BUFFER=$(fzf -q "$BUFFER" < $HISTFILE)
-    if $? -e 0; then
-        zle accept-line
-    fi
-    zle reset-prompt
+        BUFFER=$(choose -q "$BUFFER" < $HISTFILE)
+        if [[ $? -eq 0 ]]; then
+            zle accept-line
+        fi
+        zle reset-prompt
     }
     zle -N fuzzy-history
     bindkey "^R" 'fuzzy-history'

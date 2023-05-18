@@ -7,7 +7,7 @@ set $term footclient
 set $editor nvim-gtk
 set $browser firefox
 # set $menu wofi --show run
-set $menu dlauncher-toggle
+set $menu bemenu-run
 set $status_command "$HOME/.local/bin/statusbar2.py"
 set $mouse "Logitech_G903_LS"
 output * bg $(xdg-user-dir PICTURES)/wallpaper.png fill

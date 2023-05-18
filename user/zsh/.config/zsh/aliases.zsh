@@ -75,4 +75,20 @@ function notify-me() {
 
 }
 
+function latex-live-pdf() {
+    local lfile="$1.latex"
+    if [[ ! -f $lfile ]]; then
+        echo "File $lfile not found"
+        lfile="$1.tex"
+        if [[ ! -f $lfile ]]; then
+            echo "File $lfile not found"
+            return 1
+        fi
+    fi
+
+    
+    while :; do inotifywait -e modify "$lfile"; pdflatex -interaction nonstopmode "$1"; done
+}
+
 alias notme=notify-me
+alias nnvim='cd ~/.config/nvim && nvim'
