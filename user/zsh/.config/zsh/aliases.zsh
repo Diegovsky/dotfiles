@@ -92,3 +92,4 @@ function latex-live-pdf() {
 
 alias notme=notify-me
 alias nnvim='cd ~/.config/nvim && nvim'
+alias build='ninja -C build'
