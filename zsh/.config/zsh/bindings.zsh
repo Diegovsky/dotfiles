@@ -5,8 +5,10 @@ keycode[down]='^[[B'
 keycode[Delete]='\e[3~'
 keycode[Backspace]='^?'
 
-# Enable vim mode
-# bindkey -v
+if [[ -n "$NVIM_LISTEN_ADDRESS" ]]; then
+    # if we're inside neovim terminal, use emacs mode
+    bindkey -e
+fi
 
 # History based command completion
 for direction (up down) {
@@ -19,6 +21,7 @@ for direction (up down) {
 bindkey -M menuselect '^[[Z' vi-up-line-or-history
 bindkey -M menuselect '\t' vi-down-line-or-history
 bindkey -M menuselect '\e' send-break
+bindkey -M command '\e' send-break
 # bindkey -M menuselect 'h' vi-backward-char
 # bindkey -M menuselect 'j' vi-down-line-or-history
 # bindkey -M menuselect 'k' vi-up-line-or-history

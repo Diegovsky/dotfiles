@@ -1,1 +1,0 @@
-../user/nix/.config/nixpkgs/home.nix
