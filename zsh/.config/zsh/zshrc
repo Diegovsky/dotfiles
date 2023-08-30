@@ -1,13 +1,6 @@
+typeset -a _missing
 unset LC_MESSAGES
 source /etc/locale.conf
-
-if zmodload lua; then
-    HAS_LUA=1
-    zmodload lua
-    lua-source "$ZDOTDIR/init.lua"
-    alias lua=lua-eval
-fi
-
 
 # quck function to source scripts from zsh folder
 function import() {
@@ -17,12 +10,6 @@ function import() {
     source "$ZDOTDIR/$1"
     shift
     import $@
-}
-
-function lua-source() {
-    if [[ -n "$HAS_LUA" ]]; then
-        builtin lua-source $1
-    fi
 }
 
 autoload -U add-zsh-hook
@@ -44,9 +31,6 @@ function meta::osc7() {
     meta::osc 7 "file://$PWD"
 }
 
-# holds important functionality for other parts
-import store.zsh
-
 # PLUGINS
 import etc.zsh zoxide.zsh direnv.zsh cursor_mode.zsh
 import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh
@@ -54,4 +38,15 @@ import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh
 
 add-zsh-hook chpwd meta::osc7
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+    _missing+='zsh-syntax-highlighting'
+fi
+
+if [[ ${#_missing} -ge 0 ]]; then
+    echo "There are parts missing from your installation. They are:"
+    for x in $_missing; do
+        echo -e '    -' $x
+    done
+fi

@@ -8,12 +8,7 @@ function replace_for() {
     if which $2 > /dev/null; then
         eval 'alias' "$1=$2"
     else
-        local key="show_error_alias_$2"
-        local shown_error=$(db_get $key)
-        if [[ -z $shown_error ]]; then
-            echo "Command '$2' missing, falling back to '$1'"
-            db_put $key 1
-        fi
+        _missing+="$2"
     fi
 }
 replace_for 'cat' 'bat'
