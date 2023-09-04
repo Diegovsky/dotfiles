@@ -44,7 +44,7 @@ else
     _missing+='zsh-syntax-highlighting'
 fi
 
-if [[ ${#_missing} -ge 0 ]]; then
+if [[ ${#_missing} -gt 0 ]]; then
     echo "There are parts missing from your installation. They are:"
     for x in $_missing; do
         echo -e '    -' $x
