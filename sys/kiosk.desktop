@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Kiosk
+Comment=A kiosk designed to run a single app then quit
+Exec=kiosk-session
+Type=Application
