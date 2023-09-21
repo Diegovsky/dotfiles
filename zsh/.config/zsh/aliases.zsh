@@ -71,18 +71,14 @@ function notify-me() {
 }
 
 function latex-live-pdf() {
-    local lfile="$1.latex"
+    local lfile="$1.tex"
     if [[ ! -f $lfile ]]; then
-        echo "File $lfile not found"
-        lfile="$1.tex"
-        if [[ ! -f $lfile ]]; then
-            echo "File $lfile not found"
-            return 1
-        fi
+        return 1
     fi
 
+    (sleep 2 && xdg-open "$1.pdf") &
     
-    while :; do inotifywait -e modify "$lfile"; pdflatex -interaction nonstopmode "$1"; done
+    while :; do pdflatex -interaction nonstopmode "$1"; inotifywait -e modify "$lfile"; done
 }
 
 alias notme=notify-me
