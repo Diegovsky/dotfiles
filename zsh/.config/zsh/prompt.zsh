@@ -98,11 +98,8 @@ function prompt-theme-blue() {
     prompt-reload
 }
 
-case $HOST in
-    ryzenarch)
-        theme yellow
-        ;;
-    *)
-        theme blue
-        ;;
-esac
+if [[ -n "$SSH_CLIENT" ]]; then
+    theme yellow
+else
+    theme blue
+fi
