@@ -8,6 +8,7 @@ set $editor nvim-gtk
 set $browser firefox
 # set $menu wofi --show run
 set $menu bemenu-run
+set $app_opener bemenu -i
 set $status_command "$HOME/.local/bin/statusbar2.py"
 set $mouse "Logitech_G903_LS"
 output * bg $(xdg-user-dir PICTURES)/wallpaper.png fill
@@ -16,7 +17,8 @@ output * bg $(xdg-user-dir PICTURES)/wallpaper.png fill
 bindsym $mod+Return exec $term
 bindsym $mod+q kill
 bindsym Ctrl+Alt+Home exec systemctl suspend
-bindsym $mod+Space exec $menu
+bindsym $mod+Space exec j4-dmenu-desktop --dmenu="$app_opener"
+bindsym $mod+d exec $menu
 bindsym $mod+Insert exec $editor
 bindsym $mod+Backspace exec $browser
 floating_modifier $mod normal
@@ -79,6 +81,9 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
+bindsym F8 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindgesture swipe:right workspace prev
+bindgesture swipe:left workspace next
 # bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 bindsym $mod+Shift+minus move scratchpad
@@ -112,6 +117,7 @@ input "Logitech_G903_LS" {
     accel_profile flat
 }
 input "type:touchpad" {
+    accel_profile adaptive
     scroll_method two_finger
     natural_scroll enabled
     tap enabled
