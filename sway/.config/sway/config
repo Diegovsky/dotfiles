@@ -11,7 +11,7 @@ set $menu bemenu-run
 set $app_opener bemenu -i
 set $status_command "$HOME/.local/bin/statusbar2.py"
 set $mouse "Logitech_G903_LS"
-output * bg $(xdg-user-dir PICTURES)/wallpaper.png fill
+output * bg $(xdg-user-dir PICTURES)/tubes2.png fill
 
 # bindsym $mod+shift+r exec bash -c 'swaymsg bar bar-0 status_command -; swaymsg bar bar-0 status_command $status_command'
 bindsym $mod+Return exec $term
@@ -26,6 +26,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym Ctrl+Print exec wlr-screenshot output
 bindsym Ctrl+Shift+Print exec wlr-screenshot select
 bindsym Ctrl+Alt+Print exec wlr-screenshot current-window
@@ -33,6 +34,8 @@ bindsym XF86AudioPlay exec playerctl --player playerctld play-pause
 bindsym XF86AudioNext exec playerctl --player playerctld next
 bindsym XF86AudioPrev exec playerctl --player playerctld previous
 bindsym XF86AudioStop exec playerctl --player playerctld stop
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
@@ -81,6 +84,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
+bindsym Print exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot sent to clipboard"
 bindsym F8 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next
@@ -123,6 +127,11 @@ input "type:touchpad" {
     tap enabled
 }
 
+exec_always {
+  gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"
+  gsettings set org.gnome.desktop.interface icon-theme "Adwaita"
+}
+
 gaps inner 10
 # STARTUP PROGRAMS
 exec waybar
@@ -139,6 +148,11 @@ exec foot --server &
 # Remembers last played player
 exec playerctld &
 
+# Inhibit idle if anything is fullscreen and visible
+for_window [class="^.*"] inhibit_idle fullscreen
+for_window [app_id="^.*"] inhibit_idle fullscreen
+
+# Inhibit idle if steam app is focused
 for_window [class="steam_app*"] inhibit_idle focus
 
 include /etc/sway/config.d/*

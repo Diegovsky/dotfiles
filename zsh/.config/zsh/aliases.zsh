@@ -97,3 +97,13 @@ function ghclone() {
     shift
     eval "$cmd$repo" "$@"
 }
+
+export NOTES_DIR="${NOTES_DIR:-$(xdg-user-dir DOCUMENTS)/Notes}"
+
+function notes() {
+    if [[ ! -d "$NOTES_DIR" ]]; then
+        mkdir -p "$NOTES_DIR"
+    fi
+    cd "$NOTES_DIR" &&
+    $EDITOR
+}

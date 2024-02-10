@@ -1,0 +1,30 @@
+add_newline = false
+
+format="""\
+$username\
+$hostname\
+$status\
+$all\
+$directory \
+$character\
+"""
+
+[directory]
+
+[hostname]
+ssh_only=false
+style="blue"
+format='[$ssh_symbol$hostname]($style) '
+
+[username]
+format="[$user]($style)@"
+show_always=true
+
+[status]
+disabled=false
+style='bold green'
+success_symbol=''
+symbol=''
+format='[$symbol]($style)[$maybe_int](red) '
+
+
