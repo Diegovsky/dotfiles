@@ -1,8 +1,9 @@
+unset _missing
 typeset -a _missing
 unset LC_MESSAGES
-source /etc/locale.conf
+[[ -f /etc/locale.conf ]] && source /etc/locale.conf
 
-# quck function to source scripts from zsh folder
+# quick function to source scripts from zsh folder
 function import() {
     if [[ $# -eq 0 ]]; then
         return
@@ -32,8 +33,14 @@ function meta::osc7() {
 }
 
 # PLUGINS
-import etc.zsh zoxide.zsh direnv.zsh cursor_mode.zsh
+import etc.zsh direnv.zsh cursor_mode.zsh
 import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh
+
+if which zoxide > /dev/null; then
+	import zoxide.zsh 
+else
+	_missing+=zoxide
+fi
 
 
 add-zsh-hook chpwd meta::osc7

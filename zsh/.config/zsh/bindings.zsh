@@ -41,6 +41,10 @@ bindkey '^E' end-of-line
 bindkey -M vicmd '^A' beginning-of-line
 bindkey -M vicmd '^E' end-of-line
 
+# make backspace work from vim mode
+bindkey -M main "^H" backward-delete-char
+bindkey -M main "^?" backward-delete-char
+
 bindkey "e[1~" beginning-of-line
 bindkey "e[4~" end-of-line
 bindkey "e[5~" beginning-of-history
@@ -61,7 +65,7 @@ bindkey "e[7~" beginning-of-line
 bindkey "eOH" beginning-of-line
 bindkey "eOF" end-of-line
 
-if which fzf >> /dev/null; then
+if [[ -n ${commands[fzf]} ]]; then
     alias choose='fzf --bind=tab:up --bind=shift-tab:down'
     function fuzzy-history() {
         BUFFER=$(choose -q "$BUFFER" < $HISTFILE)
@@ -72,6 +76,8 @@ if which fzf >> /dev/null; then
     }
     zle -N fuzzy-history
     bindkey "^R" 'fuzzy-history'
+else
+    _missing+=fzf
 fi
 
 # Clear current command on <ESC><ESC>

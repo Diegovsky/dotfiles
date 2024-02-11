@@ -5,3 +5,6 @@ zshdb
 **/packer_compiled.lua
 **/git/private
 nix/result
+
+.DS_STORE
+**/.zsh_sessions

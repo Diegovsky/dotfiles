@@ -5,16 +5,17 @@ alias install="sudo pacman -Syu"
 alias reload="source $ZDOTDIR/.zshrc"
 alias tempdir='cd `mktemp -d`'
 function replace_for() {
-    if which $2 > /dev/null; then
+    if [[ -n ${commands[$2]} ]]; then
         eval 'alias' "$1=$2"
     else
         _missing+="$2"
     fi
 }
-replace_for 'cat' 'bat'
-replace_for 'ls' 'exa'
 
-if which nvim > /dev/null; then
+replace_for 'cat' 'bat'
+replace_for 'ls' 'eza'
+
+if [[ -n ${commands[nvim]} ]]; then
     function nvim() {
         if [[ -n "$NVIM_LISTEN_ADDRESS" ]]; then
             nvr -o "$@"
@@ -26,7 +27,7 @@ fi
 
 alias la="ls -la"
 alias tempdir='cd `mktemp -d`'
-if which helix > /dev/null; then
+if [[ -n ${commands[helix]} ]]; then
     alias hx=helix
 fi
 

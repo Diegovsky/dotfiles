@@ -9,6 +9,10 @@ add-zsh-hook -Uz precmd vcs_info # always load before displaying the prompt
 
 setopt prompt_subst
 
+function sed() {
+	cat
+}
+
 clear='%f'
 
 function theme() {
