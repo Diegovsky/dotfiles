@@ -42,8 +42,9 @@ function meta::arg() {
 }
 
 function meta::watchfilesdir {
-    ! meta::arg $1 DIR 'to watch' && return 1
+    meta::arg $1 DIR 'to watch' || return 1
     local dir="$1"
+
     [[ ! -d "$dir" ]] && err "$dir: not a directory" && return 1
     shift
     if [[ -n "$@" ]]; then
@@ -54,7 +55,7 @@ function meta::watchfilesdir {
 }
 
 function meta::watchfile() {
-    ! meta::arg $1 FILE 'to watch' && return 1
+    meta::arg $1 FILE 'to watch' || return 1
 
     meta::watchfilesdir $(dirname $1) $1
 }

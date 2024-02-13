@@ -1,7 +1,7 @@
 
 function remote::watch() {
-    ! meta::arg $1 FILE 'to serve' && return 1
-    ! meta::needs rclone inotifywait && return 1
+    meta::arg $1 FILE 'to serve' || return 1
+    meta::needs rclone inotifywait || return 1
 
     echo "Setting up file serving using WebDav on directory $1..."
 
@@ -13,16 +13,20 @@ function remote::watch() {
 }
 
 function remote::run() {
-    ! meta::arg $1 ADDR 'to connect' && return 1
-    ! meta::arg $2 FILE 'to be received' && return 1
-    ! meta::needs rclone && return 1
+    emulate -LR zsh
+    set -euo pipefail
 
-    local mount=/tmp/webdav
+    meta::arg $1 REMOTE 'to connect (this is an rclone remote. Run `rclone config` to define one)'
+    meta::arg $2 FILE 'to be received'
+    meta::needs rclone
+
+    local mount="/tmp/$1"
     local file="$mount/$2"
 
     mkdir -p $mount
 
-    (! rclone mount "$1" "$mount" && return 1) &
+    systemctl --user start "file-grabbing@$1.service"
+
     while meta::watchfile "$file" ; do
         echo "Got file!"
         "$file"

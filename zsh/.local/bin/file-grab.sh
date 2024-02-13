@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
-
-dir="/tmp/$1"
+name="$2"
+dir="/tmp/$name"
 
 mkdir -p $dir
-rclone mount $1 $dir
+rclone mount "$name:" $dir
