@@ -2,7 +2,7 @@
 Description=File serving daemon using WebDav
 
 [Service]
-ExecStart=/usr/bin/rclone serve webdav /src/webdav
+ExecStart=/home/diegovsky/.local/bin/file-serve.sh serve webdav /srv/webdav --addr 127.0.0.1:6530
 
 [Install]
 WantedBy=default.target

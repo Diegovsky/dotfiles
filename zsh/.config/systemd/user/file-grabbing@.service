@@ -1,0 +1,8 @@
+[Unit]
+Description=File grabbing mount using WebDav
+
+[Service]
+ExecStart=/home/diegovsky/.local/bin/file-grab.sh %I
+
+[Install]
+WantedBy=default.target
