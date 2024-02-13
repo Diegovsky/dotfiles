@@ -1,50 +1,30 @@
 
-needs() {
-    if [[ -z ${commands[$1]} ]]; then
-        echo "Missing '$1'" 1>&2
-        exit 1
-    elif [[ $# -gt 2 ]]; then
-        shift
-        needs $@
-    fi
-}
-
 function remote::watch() {
-    if [[ -z $1 ]]; then
-        echo 'Missing FILE to be served'
-        return 1
-    fi
-    if ! needs rclone inotifywait; then
-        return 1
-    fi
+    ! arg $1 FILE 'to serve' && return 1
+    ! meta::needs rclone inotifywait && return 1
 
     echo "Setting up file serving using WebDav on directory $1..."
+
     systemctl --user start file-serving
-    while inotifywait $1 -e modify -e create; do
+
+    while meta::watchfile $1; do
         mv $1 /src/webdav
     done
 }
 
 function remote::run() {
-    set -e
-    if [[ -z $1 ]]; then
-        echo 'Missing ADDR to connect'
-        return 1
-    fi
-    if [[ -z $2 ]]; then
-        echo 'Missing FILE to be received'
-        return 1
-    fi
+    ! arg $1 ADDR 'to connect' && return 1
+    ! arg $2 FILE 'to be received' && return 1
+    ! meta::needs rclone && return 1
 
-    if ! needs rclone; then
-        return 1
-    fi
-
-    local mount=/mnt/webdav
+    local mount=/tmp/webdav
     local file="$mount/$2"
 
-    rclone mount "$ADDR" "$mount"
-    while inotifywait "$file" -e modify -e create ; do
+    mkdir -p $mount
+
+    (! rclone mount "$1" "$mount" && return 1) &
+    while meta::watchfile "$file" ; do
+        echo "Got file!"
         "$file"
     done
 }

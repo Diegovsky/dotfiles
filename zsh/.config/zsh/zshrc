@@ -21,9 +21,47 @@ function meta::join() {
     eval "print \${(j.${sep}.)@}"
 }
 
+function meta::needs() {
+    if [[ -z ${commands[$1]} ]]; then
+        meta::err "Missing '$1'" 1>&2
+        return 1
+    elif [[ $# -gt 2 ]]; then
+        shift
+        needs $@
+    fi
+}
+
+function meta::err() {
+    print "$@" -u 2
+}
+
+function meta::arg() {
+    if [[ -z $1 ]]; then
+        meta::err Missing ${2:-ARG} $3
+    fi
+}
+
+function meta::watchfilesdir {
+    ! meta::arg $1 DIR 'to watch' && return 1
+    local dir="$1"
+    [[ ! -d "$dir" ]] && err "$dir: not a directory" && return 1
+    shift
+    if [[ -n "$@" ]]; then
+        inotifywait -e create -e close -e modify "$dir" --include $@
+    else
+        inotifywait "$dir"
+    fi
+}
+
+function meta::watchfile() {
+    ! meta::arg $1 FILE 'to watch' && return 1
+
+    meta::watchfilesdir $(dirname $1) $1
+}
+
 function meta::osc() {
     if [[ $# -eq 0 ]]; then
-        print 'fail to osc' args: $@
+        meta::err 'fail to osc' args: $@
     fi
     print -Pn "\e]$(meta::join ';' $@)\e\\"
 }
