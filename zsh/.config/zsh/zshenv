@@ -44,4 +44,5 @@ export NUGET_PACKAGES="$XDG_CACHE_HOME"/NuGetPackages
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 path+="$CARGO_HOME/bin"
-. "/Users/diegovsky/Library//cargo/env"
+
+. "$CARGO_HOME/env"
