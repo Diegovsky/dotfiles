@@ -45,4 +45,4 @@ export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
 
 path+="$CARGO_HOME/bin"
 
-. "$CARGO_HOME/env"
+[[ -n "$IS_MAC" ]] && . "$CARGO_HOME/env"
