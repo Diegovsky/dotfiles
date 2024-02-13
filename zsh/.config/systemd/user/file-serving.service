@@ -1,0 +1,8 @@
+[Unit]
+Description=File serving daemon using WebDav
+
+[Service]
+ExecStart=/usr/bin/rclone serve webdav /src/webdav
+
+[Install]
+WantedBy=default.target
