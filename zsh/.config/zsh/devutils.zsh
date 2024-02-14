@@ -2,7 +2,7 @@ function net::send() {
     meta::arg "$1" FILES 'to send' || return 5
     meta::arg "$2" REMOTE 'to send the files (will use ssh)' || return 5
 
-    rsync -azvhe "ssh -p ${PORT:-6534}" ${@:2} "$1"
+    rsync -azvhe "ssh -p ${PORT:-6534}" $@
 }
 
 function net::setup-recv() {
@@ -13,9 +13,10 @@ function net::setup-recv() {
 }
 
 function rust::net-build() {
-    meta::arg "${RECV_DIR:-$1}" REMOTE 'to send the file (will use ssh)' || return 5
+    local remote="${RECV_DIR:-$1}"
+    meta::arg "$remote" REMOTE 'to send the file (will use ssh)' || return 5
 
-    exe="${EXE:-target/debug/$PWD}"
+    exe="${EXE:-target/debug/$(basename $PWD)}"
 
     cargo build
 
@@ -24,10 +25,14 @@ function rust::net-build() {
         return 1
     fi
 
-    local exename="$(basename $exename)"
+    local exename="$(basename $exe)"
     local tarexe="$exename.tar.xz"
 
-    strip $exe
-    tar -I xz -cf "$tarexe" "$exe"
-    net::send "$tarexe" "$1"
+    strip "$exe"
+
+    echo "Compressing '$exe'..."
+    tar -I xz -vcf "$tarexe" "$exe"
+    echo "Done!"
+
+    net::send "$tarexe" "$remote"
 }
