@@ -32,17 +32,18 @@ function meta::needs() {
 }
 
 function meta::err() {
-    print "$@" -u 2
+    print -u 2 "$@"
 }
 
 function meta::arg() {
     if [[ -z $1 ]]; then
         meta::err Missing ${2:-ARG} $3
+        return 1
     fi
 }
 
 function meta::watchfilesdir {
-    meta::arg $1 DIR 'to watch' || return 1
+    meta::arg "$1" DIR 'to watch' || return 1
     local dir="$1"
 
     [[ ! -d "$dir" ]] && err "$dir: not a directory" && return 1
@@ -55,7 +56,7 @@ function meta::watchfilesdir {
 }
 
 function meta::watchfile() {
-    meta::arg $1 FILE 'to watch' || return 1
+    meta::arg "$1" FILE 'to watch' || return 1
 
     meta::watchfilesdir $(dirname $1) $1
 }
@@ -73,7 +74,7 @@ function meta::osc7() {
 
 # PLUGINS
 import etc.zsh direnv.zsh cursor_mode.zsh
-import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh
+import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh devutils.zsh
 
 if which zoxide > /dev/null; then
 	import zoxide.zsh 
