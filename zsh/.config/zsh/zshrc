@@ -49,9 +49,9 @@ function meta::watchfilesdir {
     [[ ! -d "$dir" ]] && err "$dir: not a directory" && return 1
     shift
     if [[ -n "$@" ]]; then
-        inotifywait -e create -e close -e modify "$dir" --include $@
+        inotifywait -q -e create -e close -e modify "$dir" --include $@
     else
-        inotifywait "$dir"
+        inotifywait -q "$dir"
     fi
 }
 
