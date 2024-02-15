@@ -3,3 +3,4 @@
 .vimrc
 **/.cache
 compile_commands.json
+*.xz
