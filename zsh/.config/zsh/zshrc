@@ -1,17 +1,6 @@
-unset _missing
-typeset -a _missing
+typeset -a _missing=()
 unset LC_MESSAGES
 [[ -f /etc/locale.conf ]] && source /etc/locale.conf
-
-# quick function to source scripts from zsh folder
-function import() {
-    if [[ $# -eq 0 ]]; then
-        return
-    fi
-    source "$ZDOTDIR/$1"
-    shift
-    import $@
-}
 
 autoload -U add-zsh-hook
 
@@ -73,11 +62,14 @@ function meta::osc7() {
 }
 
 # PLUGINS
-import etc.zsh direnv.zsh cursor_mode.zsh
-import bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh devutils.zsh
+plugins='etc.zsh direnv.zsh cursor_mode.zsh bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh devutils.zsh'
+for plugin in "${(s: :)plugins}"
+do
+    source "$ZDOTDIR/$plugin"
+done
 
-if which zoxide > /dev/null; then
-	import zoxide.zsh 
+if [[ -n ${commands[zoxide]} ]]; then
+    eval "$(zoxide init zsh)"
 else
 	_missing+=zoxide
 fi

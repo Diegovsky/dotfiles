@@ -1,3 +1,6 @@
+typeset -A macs=()
+macs[homearch]='a8:a1:59:43:fd:cd'
+
 function net::send() {
     meta::arg "$1" FILES 'to send' || return 5
     meta::arg "$2" REMOTE 'to send the files (will use ssh)' || return 5
@@ -8,6 +11,19 @@ function net::send() {
     echo "Sending $files to $remote"
     rsync -azvhe "ssh -p ${PORT:-6534}" $files $remote
     return $?
+}
+
+function net::wake() {
+    local machine="$1"
+    if [[ -z "$machine" ]]; then
+        print "Which machine do you want to wake?"
+        for m a in "${(@kv)macs}"; do
+            echo "    - $m | $a"
+        done | column -t
+        echo -n '> '
+        read machine
+    fi
+    wol "${macs[$machine]}"
 }
 
 RECV_DIR="$HOME/Downloads/ssh-recv"
@@ -22,11 +38,15 @@ function net::setup-run() {
 
     while :; do
         echo "Waiting to receive file..."
-        meta::watchfile "$arquive"
-        echo "Got it"
-        rm -f "$1"
-        xz -d "$arquive"
-        chmod +x "$1"
+        meta::watchfile "$1"
+        if [[ ! -f "$arquive" ]]; then
+            echo "Just rerun what we have"
+        else
+            echo "Got it"
+            rm -f "$1"
+            xz -d "$arquive"
+            chmod +x "$1"
+        fi
         "./$1"
     done
 }
@@ -44,8 +64,18 @@ function rust::net-build() {
         return 1
     fi
 
+    if [[ "${__file_hashes[$exe]}" == "$(sha1sum $exe)" ]]; then
+        echo "Same file detected. Updating timestamp..."
+        ssh -p ${PORT:-6534} $remote touch "$RECV_DIR/${(t)exe}"
+        return 0
+    fi
+
+
     local exename="$(basename $exe)"
     local arquive="$exename.xz"
+
+    typeset -A __file_hashes
+    __file_hashes[$exe]=$(sha1sum $exe)
 
     strip "$exe" || return 5
 
