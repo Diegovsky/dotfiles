@@ -1,0 +1,91 @@
+typeset -a _missing=()
+unset LC_MESSAGES
+[[ -f /etc/locale.conf ]] && source /etc/locale.conf
+
+autoload -U add-zsh-hook
+
+function meta::join() {
+    local sep=$1
+    shift
+    eval "print \${(j.${sep}.)@}"
+}
+
+function meta::needs() {
+    if [[ -z ${commands[$1]} ]]; then
+        meta::err "Missing '$1'" 1>&2
+        return 1
+    elif [[ $# -gt 2 ]]; then
+        shift
+        needs $@
+    fi
+}
+
+function meta::err() {
+    print -u 2 "$@"
+}
+
+function meta::arg() {
+    if [[ -z $1 ]]; then
+        meta::err Missing ${2:-ARG} $3
+        return 1
+    fi
+}
+
+function meta::watchfilesdir {
+    meta::arg "$1" DIR 'to watch' || return 1
+    local dir="$1"
+
+    [[ ! -d "$dir" ]] && err "$dir: not a directory" && return 1
+    shift
+    if [[ -n "$@" ]]; then
+        inotifywait -q -e create -e close -e modify "$dir" --include $@
+    else
+        inotifywait -q "$dir"
+    fi
+}
+
+function meta::watchfile() {
+    meta::arg "$1" FILE 'to watch' || return 1
+
+    meta::watchfilesdir $(dirname $1) $1
+}
+
+function meta::osc() {
+    if [[ $# -eq 0 ]]; then
+        meta::err 'fail to osc' args: $@
+    fi
+    print -Pn "\e]$(meta::join ';' $@)\e\\"
+}
+
+function meta::osc7() {
+    meta::osc 7 "file://$PWD"
+}
+
+# PLUGINS
+plugins='etc.zsh direnv.zsh cursor_mode.zsh bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh devutils.zsh'
+for plugin in "${(s: :)plugins}"
+do
+    source "$ZDOTDIR/$plugin"
+done
+
+if [[ -n ${commands[zoxide]} ]]; then
+    eval "$(zoxide init zsh)"
+else
+	_missing+=zoxide
+fi
+
+
+add-zsh-hook chpwd meta::osc7
+
+if [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+    _missing+='zsh-syntax-highlighting'
+fi
+
+if [[ ${#_missing} -gt 0 ]]; then
+    echo "There are parts missing from your installation. They are:"
+    for x in $_missing; do
+        echo -e '    -' $x
+    done
+fi

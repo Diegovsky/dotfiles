@@ -1,0 +1,22 @@
+theme = "onedarker"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[keys.normal.space]
+space = "file_picker_in_current_directory"
+
+[keys.normal]
+"A-o" = "hsplit"
+"A-i" = "vsplit"
+"esc" = "collapse_selection"
+q = {q = "match_brackets"}
+"C-space" = "buffer_picker"
+
+[keys.select.g]
+"c" = "toggle_comments"
+
+[keys.normal.g.c]
+"c" = "toggle_comments"

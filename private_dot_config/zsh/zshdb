@@ -1,0 +1,2 @@
+typeset -A __zsh_db
+export __zsh_db

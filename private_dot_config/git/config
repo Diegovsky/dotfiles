@@ -1,0 +1,14 @@
+[include]
+ path = common-info
+ path = private
+
+[safe]
+	directory = /opt/flutter
+
+[alias]
+    c = commit
+    s = switch
+    A = add -A
+    cam = commit --amend --no-edit
+    sync = !git pull && git push
+    

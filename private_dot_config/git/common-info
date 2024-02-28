@@ -1,0 +1,9 @@
+# vim: set ft=gitconfig :
+# This is Git's per-user configuration file.
+[user]
+    name = Diego Augusto S. C
+    email = diego.augusto@protonmail.com
+[pull]
+    rebase = true
+[init]
+    defaultBranch = master

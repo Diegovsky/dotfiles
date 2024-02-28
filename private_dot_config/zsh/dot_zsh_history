@@ -1,0 +1,323 @@
+ls zig-out/bin/gintro
+cd ../tp3
+build run
+build/tp3
+gcc main.c -o main
+./main
+python sym.py
+cp /tmp/pog.json fixtures/game-of-life-serialized.json
+cargo test
+cargo clean
+brew search wezterm
+brew install --cask wezterm
+cd 
+[[ $(which zoxide) ]] && echo true
+cd .
+cd dotfiles/nvim
+nvim $XDG_CONFIG_HOME/zsh/zshrc
+cd $XDG_CONFIG_HOME/zsh/
+grep _missing *
+nvim .zshrc
+~/Library/KeyBindings/DefaultKeyBinding.dict
+nvim ~/Library/KeyBindings/DefaultKeyBinding.dict
+ls Library
+cd /Users/diegovsky/Library/Keyboard\ Layouts
+nvim ABNT2-Custom.bundle
+defaults read pbs | grep 'New Terminal Window'
+defaults read pbs | grep 'Terminal'
+/usr/libexec/PlistBuddy -c "set :NSServicesStatus:'(null) - Open Terminal - runWorkflowAsService':key_equivalent @âƒ¦©" ~/Library/Preferences/pbs.plist
+/usr/libexec/PlistBuddy -c "set :NSServicesStatus:'(null) - Open Terminal - runWorkflowAsService':key_equivalent @âƒ¦©" ~/Library/Preferences/pbs.plist; killall cfprefsd
+brew search iterm2
+brew remove --cask iterm2
+ls ../Library/Preferences/nvim
+cd dotfiles/nvim/.config/nvim
+git submodule update --init --recursive
+ls Ëƒ¼/
+cd Library/Keyboard\ Layouts
+nvim Brazilian\ -\ ABNT2\ Ultimate.bundle
+nvim Brazilian\ -\ ABNT2\ Ultimate.bundle/Contents/Resources/Brazilian\ â€ƒ³\ ABNT2\ Custom.keylayout
+set +x; reload; set  -x
+l
+set -x
+set +x
+set -x; reload; set  +x
+cd
+clear
+mv ~/Library/Keyboard\ Layouts/Brazilian\ -\ ABNT2\ Ultimate.bundle dotfiles
+cd dotfiles
+mkdir macos
+mv Brazilian\ -\ ABNT2\ Ultimate.bundle macos
+ln -s $PWD/macos/Brazilian\ -\ ABNT2\ Ultimate.bundle ~/Library/Keyboard\ Layouts
+brew install direnv bat eza
+brew install zoxide
+z
+zoxide
+which zoxide
+ln -s ~/Library/Preferences .config
+ls .config
+ls -la .config
+mv .config/* ~/Library/Preferences
+rmdir .config
+ln -fs ~/Library/Preferences .config
+cd .config
+rm Preferences
+cd zsh
+nvim zshrc
+rm nvim
+ls nvim
+git clone github.com/Diegovsky/neovim-config nvim
+git clone https://github.com/Diegovsky/neovim-config nvim
+cd nvim
+brew install --cask vimr
+shutdown now
+sudo shutdown now
+sudo shutdown -t 0
+sudo shutdown -n 0
+sudo shutdown -s 0
+sudo shutdown -s 
+sudo shutdown -s 0s
+sudo poweroff
+brew search spotify
+brew search xcode
+zi Library/Preferences/nvim
+z Library/Preferences/zsh
+nvim aliases.zsh
+brew search zsh-syntax-highlighting
+brew install zsh-syntax-highliting
+brew install zsh-syntax-highlighting
+brew install --cask spotify
+sudo xcodebuilf -license accept
+sudo xcodebuild -license accept
+brew search virtualbox
+brew install --cask virtualbox
+alias ls
+eza
+brew --cask install discord
+brew install --cask discord
+sudo gem update cocoapods
+brew install cocoapods
+cd Projects/CookieBar
+pog install
+pod update
+pod install
+cd /Users/diegovsky/Projects/CookieBar
+brew install ripgrep
+rg -i controlStripItem
+brew install --cask bitwarden
+rustup component add rust-analyzer
+pgrep
+pgrep -li bars
+pkill bars
+z zsh
+echo ${path}
+echo ${(P)path}
+typeset -A pog
+pog+=1022
+unset pog
+help typeset 
+man zshbuiltins
+pog+=102
+pog+=1023
+print -l 
+print -l $pog
+echo $pog
+pkv() {\
+    local i type type_print type_print_fmt type_print_header\
+    for i in "$@"; do\
+        type=${(Pt)${i}}\
+        type_print="$i: $type"\
+        type_print_fmt="$i: \e[1m$type"\
+        type_print_header="âƒ´€${(l:${#type_print}::âƒ´€:)}âƒ´€"\
+\
+        print -l \\
+            "\e[0mâƒµ­${type_print_header}âƒµ®" \\
+            "âƒ´‚ \e[0m${type_print_fmt}\e[0m âƒ´‚" \\
+            "âƒµ°${type_print_header}âƒµ¯"\
+        case $type in\
+        association*)\
+            print -RaC 2 "${(@Pkv)i}"\
+            ;;\
+        array*)\
+            print -Rl "${(@P)i}"\
+            ;;\
+        *)\
+            print -R "${(P)i}"\
+            ;;\
+        esac\
+    done\
+}
+pkv
+pkv arr
+typeset -a pog
+pog+=10
+pkv pog
+bindkey -M main "^H" backward-delete-char\
+bindkey -M main "^?" backward-delete-char
+brew install fzf
+echo $commands[zsh]
+rehash
+echo $commands[fzf]
+cargo run
+cd .config/
+mkdir CookieBar
+cd CookieBar
+cp ~/Projects/CookieBar/CookieBar/defaultConfig.json config.json
+nvim config.json
+ls ~//Library/Application Support/CookieBar/config.json
+mv CookieBar ~//Library/Application Support/
+mv CookieBar ~'//Library/Application Support/'
+ls $_
+ls ~/Library/Application\ Support/CookieBar/config.json
+cat ~/Library/Application\ Support/CookieBar/config.json
+nvim ~/Library/Application\ Support/CookieBar/config.json
+cd ../Projects
+brew search rustup
+brew install rustup-init
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+cargo new bars
+cd bars
+cargo add cacao
+brew install --cask iterm2
+nvim /Users/diegovsky/Library/Preferences//zsh/direnv.zsh
+brew install -- cask alacritty
+git clone git://git.code.sf.net/p/zsh/code zsh-git
+cd ~/Documents/Scripts
+osascript terminal.applescript
+cd Documents
+mkdir Scripts
+cd Scripts
+nvim terminal.applescript
+fg
+brew install steam
+brew search steam
+brew install --cask steam
+brew update
+brew install lolcat
+echo "GABRIEL" | lolcat
+yes "GABRIEL" | lolcat
+curl
+curl 'https://www.govinfo.gov/content/pkg/CDOC-110hdoc50/html/CDOC-110hdoc50.htm' | lolcat
+ nvim /Users/diegovsky/Library/Preferences//zsh/aliases.zsh
+reload
+zi zsh
+export TERM=xterm
+ls ~/Downloads
+cd ~/Downloads
+cd ~/Documents
+ls -a
+brew search nerd font
+ssh
+cd ../dotfiles
+ln -s git/.config/git/ ~/.config/.
+rm ~/.config/git
+man gitconfug
+man gitconfig
+git help config
+echo $XDG_CONFIG_HOME
+cd ~/.config/
+stat git
+ls -l git
+popd
+ln -s git/.config/git/ $(realpath ~/.config)/.
+ls -l ~/.config/git
+ln -sf $PWD/git/.config/git/ $(realpath ~/.config)/git
+ls ~/.config/git
+git config --global user.name
+git config  user.name
+cd ~/.config/git
+nvim private
+exit
+git config --global credential.helper
+git config credential.helper
+git clone https://github.com/Diegovsky/zsh-module-rs.git
+cd zsh-module-rs
+git checkout next
+git checkout edge
+git pull
+git rebase master
+code
+nvim ../greeter/src/lib.rs
+rm ../Cargo.lock
+cd ../zsh-sys
+fd
+brew install fd-find
+brew install fd
+rg termio
+nvim headers/zsh_system.h
+nvim config.h
+pwd
+git starus
+git add Cargo.locl
+git add zsh-module/src/types/cstring.rs
+rm Cargo.lock
+cargo build
+ls Cargo.lock
+git add Cargo.lock
+git stash push zsh-sys/config.h
+git rebase --continue
+git push --force-with-lease
+git stash pop
+git checkout master
+git add zsh-sys/config.h
+nvim Cargo.toml
+nvim zsh-sys/Cargo.toml
+git add $_
+git commit -m "Allow project to be built on macos"
+cargo publish zsh-sys
+cargo login
+cargo publish -p zsh-sys
+cd ../zsh-git
+brew search foot
+brew install alacritty
+cat  Etc/zsh-development-guide
+rg ^zfree
+nvim Src/mem.c
+cargo check
+git status
+git add -A
+git commit -m "Add ZBox api"
+git push
+cargo doc --open zsh_sys
+cargo doc --open zsh-sys
+cargo doc --open 
+alias python=python3
+python -mhttp.server --directory target/doc/ 5555 &\
+open http://localhost:5555/
+pgrep -li pyth
+pgrep -lia pyth
+pkill Python
+python -mhttp.server --directory ../target/doc/ 5555 &\
+open http://localhost:5555/
+cd Projects/zsh-module-rs
+cd zsh-module
+swift package init
+rm -rf Package.swift Sources Tests
+xcode .
+Xcode .
+XCode .
+xcode-select
+Xcode
+xcodebuild -h
+xcodebuild -project CookieBar
+xcodebuild 
+xcodebuild -list -project CookieBar.xcodeproj
+xcodebuild -workspace CookieBar -scheme CookieBar build
+xcodebuild -workspace CookieBar.xcworkspace -scheme CookieBar build
+build/Release/CookieBar.app
+brew search xcode-build
+cd Projects
+git clone https://github.com/SolaWing/xcode-build-server.git
+brew install xcodegen
+brew search sourcekir
+nnvim
+brew search sourcekit
+brew search -h
+brew -h
+brew info sourcekitten
+xcrun sourcekit-lsp
+nvim 
+cd ..
+cd ~/Projects/CookieBar
+xcodebuild
+ls
+nvim
