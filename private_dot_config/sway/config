@@ -24,9 +24,6 @@ bindsym $mod+Backspace exec $browser
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym Ctrl+Print exec wlr-screenshot output
 bindsym Ctrl+Shift+Print exec wlr-screenshot select
 bindsym Ctrl+Alt+Print exec wlr-screenshot current-window
@@ -34,8 +31,6 @@ bindsym XF86AudioPlay exec playerctl --player playerctld play-pause
 bindsym XF86AudioNext exec playerctl --player playerctld next
 bindsym XF86AudioPrev exec playerctl --player playerctld previous
 bindsym XF86AudioStop exec playerctl --player playerctld stop
-bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
-bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
@@ -85,7 +80,6 @@ bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
 bindsym Print exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot sent to clipboard"
-bindsym F8 exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next
 # bindsym $mod+space focus mode_toggle
@@ -160,3 +154,4 @@ exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
 
 include /etc/sway/config.d/*
+include swayosd

@@ -1,0 +1,10 @@
+# vim: set ft=swayconfig :
+bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise
+bindsym XF86AudioLowerVolume exec swayosd-client --output-volume lower
+
+# Sink mute
+bindsym F8 exec swayosd-client --input-volume mute-toggle
+
+# Brightness raise
+bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
+bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower

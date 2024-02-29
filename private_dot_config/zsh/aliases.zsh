@@ -85,19 +85,7 @@ function latex-live-pdf() {
 alias notme=notify-me
 alias nnvim='cd ~/.config/nvim && nvim'
 alias build='ninja -C build'
-function ghclone() {
-    local cmd="git clone git@github.com:"
-    if [[ $# -lt 1 ]] || [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
-        echo "usage: $0 <github repo> [git clone flags]"
-        echo ""
-        echo "The first arg will be concatenated with the string"
-        echo "'$cmd'"
-        return 1
-    fi
-    local repo=$1
-    shift
-    eval "$cmd$repo" "$@"
-}
+alias ch='chezmoi'
 
 export NOTES_DIR="${NOTES_DIR:-$(xdg-user-dir DOCUMENTS)/Notes}"
 
