@@ -148,10 +148,29 @@ for_window [app_id="^.*"] inhibit_idle fullscreen
 
 # Inhibit idle if steam app is focused
 for_window [class="steam_app*"] inhibit_idle focus
+# Make FEH floating always
+for_window [class="feh*"] floating enable
 
 # run keyring
 exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
 
+exec swayosd-server
+
+bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume raise
+bindsym XF86AudioLowerVolume exec swayosd-client --output-volume lower
+
+# Sink mute
+bindsym F8 exec swayosd-client --input-volume mute-toggle
+
+# Brightness raise
+bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
+bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
+
+# Sink volume toggle mute
+bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
+# Source volume toggle mute
+bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
+
 include /etc/sway/config.d/*
-include swayosd
+
