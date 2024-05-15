@@ -1,9 +1,4 @@
 # Command aliases
-alias search="pacman -Ss"
-alias install="sudo pacman -Syu"
-
-alias reload="source $ZDOTDIR/.zshrc"
-alias tempdir='cd `mktemp -d`'
 function replace_for() {
     if [[ -n ${commands[$2]} ]]; then
         eval 'alias' "$1=$2"
@@ -25,8 +20,6 @@ if [[ -n ${commands[nvim]} ]]; then
     }
 fi
 
-alias la="ls -la"
-alias tempdir='cd `mktemp -d`'
 if [[ -n ${commands[helix]} ]]; then
     alias hx=helix
 fi
@@ -79,13 +72,14 @@ function latex-live-pdf() {
 
     (sleep 2 && xdg-open "$1.pdf") &
     
-    while :; do pdflatex -interaction nonstopmode "$1"; inotifywait -e modify "$lfile"; done
+    while :; do pdflatex -shell-escape -interaction nonstopmode "$1"; inotifywait -e modify "$lfile"; done
 }
 
-alias notme=notify-me
-alias nnvim='cd ~/.config/nvim && nvim'
-alias build='ninja -C build'
-alias ch='chezmoi'
+function add-alias() {
+    [[ -z "$1" ]] && echo "Must provide alias to be added!" && return 1
+    echo "alias $1" >> $ZDOTDIR/aliases.zsh
+    alias "$1"
+}
 
 export NOTES_DIR="${NOTES_DIR:-$(xdg-user-dir DOCUMENTS)/Notes}"
 
@@ -96,3 +90,16 @@ function notes() {
     cd "$NOTES_DIR" &&
     $EDITOR
 }
+alias search="pacman -Ss"
+alias install="sudo pacman -Syu"
+
+alias reload="source $ZDOTDIR/.zshrc"
+alias tempdir='cd `mktemp -d`'
+
+alias notme=notify-me
+alias nnvim='cd ~/.config/nvim && nvim'
+alias build='ninja -C build'
+alias ch='chezmoi'
+alias la="ls -la"
+alias tempdir='cd `mktemp -d`'
+alias zel=zellij
