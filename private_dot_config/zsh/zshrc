@@ -62,7 +62,7 @@ function meta::osc7() {
 }
 
 # PLUGINS
-plugins='etc.zsh direnv.zsh cursor_mode.zsh bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh devutils.zsh'
+plugins='etc.zsh direnv.zsh cursor_mode.zsh bindings.zsh prompt.zsh prompt_name.zsh aliases.zsh devutils.zsh scripts.zsh'
 for plugin in "${(s: :)plugins}"
 do
     source "$ZDOTDIR/$plugin"
@@ -89,3 +89,5 @@ if [[ ${#_missing} -gt 0 ]]; then
         echo -e '    -' $x
     done
 fi
+
+. "$HOME/.grit/bin/env"

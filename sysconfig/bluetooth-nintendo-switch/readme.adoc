@@ -1,0 +1,20 @@
+= How to allow the Switch to send audio
+Diego Augusto
+
+Edit `/etc/bluetooth/main.conf` and change Class to 0x0041C, like this:
+
+[,ini]
+----
+[General]
+Class = 0x0041C
+----
+
+Then, create `/etc/bluetooth/audio`.conf and add this to it:
+
+[,ini]
+----
+[General]
+Enable=Source,Sink,Media,Socket
+----
+
+You're done! Just restart your bluetooth service.
