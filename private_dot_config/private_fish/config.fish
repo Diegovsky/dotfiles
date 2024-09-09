@@ -1,11 +1,16 @@
 if status is-interactive
-    alias reload "source $__fish_config_dir/config.fish"
+    alias reload "exec fish"
 
-    function import -a source
-        source $__fish_config_dir/$source
+    function import -a source tp
+        if test "$tp" = 'dir'
+            set -l source $__fish_config_dir/$source
+            for entry in (ls $source)
+                source $source/$entry
+            end
+        else
+            source $__fish_config_dir/$source
+        end
     end
 
     import interactive.fish
-
-    functions -e import
 end

@@ -8,6 +8,10 @@
 [alias]
     c = commit
     s = switch
+    st = status
+    rc = rebase --continue
+    lol = log --oneline
+    ds = diff --stat
     A = add -A
     cam = commit --amend --no-edit
     sync = !git pull && git push
