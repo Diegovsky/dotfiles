@@ -5,15 +5,11 @@ set $up k
 set $right l
 set $term footclient
 set $editor nvim-gtk
-set $browser firefox
-# set $menu wofi --show run
+set $browser chromium
 set $menu bemenu-run
 set $app_opener bemenu -i
-set $status_command "$HOME/.local/bin/statusbar2.py"
-set $mouse "Logitech_G903_LS"
 output * bg $(xdg-user-dir PICTURES)/tubes2.png fill
 
-# bindsym $mod+shift+r exec bash -c 'swaymsg bar bar-0 status_command -; swaymsg bar bar-0 status_command $status_command'
 bindsym $mod+Return exec $term
 bindsym $mod+q kill
 bindsym Ctrl+Alt+Home exec systemctl suspend
@@ -21,6 +17,7 @@ bindsym $mod+Space exec j4-dmenu-desktop --dmenu="$app_opener"
 bindsym $mod+d exec $menu
 bindsym $mod+Insert exec $editor
 bindsym $mod+Backspace exec $browser
+bindsym $mod+P exec rbw-pass
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -90,15 +87,6 @@ bindsym $mod+minus scratchpad show
 
 bindsym $mod+r mode "resize"
 
-# bar {
-#     height 30
-#     position top
-#     font "FiraCode Nerd Font Mono 11"
-#     tray_padding 5
-#     tray_output *
-#     status_command $status_command
-# }
-
 default_border none
 focus_follows_mouse always
 input "type:keyboard" {
@@ -153,8 +141,7 @@ for_window [class="steam_app*"] inhibit_idle focus
 for_window [class="feh*"] floating enable
 
 # run keyring
-exec eval $(gnome-keyring-daemon --start)
-exec export SSH_AUTH_SOCK
+# exec eval $(gnome-keyring-daemon --start)
 
 exec swayosd-server
 

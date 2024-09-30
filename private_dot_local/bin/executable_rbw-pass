@@ -1,0 +1,9 @@
+#!/usr/bin/env fish
+if not test -t 0
+    exec footclient (status --current-filename) >>/tmp/log
+end
+alias chooser "fzf --bind 'tab:down,btab:up'\
+                --prompt 'Copy password from: '\
+                --header 'NAME | USER'"
+rbw get (rbw list --fields name,user | rg '\t[^\n]' | chooser | cut -f1) | wl-copy
+set_color blue; echo "Password copied to clipboard"; set_color normal
