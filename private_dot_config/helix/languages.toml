@@ -6,3 +6,13 @@ config = {}
 [[language]]
 name = "python"
 language-servers = [ "based-pyright" ]
+formatter = {command = "ruff", args = ["format", "-"]}
+auto-format = true
+
+[[language]]
+name = "html"
+scope = "text.html"
+file-types = ["html", {glob = "*.html.j2"}]
+auto-format = true
+soft-wrap = {enable = true}
+formatter = {command = "djlint", args = ["-", "--reformat"]}

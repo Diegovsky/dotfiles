@@ -2,7 +2,9 @@
 # VERSION: 3.0
 SETUVAR --export DEBUGINFOD_URLS:https\x3a//debuginfod\x2earchlinux\x2eorg
 SETUVAR --export DOCKER_HOST:unix\x3a///run/user/1000/docker\x2esock
+SETUVAR --export EDITOR:helix
 SETUVAR NOTIFY_CMD_LEN:30
+SETUVAR --export VISUAL:helix
 SETUVAR __fish_initialized:3400
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2d\x2dreverse

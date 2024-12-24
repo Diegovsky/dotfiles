@@ -5,5 +5,5 @@ end
 alias chooser "fzf --bind 'tab:down,btab:up'\
                 --prompt 'Copy password from: '\
                 --header 'NAME | USER'"
-rbw get (rbw list --fields name,user | rg '\t[^\n]' | chooser | cut -f1) | wl-copy
+rbw get (rbw list --fields name,user,id | rg '\t[^\n]' | chooser | cut -f3) | wl-copy
 set_color blue; echo "Password copied to clipboard"; set_color normal

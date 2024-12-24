@@ -37,16 +37,41 @@ end
 
 local common = {
   q = {q = 'match_brackets'},
-  _ = 'goto_line_start',
-  ['$'] = 'goto_line_end',
-  ['|'] = 'goto_line_start',
+  _ = 'goto_first_nonwhitespace',
   G = 'goto_last_line',
   s = 'change_selection',
+  S = 'select_regex',
+  A_s = 'split_selection',
   g = {
     u = 'switch_to_lowercase',
-    U = 'switch_to_uppercase'
-  }
+    U = 'switch_to_uppercase',
+    c = 'toggle_comments',
+  },
+  minus = 'trim_selections',
+  A_p = 'expand_selection',
+  A_9 = 'select_prev_sibling',
+  A_0 = 'select_next_sibling',
+  C_j = 'copy_selection_on_next_line',
+  C_k = 'copy_selection_on_prev_line',
+  C_l = 'keep_primary_selection',
+  [';'] = 'repeat_last_motion',
+  ['!'] = 'shell_pipe',
+  ['&'] = 'shell_pipe_to',
 }
+
+---
+---@param ... string
+---@return string[]
+local function select_mode(...)
+  return {'select_mode', ..., 'exit_select_mode'}
+end
+
+---
+---@param ... string
+---@return string[]
+local function select_end(...)
+  return {'select_mode', 'goto_line_end', ..., 'exit_select_mode'}
+end
 
 local normal = {
   A_o = 'hsplit',
@@ -54,30 +79,35 @@ local normal = {
   x = 'extend_to_line_bounds',
   esc = 'collapse_selection',
   C_space = 'buffer_picker',
-  S = 'select_regex',
   K = 'hover',
   C_r = 'redo',
-  V = {'select_mode', 'extend_to_line_bounds'},
-  Y = {'select_mode', 'goto_line_end', 'yank', 'exit_select_mode', 'collapse_selection'},
-  D = {'select_mode', 'goto_line_end', 'delete_selection'},
-  C = {'select_mode', 'goto_line_end', 'change_selection'},
   g = {
-    c = { c = 'toggle_comments' }
+    t = 'goto_type_definition',
   },
+  ['$'] = select_mode'goto_line_end',
+  ['|'] = select_mode'goto_line_start',
+  V = {'select_mode', 'extend_to_line_bounds'},
+  Y = select_end'yank',
+  D = select_end'delete_selection',
+  C = select_end'change_selection',
   space = {
     space = 'file_picker_in_current_directory',
-    c = {a = 'code_action'}
   }
 }
 table.extend(normal, common)
 table.extend(normal, win_moves)
 
+local select = {
+  ['$'] = 'goto_line_end',
+  ['|'] = 'goto_line_start',
+  C_v = {'extend_to_line_bounds', 'split_selection_on_newline', 'flip_selections'}
+}
+table.extend(select, common)
+
+
 local insert = {
   C_space = 'completion'
 }
-
-local select = { }
-table.extend(select, common)
 
 local config = {
   theme = 'onedark',

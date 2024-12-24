@@ -13,4 +13,7 @@ if status is-interactive
     end
 
     import interactive.fish
+else if status is-login
+    # Let's source path
+    systemctl --user import-environment PATH
 end

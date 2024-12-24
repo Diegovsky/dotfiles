@@ -28,7 +28,12 @@ line-number = "relative"
 C-space = "completion"
 
 [keys.normal]
-"$" = "goto_line_end"
+"!" = "shell_pipe"
+"$" = [ "select_mode", "goto_line_end", "exit_select_mode" ]
+"&" = "shell_pipe_to"
+";" = "repeat_last_motion"
+A-0 = "select_next_sibling"
+A-9 = "select_prev_sibling"
 A-H = "swap_view_left"
 A-J = "swap_view_down"
 A-K = "swap_view_up"
@@ -39,27 +44,32 @@ A-j = "jump_view_down"
 A-k = "jump_view_up"
 A-l = "jump_view_right"
 A-o = "hsplit"
-C = [ "select_mode", "goto_line_end", "change_selection" ]
+A-p = "expand_selection"
+A-s = "split_selection"
+C = [ "select_mode", "goto_line_end", "change_selection", "exit_select_mode" ]
+C-j = "copy_selection_on_next_line"
+C-k = "copy_selection_on_prev_line"
+C-l = "keep_primary_selection"
 C-r = "redo"
 C-space = "buffer_picker"
-D = [ "select_mode", "goto_line_end", "delete_selection" ]
+D = [ "select_mode", "goto_line_end", "delete_selection", "exit_select_mode" ]
 G = "goto_last_line"
 K = "hover"
 S = "select_regex"
 V = [ "select_mode", "extend_to_line_bounds" ]
-Y = [ "select_mode", "goto_line_end", "yank", "exit_select_mode", "collapse_selection" ]
-_ = "goto_line_start"
+Y = [ "select_mode", "goto_line_end", "yank", "exit_select_mode" ]
+_ = "goto_first_nonwhitespace"
 esc = "collapse_selection"
+minus = "trim_selections"
 s = "change_selection"
 x = "extend_to_line_bounds"
-"|" = "goto_line_start"
+"|" = [ "select_mode", "goto_line_start", "exit_select_mode" ]
 
     [keys.normal.g]
     U = "switch_to_uppercase"
+    c = "toggle_comments"
+    t = "goto_type_definition"
     u = "switch_to_lowercase"
-
-        [keys.normal.g.c]
-        c = "toggle_comments"
 
     [keys.normal.q]
     q = "match_brackets"
@@ -67,18 +77,29 @@ x = "extend_to_line_bounds"
     [keys.normal.space]
     space = "file_picker_in_current_directory"
 
-        [keys.normal.space.c]
-        a = "code_action"
-
 [keys.select]
+"!" = "shell_pipe"
 "$" = "goto_line_end"
+"&" = "shell_pipe_to"
+";" = "repeat_last_motion"
+A-0 = "select_next_sibling"
+A-9 = "select_prev_sibling"
+A-p = "expand_selection"
+A-s = "split_selection"
+C-j = "copy_selection_on_next_line"
+C-k = "copy_selection_on_prev_line"
+C-l = "keep_primary_selection"
+C-v = [ "extend_to_line_bounds", "split_selection_on_newline", "flip_selections" ]
 G = "goto_last_line"
-_ = "goto_line_start"
+S = "select_regex"
+_ = "goto_first_nonwhitespace"
+minus = "trim_selections"
 s = "change_selection"
 "|" = "goto_line_start"
 
     [keys.select.g]
     U = "switch_to_uppercase"
+    c = "toggle_comments"
     u = "switch_to_lowercase"
 
     [keys.select.q]

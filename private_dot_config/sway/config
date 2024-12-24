@@ -17,7 +17,8 @@ bindsym $mod+Space exec j4-dmenu-desktop --dmenu="$app_opener"
 bindsym $mod+d exec $menu
 bindsym $mod+Insert exec $editor
 bindsym $mod+Backspace exec $browser
-bindsym $mod+P exec rbw-pass
+bindsym $mod+P exec fish -c "rbw-pass"
+bindsym $mod+dead_acute exec fish -c "flatpak run --command=io.github.alainm23.planify.quick-add io.github.alainm23.planify"
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -99,9 +100,9 @@ input "type:keyboard" {
 input "type:tablet_tool" {
     map_to_output "HDMI-A-1"
 }
-input "Logitech_G903_LS" {
+input "type:pointer" {
     scroll_factor 1.2
-    accel_profile flat
+    accel_profile adaptive
 }
 input "type:touchpad" {
     accel_profile adaptive
@@ -131,14 +132,27 @@ exec foot --server &
 # Remembers last played player
 exec playerctld &
 
-# Inhibit idle if anything is fullscreen and visible
-for_window [class="^.*"] inhibit_idle fullscreen
-for_window [app_id="^.*"] inhibit_idle fullscreen
+for_window {
+    # Inhibit idle if anything is fullscreen and visible
+    [class="^.*"] inhibit_idle fullscreen
+    [app_id="^.*"] inhibit_idle fullscreen
 
-# Inhibit idle if steam app is focused
-for_window [class="steam_app*"] inhibit_idle focus
-# Make FEH floating always
-for_window [class="feh*"] floating enable
+    # Inhibit idle if a steam app is focused
+    [class="steam_app*"] inhibit_idle focus
+
+    # Make FEH floating always
+    [class="feh*"] floating enable
+    # Float devtools
+    [title="DevTools.*"] floating enable
+    # File dialogs
+    [title="(?:Open|Save) (?:File|Folder|As)"] floating enable, resize set width 1030 height 710
+
+    # Float file dialogs
+    [window_role="pop-up"] floating enable
+    [window_role="bubble"] floating enable
+    [window_role="dialog"] floating enable
+    [window_type="dialog"] floating enable
+}
 
 # run keyring
 # exec eval $(gnome-keyring-daemon --start)
