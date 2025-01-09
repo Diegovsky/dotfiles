@@ -29,7 +29,12 @@ function latex-live-pdf -a input
     end
 end
 
-set -g NOTES_DIR "$(xdg-user-dir DOCUMENTS)/Notes"
+if test "$IS_MAC" != 1
+    set -g NOTES_DIR "$(xdg-user-dir DOCUMENTS)/Notes"
+else
+    set -g NOTES_DIR "$HOME/Documents/Notes"
+end
+
 
 function notes
     if ! test -d $NOTES_DIR

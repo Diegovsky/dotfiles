@@ -1,6 +1,6 @@
 # USER VARIABLES
-if test "$(uname -s)" = 'Darwin'
-  set -gx IS_MAC 1
+if test "$(uname -s)" = Darwin
+    set -gx IS_MAC 1
 end
 
 if test "$IS_MAC" = 1
@@ -16,8 +16,8 @@ else
     set -gx XDG_DATA_DIRS $XDG_DATA_DIRS:$HOME/.local/share
 end
 
-set -gx EDITOR nvim
-set -gx VISUAL nvim
+set -gx EDITOR $HELIX
+set -gx VISUAL $HELIX
 
 # Stuff to prevent $HOME cluttering
 set -gx ATOM_HOME $XDG_DATA_HOME/atom
@@ -32,7 +32,3 @@ set -gx KDEHOME $XDG_CONFIG_HOME/kde
 set -gx ICEAUTHORITY $XDG_CACHE_HOME/ICEauthority
 set -gx NUGET_PACKAGES $XDG_CACHE_HOME/NuGetPackages
 set -gx _JAVA_OPTIONS -Djava.util.prefs.userRoot="$XDG_CONFIG_HOME"/java
-
-if test -n "$IS_MAC" 
-    source "$CARGO_HOME/env"
-end

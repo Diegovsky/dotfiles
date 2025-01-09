@@ -1,8 +1,16 @@
+
+for name in helix hx
+    if type -q $name then
+        echo $name
+        set -gx HELIX $name
+    end
+end
+
 if status is-interactive
     alias reload "exec fish"
 
     function import -a source tp
-        if test "$tp" = 'dir'
+        if test "$tp" = dir
             set -l source $__fish_config_dir/$source
             for entry in (ls $source)
                 source $source/$entry
