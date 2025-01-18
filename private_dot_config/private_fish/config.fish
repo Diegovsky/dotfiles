@@ -1,7 +1,9 @@
+if test "$(uname -s)" = Darwin
+    set -gx IS_MAC 1
+end
 
 for name in helix hx
     if type -q $name then
-        echo $name
         set -gx HELIX $name
     end
 end

@@ -1,7 +1,4 @@
 # USER VARIABLES
-if test "$(uname -s)" = Darwin
-    set -gx IS_MAC 1
-end
 
 if test "$IS_MAC" = 1
     set -gx XDG_CONFIG_HOME $HOME/Library/Preferences/

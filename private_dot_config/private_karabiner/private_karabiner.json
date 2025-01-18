@@ -4,14 +4,14 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Remap cmd+enter command",
+                        "description": "Remap keys to commands",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "return_or_enter",
                                     "modifiers": { "mandatory": ["command"] }
                                 },
-                                "to": [{ "shell_command": "/Users/diegovsky/Documents/Scripts/cmd_enter.sh" }],
+                                "to": [{ "shell_command": "env ~/Documents/Scripts/karabiner.sh win_enter" }],
                                 "type": "basic"
                             }
                         ]

@@ -20,7 +20,7 @@ function latex-live-pdf -a input
     end
 
     begin
-        sleep 2 && xdg-open $input".pdf"
+        sleep 2 && open $input".pdf"
     end &
 
     while true
