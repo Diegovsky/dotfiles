@@ -1,0 +1,38 @@
+[include]
+ path = common-info
+ path = private
+
+[safe]
+	directory = /opt/flutter
+
+[alias]
+    c = commit
+    s = switch
+    st = status
+    rc = rebase --continue
+    lol = log --oneline
+    ds = diff --stat
+    A = add -A
+    cam = commit --amend --no-edit
+    sync = !git pull && git push
+    
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[user]
+	name = Diegovsky (Diego Augusto)
+	email = diegocastro169169@gmail.com
+
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+
+[push]
+	autoSetupRemote = true

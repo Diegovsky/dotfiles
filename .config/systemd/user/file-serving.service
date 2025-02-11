@@ -1,0 +1,11 @@
+[Unit]
+Description=File serving daemon using WebDav
+
+[Service]
+StandardError=journal
+StandardOutput=journal
+StandardInput=null
+ExecStart=/home/diegovsky/.local/bin/file-serve.sh serve webdav /srv/webdav --addr 127.0.0.1:6530
+
+[Install]
+WantedBy=default.target

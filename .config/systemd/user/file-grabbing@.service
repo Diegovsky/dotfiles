@@ -1,0 +1,11 @@
+[Unit]
+Description=File grabbing mount using WebDav
+
+[Service]
+StandardError=journal
+StandardOutput=journal
+StandardInput=null
+ExecStart=/home/diegovsky/.local/bin/file-grab.sh %I %i
+
+[Install]
+WantedBy=default.target

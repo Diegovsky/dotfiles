@@ -1,0 +1,26 @@
+[language-server.pyright]
+command = "pyright-langserver"
+args = ["--stdio"]
+config = {}
+
+[language-server.ruff-server]
+command = "ruff"
+args = ["server"]
+config = {}
+
+[language-server.pylsp.config.rope_autoimport]
+enabled = true
+
+[[language]]
+name = "python"
+language-servers = [ "pylsp", "ruff-server" ]
+formatter = {command = "ruff", args = ["format", "-"]}
+auto-format = true
+
+[[language]]
+name = "html"
+scope = "text.html"
+file-types = ["html", {glob = "*.html.j2"}]
+auto-format = true
+soft-wrap = {enable = true}
+formatter = {command = "djlint", args = ["-", "--reformat"]}

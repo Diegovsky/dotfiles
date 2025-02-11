@@ -1,0 +1,10 @@
+.direnv
+.envrc
+.env
+.vimrc
+**/.cache
+compile_commands.json
+*.xz
+[
+]
+;
