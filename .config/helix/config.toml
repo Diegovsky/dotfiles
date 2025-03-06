@@ -2,27 +2,32 @@ theme = "onedark"
 
 [editor]
 color-modes = true
+end-of-line-diagnostics = "hint"
 line-number = "relative"
 
-    [editor.cursor-shape]
-    insert = "bar"
-    normal = "block"
-    select = "underline"
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
 
-    [editor.indent-guides]
-    render = true
+[editor.indent-guides]
+render = true
 
-    [editor.lsp]
-    display-inlay-hints = true
-    display-messages = true
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "disable"
 
-    [editor.statusline]
-    right = [ "workspace-diagnostics", "file-type", "version-control" ]
+[editor.lsp]
+display-inlay-hints = false
+display-messages = true
 
-        [editor.statusline.mode]
-        insert = "INSERT"
-        normal = "NORMAL"
-        select = "SELECT"
+[editor.statusline]
+right = [ "workspace-diagnostics", "file-type", "version-control" ]
+
+[editor.statusline.mode]
+insert = "INSERT"
+normal = "NORMAL"
+select = "SELECT"
 
 [keys.insert]
 C-space = "completion"
@@ -65,17 +70,17 @@ s = "change_selection"
 x = "extend_to_line_bounds"
 "|" = [ "select_mode", "goto_line_start", "exit_select_mode" ]
 
-    [keys.normal.g]
-    U = "switch_to_uppercase"
-    c = "toggle_comments"
-    t = "goto_type_definition"
-    u = "switch_to_lowercase"
+[keys.normal.g]
+U = "switch_to_uppercase"
+c = "toggle_comments"
+t = "goto_type_definition"
+u = "switch_to_lowercase"
 
-    [keys.normal.q]
-    q = "match_brackets"
+[keys.normal.q]
+q = "match_brackets"
 
-    [keys.normal.space]
-    space = "file_picker_in_current_directory"
+[keys.normal.space]
+space = "file_picker_in_current_directory"
 
 [keys.select]
 "!" = "shell_pipe"
@@ -97,10 +102,10 @@ minus = "trim_selections"
 s = "change_selection"
 "|" = "goto_line_start"
 
-    [keys.select.g]
-    U = "switch_to_uppercase"
-    c = "toggle_comments"
-    u = "switch_to_lowercase"
+[keys.select.g]
+U = "switch_to_uppercase"
+c = "toggle_comments"
+u = "switch_to_lowercase"
 
-    [keys.select.q]
-    q = "match_brackets"
+[keys.select.q]
+q = "match_brackets"

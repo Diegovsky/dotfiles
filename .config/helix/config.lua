@@ -122,9 +122,14 @@ local config = {
         select = 'SELECT',
       }
     },
+    end_of_line_diagnostics = "hint",
+    inline_diagnostics = {
+      cursor_line = 'hint',
+      other_lines = 'disable',
+    },
     lsp = {
       display_messages = true,
-      display_inlay_hints = true,
+      display_inlay_hints = false,
     },
     indent_guides = {
       render = true,

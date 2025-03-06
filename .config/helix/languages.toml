@@ -18,6 +18,15 @@ formatter = {command = "ruff", args = ["format", "-"]}
 auto-format = true
 
 [[language]]
+name = "cpp"
+formatter =  { command = 'clang-format', args = ['--style=file'] }
+auto-format = false
+
+[[language]]
+name = "markdown"
+soft-wrap.enable = true
+
+[[language]]
 name = "html"
 scope = "text.html"
 file-types = ["html", {glob = "*.html.j2"}]
