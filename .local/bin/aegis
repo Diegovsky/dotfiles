@@ -1,0 +1,26 @@
+#!/usr/bin/env fish
+set flag $argv[1]
+set -gx AEGIS_PASSWORD_FILE /tmp/aegispass
+set -gx AEGIS_FILE ~/Documents/aegis.json
+set self (status --current-filename)
+
+if not test -t 0
+    echo 'Logging to /tmp/log'
+    exec footclient $self >>/tmp/log
+end
+
+if test "$flag" = clear
+    rm $AEGIS_PASSWORD_FILE
+end
+
+echo 'pass file' $AEGIS_PASSWORD_FILE
+if test -f "$AEGIS_PASSWORD_FILE"
+    aegis-rs $AEGIS_FILE
+else
+    printf "SETDESC Enter your password:\nGETPIN\n" |
+        pinentry |
+        rg '^D' |
+        cut -c 3- >$AEGIS_PASSWORD_FILE
+
+    $self
+end

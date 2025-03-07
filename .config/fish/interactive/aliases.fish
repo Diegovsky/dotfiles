@@ -35,24 +35,6 @@ else
     set -g NOTES_DIR "$HOME/Documents/Notes"
 end
 
-set -gx AEGIS_PASSWORD_FILE /tmp/aegispass
-set -gx AEGIS_FILE ~/Documents/aegis.json
-function ag -a flag
-    if test "$flag" = clear
-        rm $AEGIS_PASSWORD_FILE
-    end
-
-    if test -f "$AEGIS_PASSWORD_FILE"
-        aegis-rs $AEGIS_FILE
-    else
-        printf "SETDESC Enter your password:\nGETPIN\n" |
-            pinentry |
-            rg '^D' |
-            cut -c 3- >$AEGIS_PASSWORD_FILE
-        ag
-    end
-end
-
 function notes
     if ! test -d $NOTES_DIR
         mkdir -p $NOTES_DIR
@@ -61,11 +43,11 @@ function notes
         $EDITOR
 end
 
-alias search "pacman -Ss"
-alias install "sudo pacman -Syu"
+abbr search "pacman -Ss"
+abbr update "sudo pacman -Syu --noconfirm"
+abbr install "sudo pacman -Syu --noconfirm"
 alias nnvim 'cd ~/.config/nvim && nvim'
 alias build 'ninja -C build'
-alias ch chezmoi
 alias la "ls -la"
 alias tempdir 'cd (mktemp -d)'
 alias zel zellij

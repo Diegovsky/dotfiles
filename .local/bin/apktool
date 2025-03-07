@@ -1,0 +1,2 @@
+#!/usr/bin/env fish
+java -jar ~/Applications/apktool.jar $argv

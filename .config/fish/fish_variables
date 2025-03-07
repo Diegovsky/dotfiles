@@ -5,7 +5,7 @@ SETUVAR --export DOCKER_HOST:unix\x3a///run/user/1000/docker\x2esock
 SETUVAR --export EDITOR:helix
 SETUVAR NOTIFY_CMD_LEN:30
 SETUVAR --export VISUAL:helix
-SETUVAR __fish_initialized:3400
+SETUVAR __fish_initialized:3800
 SETUVAR fish_color_autosuggestion:969896
 SETUVAR fish_color_cancel:\x2d\x2dreverse
 SETUVAR fish_color_command:c397d8
@@ -26,7 +26,7 @@ SETUVAR fish_color_option:\x1d
 SETUVAR fish_color_param:7aa6da
 SETUVAR fish_color_quote:b9ca4a
 SETUVAR fish_color_redirection:70c0b1
-SETUVAR fish_color_search_match:bryellow\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_search_match:white\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_color_status:aa0000
 SETUVAR fish_color_user:f0088a
@@ -46,4 +46,4 @@ SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/home/diegovsky/\x2elocal/share/cargo/bin\x1e/home/diegovsky/\x2elocal/bin
+SETUVAR fish_user_paths:/home/diegovsky/\x2erustup/toolchains/nightly\x2dx86_64\x2dunknown\x2dlinux\x2dgnu/bin\x1e/home/diegovsky/Applications\x1e/home/diegovsky/\x2eluarocks/bin\x1e/home/diegovsky/\x2elocal/share/cargo/bin\x1e/home/diegovsky/\x2elocal/bin
