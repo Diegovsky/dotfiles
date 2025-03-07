@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+ip a show dev wlan0 |
+ awk '/inet/ {
+     fsep = @/(\w+)/;
+     fc = patsplit($2, f, fsep);
+     print gensub(fsep, "0", fc-1, $2)
+ }' |
+ xargs -I % -- sudo ufw allow from %
