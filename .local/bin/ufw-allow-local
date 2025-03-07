@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-ip a show dev wlan0 |
+dev="${dev:-wlan0}"
+echo Using device $dev
+ip a show dev $dev |
  awk '/inet/ {
      fsep = @/(\w+)/;
      fc = patsplit($2, f, fsep);
