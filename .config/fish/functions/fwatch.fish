@@ -1,11 +1,11 @@
-function fwatch --description 'Watch for when $file changes, and executes $cmd' --argument file cmd
+function fwatch --description 'Watch for when $file changes, and executes $cmd' --argument-names file --argument-names cmd
     if test -z "$file"
         echo 'Missing file to watch' >&2
         return 1
-        elif test -z "$cmd"
+    else if test -z "$cmd"
         echo 'Missing command to run' >&2
         return 1
-        elif test -f "$file"
+    else if ! test -f "$file"
         echo "File $file doesn't exist."
         return 1
     end
@@ -23,6 +23,6 @@ function fwatch --description 'Watch for when $file changes, and executes $cmd' 
     echo "Starting watch... $cmdline"
     while :
         eval $cmdline
-        inotifywait -qq -e $events . --include $file; or return $status
+        inotifywait -r -qq -e $events . --include $file; or return $status
     end
 end

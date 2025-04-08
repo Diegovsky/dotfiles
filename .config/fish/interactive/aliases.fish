@@ -43,8 +43,14 @@ function notes
         $EDITOR
 end
 
+function update-mirrors
+    echo "Updating mirrors..."
+    reflector --completion-percent 90 -f 5 -c BR | sudo tee /etc/pacman.d/mirrorlist
+    sudo pacman -Syyuu
+end
+
 abbr search "pacman -Ss"
-abbr update "sudo pacman -Syu --noconfirm"
+abbr update "sudo pacman -Syu --noconfirm; notme"
 abbr install "sudo pacman -Syu --noconfirm"
 alias nnvim 'cd ~/.config/nvim && nvim'
 alias build 'ninja -C build'
