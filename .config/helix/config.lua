@@ -77,6 +77,7 @@ local normal = {
   A_o = 'hsplit',
   A_i = 'vsplit',
   x = 'extend_to_line_bounds',
+  C_a = {'select_all', 'yank_to_clipboard'},
   esc = 'collapse_selection',
   C_space = 'buffer_picker',
   K = 'hover',

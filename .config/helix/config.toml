@@ -52,6 +52,7 @@ A-o = "hsplit"
 A-p = "expand_selection"
 A-s = "split_selection"
 C = [ "select_mode", "goto_line_end", "change_selection", "exit_select_mode" ]
+C-a = [ "select_all", "yank_to_clipboard" ]
 C-j = "copy_selection_on_next_line"
 C-k = "copy_selection_on_prev_line"
 C-l = "keep_primary_selection"
