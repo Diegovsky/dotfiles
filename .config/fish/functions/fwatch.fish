@@ -5,11 +5,7 @@ function fwatch --description 'Watch for when $file changes, and executes $cmd' 
     else if test -z "$cmd"
         echo 'Missing command to run' >&2
         return 1
-    else if ! test -f "$file"
-        echo "File $file doesn't exist."
-        return 1
     end
-
     if test -n "$EVENTS"
         set events $EVENTS
     else

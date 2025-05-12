@@ -3,17 +3,30 @@ command = "pyright-langserver"
 args = ["--stdio"]
 config = {}
 
+[language-server.tinymist]
+command = "tinymist"
+
 [language-server.ruff-server]
 command = "ruff"
 args = ["server"]
 config = {}
 
-[language-server.pylsp.config.rope_autoimport]
-enabled = true
+[language-server.pylsp.config.pylsp.plugins]
+rope.enabled = true
+ruff.enabled = true
+pyls_mypy.enabled = true
+pyls_mypy.live_mode = true
+autopep8.enabled = false
+flake8.enabled = false
+mccabe.enabled = false
+pycodestyle.enabled = false
+pyflakes.enabled = false
+pylint.enabled = false
+yapf.enabled = false
 
 [[language]]
 name = "python"
-language-servers = [ "pylsp", "ruff-server" ]
+language-servers = ["pylsp"]
 formatter = {command = "ruff", args = ["format", "-"]}
 auto-format = true
 
@@ -33,3 +46,36 @@ file-types = ["html", {glob = "*.html.j2"}]
 auto-format = true
 soft-wrap = {enable = true}
 formatter = {command = "djlint", args = ["-", "--reformat"]}
+
+[[language]]
+name = "typst"
+language-servers = ["tinymist"]
+
+
+# WEBSHIT
+[language-server]
+biome = { command = "biome", args = ["lsp-proxy"] }
+
+[[language]]
+name = "javascript"
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome" ]
+auto-format = true
+
+[[language]]
+name = "typescript"
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome" ]
+auto-format = true
+
+[[language]]
+name = "tsx"
+auto-format = true
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome" ]
+
+[[language]]
+name = "jsx"
+auto-format = true
+language-servers = [ { name = "typescript-language-server", except-features = [ "format" ] }, "biome" ]
+
+[[language]]
+name = "json"
+language-servers = [ { name = "vscode-json-language-server", except-features = [ "format" ] }, "biome" ]

@@ -5,7 +5,6 @@ set $up k
 set $right l
 set $term footclient
 set $editor nvim-gtk
-set $browser chromium
 set $menu bemenu-run
 set $app_opener bemenu -i
 output * bg $(xdg-user-dir PICTURES)/tubes2.png fill
@@ -16,9 +15,9 @@ bindsym Ctrl+Alt+Home exec systemctl suspend
 bindsym $mod+Space exec j4-dmenu-desktop --dmenu="$app_opener"
 bindsym $mod+d exec $menu
 bindsym $mod+Insert exec $editor
-bindsym $mod+Backspace exec $browser
-bindsym $mod+P exec fish -c "rbw-pass"
-bindsym $mod+dead_acute exec fish -c "flatpak run --command=io.github.alainm23.planify.quick-add io.github.alainm23.planify"
+bindsym $mod+Backspace exec $SHELL -c '$WEB_BROWSER'
+bindsym $mod+P exec $SHELL -c "rbw-pass"
+bindsym $mod+dead_acute exec $SHELL -c "flatpak run --command=io.github.alainm23.planify.quick-add io.github.alainm23.planify"
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -74,11 +73,12 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 bindsym $mod+Shift+space floating toggle
-# Launching zsh is necessary cuz sway uses sh otherwise,
+# Launching $SHELL is necessary cuz sway uses sh otherwise,
 # and it does not pick my $PATH
-bindsym Print exec zsh -c "sway-screenshot -m region"
-bindsym Ctrl+Print exec zsh -c "sway-screenshot -m output"
-bindsym Shift+Print exec zsh -c "sway-screenshot -m window"
+bindsym Print exec $SHELL -c "sway-screenshot -m output"
+bindsym Ctrl+Print exec $SHELL -c "sway-screenshot -m window"
+bindsym Shift+Print exec $SHELL -c "sway-screenshot -m region"
+
 bindgesture swipe:right workspace prev
 bindgesture swipe:left workspace next
 # bindsym $mod+space focus mode_toggle
@@ -153,6 +153,8 @@ for_window {
     [window_role="dialog"] floating enable
     [window_type="dialog"] floating enable
 }
+
+output "eDP-1" scale 1.25
 
 # run keyring
 # exec eval $(gnome-keyring-daemon --start)

@@ -43,6 +43,13 @@ function notes
         $EDITOR
 end
 
+function cd-gio -a where
+    if test -z "$where"
+        set where (wl-paste)
+    end
+    cd (gio info $where | awk -F ': ' '/local path/ { print $2 }')
+end
+
 function update-mirrors
     echo "Updating mirrors..."
     reflector --completion-percent 90 -f 5 -c BR | sudo tee /etc/pacman.d/mirrorlist
