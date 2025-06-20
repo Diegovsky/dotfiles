@@ -6,6 +6,11 @@ config = {}
 [language-server.tinymist]
 command = "tinymist"
 
+[language-server.ty-server]
+command = "ty"
+args = ["server"]
+config = { experimental = {completions = {enable = true }}}
+
 [language-server.ruff-server]
 command = "ruff"
 args = ["server"]
@@ -26,7 +31,7 @@ yapf.enabled = false
 
 [[language]]
 name = "python"
-language-servers = ["pylsp"]
+language-servers = ["pyright", "ruff-server"]
 formatter = {command = "ruff", args = ["format", "-"]}
 auto-format = true
 
