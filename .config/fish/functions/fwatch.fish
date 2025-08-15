@@ -18,7 +18,10 @@ function fwatch --description 'Watch for when $file changes, and executes $cmd' 
 
     echo "Starting watch... $cmdline"
     while :
-        eval $cmdline
-        inotifywait -r -qq -e $events . --include $file; or return $status
+        begin
+            eval $cmdline
+        end
+        inotifywait -qq -e $events . --include $file
+        echo Modified
     end
 end
