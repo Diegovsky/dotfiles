@@ -1,0 +1,14 @@
+#!/usr/bin/env fish
+
+function call -a method
+    gdbus call --session --dest io.github.isaksamsten.Niriswitcher --object-path /io/github/isaksamsten/Niriswitcher --method "io.github.isaksamsten.Niriswitcher.$method"
+
+end
+
+switch $argv[1]
+    case application workspace
+        call $argv[1]
+    case '*'
+        echo 'Unknown method' $argv[1] >2
+        exit 1
+end

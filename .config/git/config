@@ -13,6 +13,7 @@
     lol = log --oneline
     ds = diff --stat
     A = add -A
+	cp = cherry-pick
     cam = commit --amend --no-edit
     sync = !git pull && git push
     

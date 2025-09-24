@@ -21,13 +21,14 @@ rope.enabled = true
 ruff.enabled = true
 pyls_mypy.enabled = true
 pyls_mypy.live_mode = true
-autopep8.enabled = false
-flake8.enabled = false
-mccabe.enabled = false
-pycodestyle.enabled = false
-pyflakes.enabled = false
-pylint.enabled = false
-yapf.enabled = false
+jedi_completion.eager = true
+jedi_completion.cache_for = ["django"]
+rope_autoimport.enabled = true
+rope_completion.enabled = true
+
+[[language]]
+name = "json"
+formatter = {command = "jq", args=["."]}
 
 [[language]]
 name = "python"

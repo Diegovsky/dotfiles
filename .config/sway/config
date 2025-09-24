@@ -3,7 +3,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term footclient
+set $term ghostty
 set $editor nvim-gtk
 set $menu bemenu-run
 set $app_opener bemenu -i
@@ -21,6 +21,11 @@ bindsym $mod+dead_acute exec $SHELL -c "flatpak run --command=io.github.alainm23
 floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+bindsym $mod+Up exec playerctl --player playerctld play-pause
+bindsym $mod+Left exec playerctl --player playerctld previous
+bindsym $mod+Right exec playerctl --player playerctld next
+
 bindsym XF86AudioPlay exec playerctl --player playerctld play-pause
 bindsym XF86AudioNext exec playerctl --player playerctld next
 bindsym XF86AudioPrev exec playerctl --player playerctld previous
@@ -29,20 +34,12 @@ bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
 bindsym $mod+Shift+$left move left
 bindsym $mod+Shift+$down move down
 bindsym $mod+Shift+$up move up
 bindsym $mod+Shift+$right move right
 bindsym $mod+greater move workspace to right
 bindsym $mod+less move workspace to left
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
 bindsym --whole-window $mod+BTN_EXTRA workspace next_on_output
 bindsym --whole-window $mod+BTN_SIDE workspace prev_on_output
 bindsym --whole-window $mod+BTN_MIDDLE exec .local/bin/toggle_acell.sh
@@ -102,7 +99,7 @@ input "type:tablet_tool" {
 }
 input "type:pointer" {
     scroll_factor 1.2
-    accel_profile adaptive
+    accel_profile flat
 }
 input "type:touchpad" {
     accel_profile adaptive
@@ -161,13 +158,20 @@ output "eDP-1" scale 1.25
 
 exec swayosd-server
 
+# Volume Control
+bindsym $mod+F10 exec swayosd-client --output-volume -3
+bindsym $mod+F11 exec swayosd-client --output-volume +3
+
 bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume +3
 bindsym XF86AudioLowerVolume exec swayosd-client --output-volume -3
 
 # Sink mute
 bindsym F8 exec swayosd-client --input-volume mute-toggle
 
-# Brightness raise
+# Brightness control
+bindsym super+F4 exec swayosd-client --brightness raise
+bindsym super+F3 exec swayosd-client --brightness lower
+
 bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
 bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
 

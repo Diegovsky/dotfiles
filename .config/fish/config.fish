@@ -7,7 +7,7 @@ end
 # set -gx XMODIFIERS '@im=fcitx'
 
 for name in helix hx
-    if type -q $name
+    if which $name &>/dev/null
         set -gx HELIX $name
     end
 end
@@ -15,7 +15,7 @@ if ! type -q rust-analyzer; and type -q rustup
     fish_add_path (path dirname (rustup which rust-analyzer))
 end
 
-set -gx WEB_BROWSER zen-browser
+set -gx WEB_BROWSER firefox
 
 if status is-interactive
     alias reload "exec fish"

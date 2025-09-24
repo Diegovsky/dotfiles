@@ -21,6 +21,9 @@ other-lines = "disable"
 display-inlay-hints = false
 display-messages = true
 
+[editor.soft-wrap]
+enable = true
+
 [editor.statusline]
 right = [ "workspace-diagnostics", "file-type", "version-control" ]
 
@@ -52,15 +55,17 @@ A-o = "hsplit"
 A-p = "expand_selection"
 A-s = "split_selection"
 C = [ "select_mode", "goto_line_end", "change_selection", "exit_select_mode" ]
-C-a = [ "select_all", "yank_to_clipboard" ]
+C-A = "@\"#<C-A>"
+C-X = "@\"#<C-X>"
 C-j = "copy_selection_on_next_line"
 C-k = "copy_selection_on_prev_line"
 C-l = "keep_primary_selection"
 C-r = "redo"
 C-space = "buffer_picker"
 D = [ "select_mode", "goto_line_end", "delete_selection", "exit_select_mode" ]
-G = "goto_last_line"
+G = "@10000gg"
 K = "hover"
+M = "goto_last_line"
 S = "select_regex"
 V = [ "select_mode", "extend_to_line_bounds" ]
 Y = [ "select_mode", "goto_line_end", "yank", "exit_select_mode" ]
@@ -95,8 +100,9 @@ A-s = "split_selection"
 C-j = "copy_selection_on_next_line"
 C-k = "copy_selection_on_prev_line"
 C-l = "keep_primary_selection"
-C-v = [ "extend_to_line_bounds", "split_selection_on_newline", "flip_selections" ]
-G = "goto_last_line"
+C-v = [ "extend_to_line_bounds", "split_selection_on_newline", "flip_selections", "collapse_selection" ]
+G = "@10000gg"
+M = "goto_last_line"
 S = "select_regex"
 _ = "goto_first_nonwhitespace"
 minus = "trim_selections"

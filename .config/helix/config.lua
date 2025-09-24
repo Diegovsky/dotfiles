@@ -38,7 +38,8 @@ end
 local common = {
   q = {q = 'match_brackets'},
   _ = 'goto_first_nonwhitespace',
-  G = 'goto_last_line',
+  G = '@10000gg',
+  M = 'goto_last_line',
   s = 'change_selection',
   S = 'select_regex',
   A_s = 'split_selection',
@@ -77,7 +78,7 @@ local normal = {
   A_o = 'hsplit',
   A_i = 'vsplit',
   x = 'extend_to_line_bounds',
-  C_a = {'select_all', 'yank_to_clipboard'},
+  C_A = {'select_all', 'yank_to_clipboard'},
   esc = 'collapse_selection',
   C_space = 'buffer_picker',
   K = 'hover',
@@ -85,6 +86,8 @@ local normal = {
   g = {
     t = 'goto_type_definition',
   },
+  C_A = '@"#<C-A>',
+  C_X = '@"#<C-X>',
   ['$'] = select_mode'goto_line_end',
   ['|'] = select_mode'goto_line_start',
   V = {'select_mode', 'extend_to_line_bounds'},
@@ -101,7 +104,7 @@ table.extend(normal, win_moves)
 local select = {
   ['$'] = 'goto_line_end',
   ['|'] = 'goto_line_start',
-  C_v = {'extend_to_line_bounds', 'split_selection_on_newline', 'flip_selections'}
+  C_v = {'extend_to_line_bounds', 'split_selection_on_newline', 'flip_selections', 'collapse_selection'}
 }
 table.extend(select, common)
 
@@ -113,6 +116,7 @@ local insert = {
 local config = {
   theme = 'onedark',
   editor = {
+    soft_wrap = {enable = true},
     line_number = 'relative',
     color_modes = true,
     statusline = {
