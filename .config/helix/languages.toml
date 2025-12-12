@@ -26,9 +26,18 @@ jedi_completion.cache_for = ["django"]
 rope_autoimport.enabled = true
 rope_completion.enabled = true
 
+[language-server.steel-lsp]
+command="steel-language-server"
+args=[]
+config={}
+
 [[language]]
 name = "json"
 formatter = {command = "jq", args=["."]}
+
+[[language]]
+name = "scheme"
+language-servers=["steel-lsp"]
 
 [[language]]
 name = "python"
@@ -85,3 +94,27 @@ language-servers = [ { name = "typescript-language-server", except-features = [ 
 [[language]]
 name = "json"
 language-servers = [ { name = "vscode-json-language-server", except-features = [ "format" ] }, "biome" ]
+
+[language-server.jdtls]
+command = "jdtls"
+
+[[language]]
+name = "java"
+scope = "source.java"
+file-types = ["java"]
+roots = ["pom.xml", "build.gradle", "app/build.gradle.kts", ".git"]
+language-servers = ["jdtls"]  
+
+[language-server.metals]
+command = "metals"
+args = []
+
+[[language]]
+name = "scala"
+scope = "source.scala"
+file-types = ["scala", "sbt", "sc"]
+roots = ["build.sbt", "build.sc"]
+language-servers = ["metals"]
+indent = { tab-width = 2, unit = "  " }  
+
+

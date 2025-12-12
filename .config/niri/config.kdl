@@ -49,8 +49,9 @@ layout {
     struts {
     }
 }
+spawn-at-startup "emacs" "--daemon"
+spawn-at-startup "dms-runner"
 spawn-at-startup "niriswitcher"
-spawn-at-startup "waybar"
 spawn-at-startup "swayosd-server"
 
 hotkey-overlay {
@@ -58,6 +59,14 @@ hotkey-overlay {
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
 }
+
+window-rule {
+	match title=r"DEBUG"
+	match title=r"^Godot$"
+	exclude app-id="Pixelorama"
+	open-floating true
+}
+
 window-rule {
     match app-id="ghostty" is-active=true
     scroll-factor 0.25
@@ -66,22 +75,12 @@ window-rule {
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
     open-floating true
 }
+window-rule {
+    match app-id=r#"zen$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
 binds {
-    Alt+Tab repeat=false { spawn "niri-switcher" "application";}
-    Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-
-    Mod+Return hotkey-overlay-title="Spawn Terminal" { spawn "ghostty"; }
-    Mod+Backspace hotkey-overlay-title="Spawn Browser" { spawn "firefox"; }
-    Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
-    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume +3"; }
-
-    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume -3"; }
-    XF86AudioMute        allow-when-locked=true { spawn-sh "swayosd-client --output-volume mute-toggle"; }
-    XF86AudioMicMute     allow-when-locked=true { spawn-sh "swayosd-client --input-volume mute-toggle "; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn "swayosd-client" "--brightness" "raise"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "swayosd-client" "--brightness" "lower"; }
-
     Super+Z repeat=false { toggle-overview; }
     Super+Q repeat=false { close-window; }
     Mod+Left  { focus-column-left; }
@@ -136,8 +135,8 @@ binds {
     Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
     Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
     Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
-    Mod+WheelScrollRight      { focus-column-right; }
-    Mod+WheelScrollLeft       { focus-column-left; }
+    Alt+WheelScrollDown      { focus-column-right; }
+    Alt+WheelScrollUp       { focus-column-left; }
     Mod+Ctrl+WheelScrollRight { move-column-right; }
     Mod+Ctrl+WheelScrollLeft  { move-column-left; }
     Mod+Shift+WheelScrollDown      { focus-column-right; }
@@ -153,15 +152,15 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
-    Mod+Ctrl+3 { move-column-to-workspace 3; }
-    Mod+Ctrl+4 { move-column-to-workspace 4; }
-    Mod+Ctrl+5 { move-column-to-workspace 5; }
-    Mod+Ctrl+6 { move-column-to-workspace 6; }
-    Mod+Ctrl+7 { move-column-to-workspace 7; }
-    Mod+Ctrl+8 { move-column-to-workspace 8; }
-    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
     Mod+BracketLeft  { consume-or-expel-window-left; }
     Mod+BracketRight { consume-or-expel-window-right; }
     Mod+Comma  { consume-window-into-column; }
@@ -178,7 +177,7 @@ binds {
     Mod+Equal { set-column-width "+10%"; }
     Mod+Shift+Minus { set-window-height "-10%"; }
     Mod+Shift+Equal { set-window-height "+10%"; }
-    Mod+V       { toggle-window-floating; }
+    Mod+Shift+Space       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
     Mod+W { toggle-column-tabbed-display; }
     Print { screenshot; }
@@ -188,4 +187,85 @@ binds {
     Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
     Mod+Shift+P { power-off-monitors; }
+
+    Alt+Tab repeat=false { spawn "niri-switcher" "application";}
+    Mod+Shift+Slash { show-hotkey-overlay; }
+
+    Mod+Return hotkey-overlay-title="Spawn Terminal" { spawn "emacsclient" "-c" "-e" "(spawn-vterm)"; }
+    Mod+Backspace hotkey-overlay-title="Spawn Browser" { spawn "firefox"; }
+    // XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume +3"; }
+
+    // XF86AudioLowerVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume -3"; }
+    // XF86AudioMute        allow-when-locked=true { spawn-sh "swayosd-client --output-volume mute-toggle"; }
+    // F8     allow-when-locked=true { spawn-sh "swayosd-client --input-volume mute-toggle "; }
+    // XF86MonBrightnessUp allow-when-locked=true { spawn "swayosd-client" "--brightness" "raise"; }
+    // XF86MonBrightnessDown allow-when-locked=true { spawn "swayosd-client" "--brightness" "lower"; }
+
+
+    // Dank keybinds
+   Mod+Space hotkey-overlay-title="Application Launcher" {
+      spawn "dms" "ipc" "call" "spotlight" "toggle";
+   }
+
+   Mod+Shift+M hotkey-overlay-title="Task Manager" {
+      spawn "dms" "ipc" "call" "processlist" "toggle";
+   }
+
+   Mod+N hotkey-overlay-title="Notification Center" {
+      spawn "dms" "ipc" "call" "notifications" "toggle";
+   }
+
+   Mod+Shift+Comma hotkey-overlay-title="Settings Panel" {
+      spawn "dms" "ipc" "call" "settings" "toggle";
+   }
+
+   // Mod+P hotkey-overlay-title="Notepad" {
+   //    spawn "dms" "ipc" "call" "notepad" "toggle";
+   // }
+
+   Super+P hotkey-overlay-title="Lock Screen" {
+      spawn "dms" "ipc" "call" "lock" "lock";
+   }
+
+   Mod+Shift+C hotkey-overlay-title="Control Center" {
+      spawn "dms" "ipc" "call" "control-center" "toggle";
+   }
+
+   Mod+Shift+N allow-when-locked=true hotkey-overlay-title="Toggle Night Mode" {
+      spawn "dms" "ipc" "call" "night" "toggle";
+   }
+   XF86AudioRaiseVolume allow-when-locked=true {
+      spawn "dms" "ipc" "call" "audio" "increment" "3";
+   }
+   XF86AudioLowerVolume allow-when-locked=true {
+      spawn "dms" "ipc" "call" "audio" "decrement" "3";
+   }
+   XF86AudioMute allow-when-locked=true {
+      spawn "dms" "ipc" "call" "audio" "mute";
+   }
+   XF86AudioMicMute allow-when-locked=true {
+      spawn "dms" "ipc" "call" "audio" "micmute";
+   }
+   XF86MonBrightnessUp allow-when-locked=true {
+      spawn "dms" "ipc" "call" "brightness" "increment" "5" "";
+   }
+   XF86MonBrightnessDown allow-when-locked=true {
+      spawn "dms" "ipc" "call" "brightness" "decrement" "5" "";
+   }
+
+   XF86AudioPlay allow-when-locked=true {
+      spawn "dms" "ipc" "call" "mpris" "playPause";
+   }
+
+   XF86AudioNext allow-when-locked=true{
+      spawn "dms" "ipc" "call" "mpris" "next";
+   }
+
+   XF86AudioPrev allow-when-locked=true{
+      spawn "dms" "ipc" "call" "mpris" "previous";
+   }
+
+   XF86AudioStop allow-when-locked=true{
+      spawn "dms" "ipc" "call" "mpris" "stop";
+   }
 }

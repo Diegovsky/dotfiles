@@ -2,7 +2,10 @@
 # VERSION: 3.0
 SETUVAR --export DEBUGINFOD_URLS:https\x3a//debuginfod\x2earchlinux\x2eorg
 SETUVAR --export DOCKER_HOST:unix\x3a///run/user/1000/docker\x2esock
+SETUVAR --export DOTNET_CLI_TELEMETRY_OPTOUT:1
 SETUVAR --export EDITOR:helix
+SETUVAR --export GTK_IM_MODULE:simple
+SETUVAR --export --path LD_LIBRARY_PATH:/home/diegovsky/Projects/random\x2dstuff/gtk/BUILD/gtk/
 SETUVAR NOTIFY_CMD_LEN:30
 SETUVAR --export VISUAL:helix
 SETUVAR __fish_initialized:3800
@@ -46,4 +49,4 @@ SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3dbrblack
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d
-SETUVAR fish_user_paths:/opt/wonderful/bin\x1e/usr/lib/jvm/java\x2d19\x2dgraalvm/bin\x1e/home/diegovsky/\x2erustup/toolchains/nightly\x2dx86_64\x2dunknown\x2dlinux\x2dgnu/bin\x1e/home/diegovsky/Applications\x1e/home/diegovsky/\x2eluarocks/bin\x1e/home/diegovsky/\x2elocal/share/cargo/bin\x1e/home/diegovsky/\x2elocal/bin
+SETUVAR fish_user_paths:/home/diegovsky/\x2econfig/emacs/bin\x1e/home/diegovsky/\x2econfig/herd\x2dlite/bin\x1e/opt/wonderful/bin\x1e/usr/lib/jvm/java\x2d19\x2dgraalvm/bin\x1e/home/diegovsky/\x2erustup/toolchains/nightly\x2dx86_64\x2dunknown\x2dlinux\x2dgnu/bin\x1e/home/diegovsky/Applications\x1e/home/diegovsky/\x2eluarocks/bin\x1e/home/diegovsky/\x2elocal/share/cargo/bin\x1e/home/diegovsky/\x2elocal/bin

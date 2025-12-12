@@ -1,4 +1,4 @@
-
+#!/usr/bin/env lua
 local toml = require'toml'
 
 function table.extend(a, b)
@@ -88,6 +88,7 @@ local normal = {
   },
   C_A = '@"#<C-A>',
   C_X = '@"#<C-X>',
+
   ['$'] = select_mode'goto_line_end',
   ['|'] = select_mode'goto_line_start',
   V = {'select_mode', 'extend_to_line_bounds'},
