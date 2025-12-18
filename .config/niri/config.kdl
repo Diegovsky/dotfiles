@@ -192,6 +192,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+Return hotkey-overlay-title="Spawn Terminal" { spawn "emacsclient" "-c" "-e" "(spawn-vterm)"; }
+    Mod+Shift+Return hotkey-overlay-title="Spawn Emacs (Client)" { spawn "emacsclient" "-c"; }
     Mod+Backspace hotkey-overlay-title="Spawn Browser" { spawn "firefox"; }
     // XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume +3"; }
 
