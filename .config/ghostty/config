@@ -1,0 +1,9 @@
+# background-opacity  = 0.80
+keybind = ctrl+n=new_tab
+keybind = ctrl+shift+n=new_window
+keybind = ctrl+shift+i=new_split:right
+keybind = ctrl+shift+o=new_split:down
+keybind = ctrl+alt+i=inspector:toggle
+keybind = ¬=next_tab
+#term=xterm-256color
+mouse-scroll-multiplier = 1.5

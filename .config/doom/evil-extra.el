@@ -1,3 +1,9 @@
+;;; evil-extra.el -*- lexical-binding: t; -*-
+
+(defun my/evil-shift-left-line ()
+  (interactive))
+
+
 (defun evil-surround-char (char)
   (interactive (evil-surround-input-char))
   (evil-surround-region (point) (+ 1 (point)) 'inclusive char))

@@ -112,6 +112,7 @@ table.extend(select, common)
 
 local insert = {
   C_space = 'completion'
+  C_backspace = "delete_word_backward"
 }
 
 local config = {

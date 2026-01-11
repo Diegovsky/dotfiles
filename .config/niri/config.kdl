@@ -1,5 +1,5 @@
 input {
-    focus-follows-mouse
+    focus-follows-mouse max-scroll-amount="0%"
     keyboard {
         xkb { }
         numlock
@@ -58,6 +58,10 @@ hotkey-overlay {
 }
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 animations {
+}
+window-rule {
+	match title="Vivaldi Settings"
+	open-floating true
 }
 
 window-rule {
@@ -191,9 +195,14 @@ binds {
     Alt+Tab repeat=false { spawn "niri-switcher" "application";}
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+Return hotkey-overlay-title="Spawn Terminal" { spawn "emacsclient" "-c" "-e" "(spawn-vterm)"; }
+    Mod+Return hotkey-overlay-title="Spawn Terminal" {
+    	//spawn "emacsclient" "-c" "-e" "(spawn-vterm)";
+    	spawn "ghostty"
+	}
     Mod+Shift+Return hotkey-overlay-title="Spawn Emacs (Client)" { spawn "emacsclient" "-c"; }
-    Mod+Backspace hotkey-overlay-title="Spawn Browser" { spawn "firefox"; }
+
+    Mod+Alt+Return hotkey-overlay-title="Spawn Terminal" { spawn "foot"; }
+    Mod+Backspace hotkey-overlay-title="Spawn Browser" { spawn "vivaldi"; }
     // XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume +3"; }
 
     // XF86AudioLowerVolume allow-when-locked=true { spawn-sh "swayosd-client --output-volume -3"; }

@@ -58,6 +58,7 @@
      ((node-is "}") grand-parent 0)
      ;; strings
      ((node-is "\"") prev-sibling -1)
+     ((node-is "node_field") prev-sibling 0)
      ((parent-is "string") parent 0)
 
      ((parent-is "node_children") grand-parent 2))))
