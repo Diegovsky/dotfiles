@@ -7,7 +7,7 @@ set $term ghostty
 set $editor nvim-gtk
 set $menu bemenu-run
 set $app_opener bemenu -i
-output * bg $(xdg-user-dir PICTURES)/tubes2.png fill
+output * bg $(xdg-user-dir PICTURES)/wallpaper.jpg fill
 
 bindsym $mod+Return exec $term
 bindsym $mod+q kill
@@ -98,7 +98,7 @@ input "type:tablet_tool" {
     map_to_output "HDMI-A-1"
 }
 input "type:pointer" {
-    scroll_factor 1.2
+    scroll_factor 1.0
     accel_profile flat
 }
 input "type:touchpad" {
