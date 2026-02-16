@@ -1,0 +1,102 @@
+#!/usr/bin/env python
+import glob
+import os
+from subprocess import run
+import select
+from typing import Any, Iterator, Literal
+import evdev
+from evdev import InputEvent, ecodes
+from evdev.eventio import EventIO
+from evdev.events import KeyEvent
+from evdev.util import categorize
+from dataclasses import dataclass, field
+
+type Dev = evdev.InputDevice[str]
+
+
+@dataclass(slots=True)
+class App:
+    dev: Dev
+    udev: evdev.UInput
+    control: bool = False
+    enabled: bool = True
+    keys: set = field(default_factory=set)
+    last_event: InputEvent | None = None
+
+    def read_once(self) -> Iterator[evdev.InputEvent]:
+        _ = select.select([self.dev.fd], [], [])
+        return EventIO.read(self.dev)
+
+    def process_events(self):
+        for event in self.read_once():
+            self.last_event = event
+            ev = categorize(event)
+            match ev:
+                case KeyEvent(scancode=key, keycode=_, keystate=key_state):
+                    pressed = key_state != KeyEvent.key_up
+
+                    self.keys.add(key)
+
+                    match key:
+                        case ecodes.KEY_PAUSE if pressed and self.control:
+                            self.enabled = not self.enabled
+                            self.on_toggle()
+                            self.notify_system_state()
+                            continue
+
+                        case ecodes.KEY_LEFTCTRL | ecodes.KEY_RIGHTCTRL:
+                            self.control = pressed
+
+            if self.enabled:
+                self.udev.write_event(ev)
+                self.udev.syn()
+
+    def on_toggle(self):
+        if not self.enabled and self.last_event:
+            self.control = False
+            ev = self.last_event
+            for key in self.keys:
+                ev.code = key
+                ev.value = KeyEvent.key_up
+                self.udev.write_event(ev)
+            self.udev.syn()
+            self.keys.clear()
+
+        # case _:
+        #     print("got other event")
+        #     print(type(ev))
+        #     print(ev)
+
+    def notify_system_state(self):
+        self.send_notification(
+            "Laptop keyboard " + ("enabled" if self.enabled else "disabled")
+        )
+
+    def send_notification(self, msg: str):
+        for bus in glob.glob("/run/user/[0-9]*/bus"):
+            user = int(bus.split("/")[3])
+            run(
+                """notify-send
+                    -t 1000
+                    -i dialog-information
+                    -h boolean:transient:true
+                    -a""".split()
+                + ["Keyboard State", msg],
+                env={"DBUS_SESSION_BUS_ADDRESS": f"unix:path={bus}"},
+                user=user,
+            )
+
+
+def main():
+    device_path = "/dev/input/event4"
+    dev = evdev.InputDevice(device_path)
+
+    with dev.grab_context(), evdev.UInput() as udev:
+        app = App(dev, udev)
+        app.notify_system_state()
+        while True:
+            app.process_events()
+
+
+if __name__ == "__main__":
+    main()
