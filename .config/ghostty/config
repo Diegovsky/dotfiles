@@ -7,3 +7,6 @@ keybind = ctrl+alt+i=inspector:toggle
 keybind = ¬=next_tab
 #term=xterm-256color
 mouse-scroll-multiplier = 1.5
+
+
+shell-integration-features = cursor,sudo,ssh-env,ssh-terminfo,title

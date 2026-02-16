@@ -2,7 +2,7 @@
 Description=Keyboard Disabler Daemon
 DefaultDependencies=no
 After=local-fs.target
-Before=multi-user.target
+Before=keyd.service
 
 [Service]
 Type=simple
@@ -14,7 +14,6 @@ User=root
 # Optional hardening
 NoNewPrivileges=true
 ProtectSystem=strict
-ProtectHome=yes
 PrivateTmp=yes
 
 [Install]

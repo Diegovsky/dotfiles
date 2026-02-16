@@ -31,9 +31,17 @@ if status is-interactive
         end
     end
 
-    import vterm.fish
+    function fish_title
+        if test (status current-command) != fish
+            status current-commandline
+        else
+            prompt_pwd
+        end
+    end
+
+    # import vterm.fish
     import interactive.fish
-    import vterm-end.fish
+    # import vterm-end.fish
 else if status is-login
     # Let's source path
     systemctl --user import-environment PATH

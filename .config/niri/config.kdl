@@ -65,6 +65,11 @@ window-rule {
 }
 
 window-rule {
+	match title="Emulator"
+	open-floating true
+}
+
+window-rule {
 	match title=r"DEBUG"
 	match title=r"^Godot$"
 	exclude app-id="Pixelorama"

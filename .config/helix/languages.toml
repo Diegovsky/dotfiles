@@ -105,6 +105,15 @@ file-types = ["java"]
 roots = ["pom.xml", "build.gradle", "app/build.gradle.kts", ".git"]
 language-servers = ["jdtls"]  
 
+[language-server.kotlin-lsp]
+command = "kotlin-lsp"
+args = ["--stdio"]
+
+
+[[language]]
+name = "kotlin"
+language-servers = ["kotlin-lsp"]
+
 [language-server.metals]
 command = "metals"
 args = []
