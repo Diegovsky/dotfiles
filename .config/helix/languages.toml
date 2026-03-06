@@ -1,3 +1,4 @@
+
 [language-server.pyright]
 command = "pyright-langserver"
 args = ["--stdio"]
@@ -30,6 +31,23 @@ rope_completion.enabled = true
 command="steel-language-server"
 args=[]
 config={}
+
+[language-server.haxe]
+command = "haxe-lsp"
+config = { displayArguments = ["build.hxml"] } 
+
+[[language]]
+name = "haxe"
+scope = "source.haxe"
+injection-regex = "Haxe"
+file-types = ["hx"]
+roots = [ "build.hxml" ]
+indent = { tab-width = 4, unit = "    " }
+language-servers = ["haxe"]
+
+[[grammar]]
+name = "haxe"
+source = { git = "https://github.com/tong/tree-sitter-haxe", rev="cd22e75fd9e80cc1752854be1a3aac22b08f82c7"}
 
 [[language]]
 name = "json"
