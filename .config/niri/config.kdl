@@ -284,3 +284,5 @@ binds {
       spawn "dms" "ipc" "call" "mpris" "stop";
    }
 }
+
+include "dms/windowrules.kdl"

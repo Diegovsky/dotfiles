@@ -41,7 +41,7 @@ language-servers=["steel-lsp"]
 
 [[language]]
 name = "python"
-language-servers = ["pyright", "ruff-server"]
+language-servers = ["ty", "ruff-server"]
 formatter = {command = "ruff", args = ["format", "-"]}
 auto-format = true
 
