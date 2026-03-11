@@ -1,0 +1,4 @@
+defaults:
+  max_columns: 90
+options:
+  implicit_slide_ends: true
