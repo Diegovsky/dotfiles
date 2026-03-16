@@ -16,6 +16,7 @@ if ! type -q rust-analyzer; and type -q rustup
 end
 
 set -gx WEB_BROWSER vivaldi
+source $__fish_config_dir/aliases.fish
 
 if status is-interactive
     alias reload "exec fish"
