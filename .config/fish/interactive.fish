@@ -1,4 +1,4 @@
-import dir
+__import interactive
 
 if ! set -q
     set -U NOTIFY_CMD_LEN 30
@@ -30,5 +30,13 @@ end
 function storePathForWindowsTerminal --on-variable PWD
     if test -n "$WT_SESSION"
         printf "\e]9;9;%s\e\\" (wslpath -w "$PWD")
+    end
+end
+
+function fish_title
+    if test (status current-command) != fish
+        status current-commandline
+    else
+        prompt_pwd
     end
 end

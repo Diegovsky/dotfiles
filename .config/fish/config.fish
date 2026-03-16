@@ -2,46 +2,30 @@ if test "$(uname -s)" = Darwin
     set -gx IS_MAC 1
 end
 
+function __import -a arg
+    if not test -e $arg
+        set arg $HOME/.config/fish/$arg
+    end
+    if test -d $arg
+        for entry in $arg/*
+            __import $entry
+        end
+    else
+        source $arg
+    end
+end
+
 # set -gx GTK_IM_MODULE fcitx
 # set -gx QT_IM_MODULE fcitx
 # set -gx XMODIFIERS '@im=fcitx'
-for name in helix hx
-    if which $name &>/dev/null
-        set -gx HELIX $name
-        break
-    end
-end
-if ! type -q rust-analyzer; and type -q rustup
-    fish_add_path (path dirname (rustup which rust-analyzer))
-end
 
 set -gx WEB_BROWSER vivaldi
-source $__fish_config_dir/aliases.fish
 
 if status is-interactive
     alias reload "exec fish"
 
-    function import -a source tp
-        if test "$tp" = dir
-            set -l source $__fish_config_dir/$source
-            for entry in (ls $source)
-                source $source/$entry
-            end
-        else
-            source $__fish_config_dir/$source
-        end
-    end
-
-    function fish_title
-        if test (status current-command) != fish
-            status current-commandline
-        else
-            prompt_pwd
-        end
-    end
-
     # import vterm.fish
-    import interactive.fish
+    __import interactive.fish
     # import vterm-end.fish
 else if status is-login
     # Let's source path
