@@ -1,15 +1,9 @@
 # USER VARIABLES
 
-if test "$IS_MAC" = 1
-    set -gx XDG_CONFIG_HOME $HOME/Library/Preferences/
-    set -gx XDG_DATA_HOME $HOME/Library/
-    set -gx XDG_CACHE_HOME $HOME/Library/Caches/
-    set -gx ZDOTDIR $XDG_CONFIG_HOME/zsh
-else
-    set -gx XDG_CONFIG_HOME $HOME/.config
-    set -gx XDG_DATA_HOME $HOME/.local/share
-    set -gx XDG_CACHE_HOME $HOME/.cache
-    set -gx ZDOTDIR $XDG_CONFIG_HOME/zsh
+set -gx XDG_CONFIG_HOME $HOME/.config
+set -gx XDG_DATA_HOME $HOME/.local/share
+set -gx XDG_CACHE_HOME $HOME/.cache
+if test $IS_MAC != 0
     set -gx XDG_DATA_DIRS $XDG_DATA_DIRS:$HOME/.local/share
 end
 

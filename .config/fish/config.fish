@@ -1,3 +1,5 @@
+set fish_greeting
+
 if test "$(uname -s)" = Darwin
     set -gx IS_MAC 1
 end
