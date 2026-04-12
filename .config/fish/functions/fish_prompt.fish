@@ -1,7 +1,7 @@
-if test $IS_MAC = 1
-    function fish_vcs_prompt
-    end
-end
+# if test $IS_MAC = 1
+#     function fish_vcs_prompt
+#     end
+# end
 
 function fish_prompt --description 'Write out the prompt'
     set -l last_pipestatus $pipestatus

@@ -37,3 +37,6 @@
 
 [push]
 	autoSetupRemote = true
+[core]
+	fsmonitor = false
+	untrackedCache = false

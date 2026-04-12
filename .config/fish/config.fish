@@ -4,42 +4,36 @@ if test "$(uname -s)" = Darwin
     set -gx IS_MAC 1
 end
 
-function __import -a arg
-    if not test -e $arg
-        set arg $HOME/.config/fish/$arg
-    end
-    if test -d $arg
-        for entry in $arg/*
-            __import $entry
-        end
-    else
-        source $arg
+for name in helix hx
+    if type -q $name
+        set -gx HELIX $name
     end
 end
 
-# set -gx GTK_IM_MODULE fcitx
-# set -gx QT_IM_MODULE fcitx
-# set -gx XMODIFIERS '@im=fcitx'
+if ! type -q rust-analyzer; and type -q rustup
+    fish_add_path (path dirname (rustup which rust-analyzer))
+end
 
-set -gx WEB_BROWSER vivaldi
+set -gx WEB_BROWSER zen-browser
 
 if status is-interactive
     alias reload "exec fish"
 
-    # import vterm.fish
-    __import interactive.fish
-    # import vterm-end.fish
+    function import -a source tp
+        if test "$tp" = dir
+            set -l source $__fish_config_dir/$source
+            for entry in $source/*.fish
+                source $entry
+            end
+        else
+            source $__fish_config_dir/$source
+        end
+    end
+
+    import interactive.fish
 else if status is-login
     # Let's source path
-    systemctl --user import-environment PATH
+    if test $IS_MAC = 0
+        systemctl --user import-environment PATH
+    end
 end
-
-# BEGIN opam configuration
-# This is useful if you're using opam as it adds:
-#   - the correct directories to the PATH
-#   - auto-completion for the opam binary
-# This section can be safely removed at any time if needed.
-set OPAM_INIT $HOME/.opam/opam-init/init.fish
-test -r $OPAM_INIT && source $OPAM_INIT >/dev/null 2>/dev/null; or true
-# END opam configuration
-# 
