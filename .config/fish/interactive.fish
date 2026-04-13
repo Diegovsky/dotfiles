@@ -1,4 +1,4 @@
-__import interactive
+import interactive dir
 
 if ! set -q
     set -U NOTIFY_CMD_LEN 30
