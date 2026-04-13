@@ -9,4 +9,4 @@ keybind = ¬=next_tab
 mouse-scroll-multiplier = 1.5
 
 
-shell-integration-features = cursor,sudo,ssh-env,ssh-terminfo,title
+shell-integration-features = cursor,sudo,title

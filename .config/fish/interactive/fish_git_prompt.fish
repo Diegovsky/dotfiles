@@ -6,12 +6,18 @@ function _my_git_tracker --on-variable PWD
         set git_branch
     end
 end
+_my_git_tracker
 
 function _my_git_tracker2 --on-event fish_postexec
-    if test -n $git_branch
+    if test -n "$git_branch"
         return
     end
-    if test $argv[1] = git; and test $argv[2] = init
+    set args (string split ' ' $argv[1])
+    if test "$args[1]" = git
+        switch $args[2]
+            case commit init
+                _my_git_tracker
+        end
     end
 end
 
