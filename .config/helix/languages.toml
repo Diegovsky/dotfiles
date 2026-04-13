@@ -33,7 +33,7 @@ args=[]
 config={}
 
 [language-server.haxe]
-command = "haxe-lsp"
+command = "haxe-language-server"
 config = { displayArguments = ["build.hxml"] } 
 
 [[language]]
