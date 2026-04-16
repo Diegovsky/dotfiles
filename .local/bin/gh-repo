@@ -1,0 +1,8 @@
+#!/usr/bin/env fish
+set -l user Diegovsky
+set -l TEMPFILE /tmp/my-repos.txt
+if ! test -f $TEMPFILE
+    curl -sL "https://api.github.com/users/$user/repos?sort=updated&direction=desc&per_page=100" | jq .[].full_name -r >$TEMPFILE
+end
+
+cat $TEMPFILE | fzf
