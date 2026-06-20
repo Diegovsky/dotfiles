@@ -1,4 +1,8 @@
 
+[language-server]
+roslyn-language-server = { command = "roslyn-language-server", args = ["--stdio", "--autoLoadProjects"] }
+
+
 [language-server.pyright]
 command = "pyright-langserver"
 args = ["--stdio"]
@@ -16,6 +20,7 @@ config = { experimental = {completions = {enable = true }}}
 command = "ruff"
 args = ["server"]
 config = {}
+
 
 [language-server.pylsp.config.pylsp.plugins]
 rope.enabled = true
@@ -85,9 +90,9 @@ name = "typst"
 language-servers = ["tinymist"]
 
 
-# WEBSHIT
-[language-server]
-biome = { command = "biome", args = ["lsp-proxy"] }
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
 
 [[language]]
 name = "javascript"
@@ -127,6 +132,9 @@ language-servers = ["jdtls"]
 command = "kotlin-lsp"
 args = ["--stdio"]
 
+[[language]]
+name = "c-sharp"
+# language-servers = [ "roslyn-language-server"]
 
 [[language]]
 name = "kotlin"

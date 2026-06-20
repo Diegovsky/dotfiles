@@ -7,7 +7,7 @@ else
 end
 
 for name in helix hx
-    if type -q $name
+    if type -fq $name
         set -gx HELIX $name
     end
 end
