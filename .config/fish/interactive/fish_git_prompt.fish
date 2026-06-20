@@ -14,7 +14,6 @@ _my_git_tracker
 
 function _my_git_tracker2 --on-event fish_postexec
     set args (string split ' ' $argv[1])
-    echo $args
     if test "$args[1]" = git
         switch $args[2]
             case status diff st
