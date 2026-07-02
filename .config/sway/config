@@ -1,13 +1,10 @@
 set $mod Mod4
 set $term ghostty
-set $menu bemenu-run
-set $app_opener bemenu -i
 set $SHELL fish
+
 output * bg $(xdg-user-dir PICTURES)/wallpaper.jpg fill
 
 bindsym $mod+Return exec $term
-bindsym $mod+Space exec j4-dmenu-desktop --dmenu="$app_opener"
-bindsym $mod+d exec $menu
 bindsym $mod+Backspace exec $SHELL -c '$WEB_BROWSER'
 bindsym $mod+P exec $SHELL -c "rbw-pass"
 

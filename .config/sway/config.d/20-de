@@ -1,27 +1,26 @@
-exec swayosd-server
+set $menu bemenu-run
+set $app_opener bemenu -i
 
-# Volume Control
-bindsym $mod+F10 exec swayosd-client --output-volume -3
-bindsym $mod+F11 exec swayosd-client --output-volume +3
+# Launchers
+bindsym $mod+d exec $menu
 
-bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume +3
-bindsym XF86AudioLowerVolume exec swayosd-client --output-volume -3
+# DMS Keybindings
+bindsym $mod+space exec dms ipc call spotlight toggle
+bindsym $mod+comma exec dms ipc call settings focusOrToggle
 
-# Sink mute
-bindsym F8 exec swayosd-client --input-volume mute-toggle
+# Audio controls
+bindsym XF86AudioRaiseVolume exec dms ipc call audio increment 3
+bindsym XF86AudioLowerVolume exec dms ipc call audio decrement 3
 
-# Brightness control
-bindsym super+F4 exec swayosd-client --brightness raise
-bindsym super+F3 exec swayosd-client --brightness lower
-
-bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
-bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
+# Brightness controls
+bindsym XF86MonBrightnessUp exec dms ipc call brightness increment 5
+bindsym XF86MonBrightnessDown exec dms ipc call brightness decrement 5
 
 # Sink volume toggle mute
-bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
+bindsym XF86AudioMute exec dms ipc call audio mute
 # Source volume toggle mute
-bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
-
+bindsym F8 exec dms ipc call audio micmute
+bindsym XF86AudioMicMute exec dms ipc call audio micmute
 
 bindsym $mod+Up exec playerctl --player playerctld play-pause
 bindsym $mod+Left exec playerctl --player playerctld previous
