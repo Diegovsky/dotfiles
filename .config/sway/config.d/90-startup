@@ -1,0 +1,6 @@
+# STARTUP PROGRAMS
+exec swayidle
+exec dex -a -e sway
+exec /lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# Remembers last played player
+exec playerctld &

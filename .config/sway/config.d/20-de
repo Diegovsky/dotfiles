@@ -1,0 +1,40 @@
+exec swayosd-server
+
+# Volume Control
+bindsym $mod+F10 exec swayosd-client --output-volume -3
+bindsym $mod+F11 exec swayosd-client --output-volume +3
+
+bindsym XF86AudioRaiseVolume exec swayosd-client --output-volume +3
+bindsym XF86AudioLowerVolume exec swayosd-client --output-volume -3
+
+# Sink mute
+bindsym F8 exec swayosd-client --input-volume mute-toggle
+
+# Brightness control
+bindsym super+F4 exec swayosd-client --brightness raise
+bindsym super+F3 exec swayosd-client --brightness lower
+
+bindsym XF86MonBrightnessUp exec swayosd-client --brightness raise
+bindsym XF86MonBrightnessDown exec swayosd-client --brightness lower
+
+# Sink volume toggle mute
+bindsym XF86AudioMute exec swayosd-client --output-volume mute-toggle
+# Source volume toggle mute
+bindsym XF86AudioMicMute exec swayosd-client --input-volume mute-toggle
+
+
+bindsym $mod+Up exec playerctl --player playerctld play-pause
+bindsym $mod+Left exec playerctl --player playerctld previous
+bindsym $mod+Right exec playerctl --player playerctld next
+bindsym XF86AudioPlay exec playerctl --player playerctld play-pause
+bindsym XF86AudioNext exec playerctl --player playerctld next
+bindsym XF86AudioPrev exec playerctl --player playerctld previous
+bindsym XF86AudioStop exec playerctl --player playerctld stop
+
+
+bindsym Print exec $SHELL -c "sway-screenshot -m output"
+bindsym Ctrl+Print exec $SHELL -c "sway-screenshot -m window"
+bindsym Shift+Print exec $SHELL -c "sway-screenshot -m region"
+
+# exec eval $(gnome-keyring-daemon --start)
+exec 'while :; do dms run; done'
