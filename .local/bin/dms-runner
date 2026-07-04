@@ -1,0 +1,4 @@
+#!/usr/bin/env fish
+while :
+	dms run
+end

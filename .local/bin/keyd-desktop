@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+import os
+from subprocess import run
+
+desktops = {
+    "niri": ["leftmeta = overload(meta, macro(leftmeta+z))"],
+}
+
+
+def main():
+    current_desktop = os.getenv("XDG_CURRENT_DESKTOP")
+    print(f"Current desktop: {current_desktop}")
+    binds = desktops.get(current_desktop, [])
+
+    print(f"Applying:\n{'\n'.join(binds)}")
+    run(["keyd", "bind", "reset", *binds])
+
+
+main()
