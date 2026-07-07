@@ -1,0 +1,4 @@
+window-rule {
+	match at-startup=true app-id="org.mozilla.Thunderbird"
+	match at-startup=true app-id="discord"
+}

@@ -1,4 +1,7 @@
 #!/usr/bin/env fish
 while :
-	dms run
+    dms run
+    if ! test -f /var/run/user/(id -u $USER)/$WAYLAND_DISPLAY
+        return
+    end
 end

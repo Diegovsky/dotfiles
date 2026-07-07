@@ -1,0 +1,5 @@
+spawn-at-startup "xfdesktop"
+spawn-at-startup "fish" "-c" "dms-runner"
+spawn-at-startup "fish" "-c" "keyd-desktop"
+
+

@@ -1,3 +1,2 @@
-.ssh/*.key
+.ssh/id_*
 .local/bin/agent-coding
-
