@@ -1,0 +1,28 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "obsws-python>=1.8.0",
+# ]
+# ///
+from sys import argv
+import obsws_python as obs
+from subprocess import run
+
+
+def notify(title: str, body: str | None = None):
+    a = [title]
+    if body:
+        a.append(body)
+    run(["notify-send", *a, "--app-name", "obs-key"])
+
+
+try:
+    client = obs.ReqClient(host="localhost", port=4455, timeout=3)
+    match argv[1]:
+        case "record":
+            client.toggle_record()
+        case _:
+            notify("Error", f"Unrecognized command: {argv[1]}")
+except Exception as e:
+    notify("Error", f"Something went wrong: {e}")

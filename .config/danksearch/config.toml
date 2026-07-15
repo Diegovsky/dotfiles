@@ -1,0 +1,40 @@
+index-all-files = true
+index-path = "/home/diegovsky/.cache/danksearch/index"
+index-xattr-tags = true
+listen-addr = "127.0.0.1:43654"
+max-depth = 0
+max-file-bytes = 2097152
+text-extensions = [
+".txt", ".md", ".go", ".py", ".js", ".ts", ".jsx", ".tsx", ".json", ".yaml", ".yml", ".toml", ".html", ".css", ".rs", ".c", ".cpp", ".h", ".java", ".rb", ".php", ".sh", ".typ"
+]
+worker-count = 6
+
+[[index-paths]]
+exclude-dirs = [
+".git", ".hg", ".svn", "node_modules", "bower_components", ".npm", ".yarn", "site-packages", "__pycache__", ".venv", "venv", ".tox", ".pytest_cache", ".eggs", "dist", "build", "out", "bin", "obj", "target", "vendor", ".gradle", ".m2", "bundle", ".cache", ".parcel-cache", ".next", ".nuxt", ".serverless", "Library", ".Trash-1000", ".postgresql", ".postgres", ".mysql", ".mongodb", ".redis", "pgdata", "pg_data", "go", ".cargo", ".pyenv", ".rbenv", ".nvm", ".rustup", ".composer", ".gem", ".idea", ".vscode"
+]
+exclude-hidden = true
+extract-exif = true
+extract-xattr-tags = false
+max-depth = 6
+path = "/home/diegovsky/"
+
+[[index-paths]]
+exclude-dirs = [
+"Steam", ".hg", ".svn", "node_modules", "bower_components", ".npm", ".yarn", "site-packages", "__pycache__", ".venv", "venv", ".tox", ".pytest_cache", ".eggs", "dist", "build", "out", "bin", "obj", "target", "vendor", ".gradle", ".m2", "bundle", ".cache", ".parcel-cache", ".next", ".nuxt", ".serverless", "Library", ".Trash-1000", ".postgresql", ".postgres", ".mysql", ".mongodb", ".redis", "pgdata", "pg_data", "go", ".cargo", ".pyenv", ".rbenv", ".nvm", ".rustup", ".composer", ".gem", ".idea", ".vscode", ".git", ".hg", ".svn", "node_modules", "bower_components", ".npm", ".yarn", "site-packages", "__pycache__", ".venv", "venv", ".tox", ".pytest_cache", ".eggs", "dist", "build", "out", "bin", "obj", "target", "vendor", ".gradle", ".m2", "bundle", ".cache", ".parcel-cache", ".next", ".nuxt", ".serverless", "Library", ".Trash-1000", ".postgresql", ".postgres", ".mysql", ".mongodb", ".redis", "pgdata", "pg_data", "go", ".cargo", ".pyenv", ".rbenv", ".nvm", ".rustup", ".composer", ".gem", ".idea", ".vscode"
+]
+exclude-hidden = true
+extract-exif = true
+extract-xattr-tags = false
+max-depth = 4
+path = "/home/diegovsky/.local"
+
+[[index-paths]]
+exclude-dirs = [
+"Steam", ".hg", ".svn", "node_modules", "bower_components", ".npm", ".yarn", "site-packages", "__pycache__", ".venv", "venv", ".tox", ".pytest_cache", ".eggs", "dist", "build", "out", "bin", "obj", "target", "vendor", ".gradle", ".m2", "bundle", ".cache", ".parcel-cache", ".next", ".nuxt", ".serverless", "Library", ".Trash-1000", ".postgresql", ".postgres", ".mysql", ".mongodb", ".redis", "pgdata", "pg_data", "go", ".cargo", ".pyenv", ".rbenv", ".nvm", ".rustup", ".composer", ".gem", ".idea", ".vscode", ".git", ".hg", ".svn", "node_modules", "bower_components", ".npm", ".yarn", "site-packages", "__pycache__", ".venv", "venv", ".tox", ".pytest_cache", ".eggs", "dist", "build", "out", "bin", "obj", "target", "vendor", ".gradle", ".m2", "bundle", ".cache", ".parcel-cache", ".next", ".nuxt", ".serverless", "Library", ".Trash-1000", ".postgresql", ".postgres", ".mysql", ".mongodb", ".redis", "pgdata", "pg_data", "go", ".cargo", ".pyenv", ".rbenv", ".nvm", ".rustup", ".composer", ".gem", ".idea", ".vscode"
+]
+exclude-hidden = true
+extract-exif = true
+extract-xattr-tags = false
+max-depth = 2
+path = "/home/diegovsky/.config"
